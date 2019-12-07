@@ -9,18 +9,19 @@
 	<!-- menu -->
 	<div id="menu">
 		<a href="home.php"><button type="button" class="button menu">Home</button></a>
-		<a href="admin.php"><button type="button" class="button menu">Admin</button></a>
 		<a href="reports.php"><button type="button" class="button menu">Reports</button></a>
+        <a href="admin.php"><button type="button" class="button menu">Admin</button></a>
         <a href="logout.php"><button type="button" class="button menu">Logout</button></a>
 		<a href="#"><button type="button" class="button menu" name="button" onclick="closeMenu();">Close</button></a>
 	</div>
-	<!-- end of menu -->		
+	<!-- end of menu -->
+    <!-- username -->
+    <div class="username">
+        <a href="<? echo "update_user.php?UsersId=".$_SESSION['UsersId']; ?>" title="Edit"><? echo $_SESSION['Name']; ?></a>
+    </div>  
+<!-- end of username -->		
 </nav>
-<!-- username -->
-<div class="username">
-		<a href="<? echo "update_user.php?UsersId=".$_SESSION['UsersId']; ?>" title="Edit"><? echo $_SESSION['Name']; ?></a>
-</div>	
-<!-- end of username -->
+
 <script type="text/javascript">
     //get menu
     var menu = document.getElementById('menu');

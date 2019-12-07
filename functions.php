@@ -92,4 +92,19 @@ function table_Users ($job, $var1, $var2) {
 	}
 }
 
+//function to use data from the table Organizations
+function table_Organizations ($job, $var1, $var2) {
+	$database = new Database();
+
+	switch ($job) {
+		case 'check_before_insert':
+			# code...
+			break;
+		
+		default:
+			# code...
+			break;
+	}
+}
+
 ?>

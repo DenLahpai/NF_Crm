@@ -1,7 +1,8 @@
 :root {
 	--color1: #FFFFFF;
 	--color2: #E4007B;
-	--color3: #E8E8E8;	
+	--color3: #E8E8E8;
+	--color4: #F7F8FC;	
 }
 * {
 	margin: 0;
@@ -16,8 +17,8 @@ body {
 .content {
 	height: 100%;
 	position: relative;
-	background: #F7F8FC;
-	direction: grid;
+	background: var(--color4);
+	display: grid;
 	grid-gap: 6px;
 	grid-template-columns: repeat(3, 1fr);
 	grid-template-areas: 
@@ -111,10 +112,37 @@ nav	{
     text-decoration: none;
 }
 
+
+
+.sub-menu {
+	grid-area: sub-menu;
+	background: var(--color2);
+}
+
+.sub-menu ul li {
+	display: inline-block;
+	padding: 6px 18px;	
+}
+
+.sub-menu ul li a {
+	color: var(--color1);
+	font-weight: bolder;
+}
+
+.sub-menu ul li a:hover {
+	color: var(--color3);
+}
+
+.sub-menu ul li a:active {
+	background: var(--color3);
+	color: var(--color2);
+}
+
 .username {
 	text-align: right;
 	font-style: italic;
 	padding:0px 12px;
+	background: var(--color4);
 }
 
 .grid-div {
@@ -160,6 +188,7 @@ main {
 }
 
 footer {
+	grid-area: footer;
 	border-top: 0.5px solid var(--color2);
 	background: var(--color1);
 	margin-top: 120px;
@@ -204,6 +233,8 @@ footer {
 	box-shadow: 0 6px #666;
 	transform: translateY(3px);
 }
+
+
 
 .error {
 	font-weight: bold;
