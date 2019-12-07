@@ -12,11 +12,38 @@ require_once "handler.php";
 	<div class="content">
 		<?php
 		include "includes/nav.php";
-		$header = "Welcome ".$_SESSION['Name'];
+		$header = "Modules";
 		include "includes/header.php";
 		?>
 		<main>
-			<!-- TODO -->
+			<!-- grid-div -->
+			<div class="grid-div">
+				<!-- grid-item -->
+				<div class="grid-item">
+					<button class="big square" onclick="window.location.href='organizations.php'">Organizations</button>
+				</div>
+				<!-- end of grid-item --><!-- grid-item -->
+				<div class="grid-item">
+					<button class="big square">Frequent Flyer Clubs</button>
+				</div>
+				<!-- end of grid-item -->
+				<!-- grid-item -->
+				<div class="grid-item">
+					<button class="big square">Clients</button>
+				</div>
+				<!-- end of grid-item -->
+				<!-- grid-item -->
+				<div class="grid-item">
+					<button class="big square">Passport Expiry</button>
+				</div>
+				<!-- end of grid-item -->
+				<!-- grid-item -->
+				<div class="grid-item">
+					<button class="big square">Birthdays</button>
+				</div>
+				<!-- end of grid-item -->
+			</div>
+			<!-- end of grid-div -->
 		</main>
 	</div>
 	<!-- end of content -->

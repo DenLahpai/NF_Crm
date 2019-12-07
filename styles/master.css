@@ -1,6 +1,7 @@
 :root {
 	--color1: #FFFFFF;
-	--color2: #E4007B;	
+	--color2: #E4007B;
+	--color3: #E8E8E8;	
 }
 * {
 	margin: 0;
@@ -53,12 +54,17 @@ nav	{
 
 #menuSwitch:hover {
 	opacity: 1;
+	background: var(--color1);
+}
+
+#menuSwitch:hover > .hamburger {
+	background: var(--color2);
 }
 
 .hamburger {
 	width: 36px;
 	height: 6px;
-	background: #FFFFFF;
+	background: var(--color1);
 	margin: 6px 0px;
 }
 
@@ -89,14 +95,32 @@ nav	{
 	font-size: 3em;
 	color: white;
 	background: var(--color2);
-	border: 1px solid #FFFFFF;
+	border: 1px solid var(--color1);
 	cursor: pointer;
 	border-radius: 3px;
 	box-shadow: 6px 12px #666666;
 }
 
+#menu button:hover {
+	background: var(--color1);
+	border: 1px solid var(--color2);
+	color: var(--color2);
+}
+
 #menu a {
     text-decoration: none;
+}
+
+.username {
+	text-align: right;
+	font-style: italic;
+	padding:0px 12px;
+}
+
+.grid-div {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 3px;
 }
 
 .login {
@@ -107,9 +131,37 @@ nav	{
 	margin: 6px 3px;
 }
 
+main {
+	grid-area: main;
+}
+
+.form {
+	
+}
+
+.form table {
+	margin: 6px auto;
+	background: var(--color3);
+	padding: 12px;
+}
+
+.form table tbody tr td {
+	padding: 3px 3px;
+}
+
+.form table tbody tr td input {
+	border: 0px;
+	border-bottom: 1px solid var(--color2);
+	background: var(--color3);
+}
+
+.form table tbody tr td input:focus {
+	background: var(--color1);	
+}
+
 footer {
 	border-top: 0.5px solid var(--color2);
-	background: #FFFFFF;
+	background: var(--color1);
 	margin-top: 120px;
 	padding-top: 12px;
 	text-align: center;
@@ -117,15 +169,49 @@ footer {
 
 .medium.button {
 	background: var(--color2);
-	padding: 6px 12px;
+	padding: 9px 24px;
+	cursor: pointer;
 	color: white;
-	border: 1px solid white;
+	font-weight: bold;
+	outline: none;
+	border: none;
 	border-radius: 6px;
+	box-shadow: 0 9px #999;
+}
+
+.medium.button:active {
+	box-shadow: 0 6px #666;
+	transform: translateY(3px);
+}
+
+.square {
+	padding: 12px;
+	width: 300px;
+	height: 300px;
+	margin: 12px auto;
+	display: block;
+	float: center;
+	background: var(--color2);
+	color: var(--color1);
+	font-size: 2.7em;
+	border: none;
+	outline: none;
+	border-radius: 6px;
+	box-shadow: 0 9px #999;	
+}
+
+.square:active {
+	box-shadow: 0 6px #666;
+	transform: translateY(3px);
 }
 
 .error {
 	font-weight: bold;
 	color: red;
+}
+
+.invisible {
+	display: none;
 }
 
 

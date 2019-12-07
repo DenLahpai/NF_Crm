@@ -28,7 +28,14 @@ else {
                     <form action="login.php" method="post">
                         <p>Please login!</p>
                          <p class="error">
-                            <?php if (!empty($error)) { echo $error; } ?>
+                            <?php 
+                            if (!empty($error)) { 
+                                echo $error; 
+                            } 
+                            else if (!empty($_SESSION['msg_error'])) {
+                                    echo $_SESSION['msg_error'];
+                            }
+                            ?>
                         </p>
                         <input type="text" name="Username" placeholder="Username" required>
                         <br>
