@@ -99,7 +99,7 @@ nav	{
 	border: 1px solid var(--color1);
 	cursor: pointer;
 	border-radius: 3px;
-	box-shadow: 6px 12px #666666;
+	box-shadow: 0px 9px #999;
 }
 
 #menu button:hover {
@@ -108,11 +108,14 @@ nav	{
 	color: var(--color2);
 }
 
+#menu button:active {
+	box-shadow: 0 6px #666;
+	transform: translateY(3px);
+}
+
 #menu a {
     text-decoration: none;
 }
-
-
 
 .sub-menu {
 	grid-area: sub-menu;
@@ -149,6 +152,18 @@ nav	{
 	display: grid;
 	grid-template-columns: 1fr;
 	grid-gap: 3px;
+	padding: 12px;
+}
+
+.grid-item {
+	border: 1px solid var(--color2);
+	padding: 6px 6px 12px 6px;
+	border-radius: 6px;
+}
+
+.grid-item ul li {
+	padding: 12px;
+	list-style: none;
 }
 
 .login {
@@ -164,17 +179,23 @@ main {
 }
 
 .form {
-	
+	padding: 12px;
 }
 
 .form table {
 	margin: 6px auto;
 	background: var(--color3);
 	padding: 12px;
+	border-collapse: collapse;
+	border-radius: 60px 0px 0px 0px;
+}
+
+.form table thead tr th {
+	padding: 12px 12px;
 }
 
 .form table tbody tr td {
-	padding: 3px 3px;
+	padding: 12px 12px;
 }
 
 .form table tbody tr td input {
@@ -186,6 +207,35 @@ main {
 .form table tbody tr td input:focus {
 	background: var(--color1);	
 }
+
+.form table tbody tr td textarea {
+	resize: none;
+}
+
+.form table tbody tr th {
+	padding: 3px 3px 24px 3px;
+}
+
+.small table thead tr th {
+	padding: 6px;	
+}
+
+.small table thead tr td {
+	padding: 6px 6px 12px 6px;
+	/*padding-bottom: 12px;*/
+	border-bottom: 2px solid var(--color2); 
+}
+
+.small table thead input {
+	border: none;
+	border-bottom: 1px solid var(--color2);
+	background: var(--color3);
+}
+
+.small table tbody tr td {
+	padding: 6px 12px;
+}
+
 
 footer {
 	grid-area: footer;
@@ -234,7 +284,9 @@ footer {
 	transform: translateY(3px);
 }
 
-
+.bold {
+	font-weight: bold;
+}
 
 .error {
 	font-weight: bold;

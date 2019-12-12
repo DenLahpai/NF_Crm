@@ -8,7 +8,7 @@
 	<!-- end of menuSwitch -->
 	<!-- menu -->
 	<div id="menu">
-		<a href="home.php"><button type="button" class="button menu">Home</button></a>
+		<a href="home.php"><button type="button" class="button menu" onclick="window.location.href='home.php'">Home</button></a>
 		<a href="reports.php"><button type="button" class="button menu">Reports</button></a>
         <a href="admin.php"><button type="button" class="button menu">Admin</button></a>
         <a href="logout.php"><button type="button" class="button menu">Logout</button></a>

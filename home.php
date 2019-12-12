@@ -22,11 +22,7 @@ require_once "handler.php";
 				<div class="grid-item">
 					<button class="big square" onclick="window.location.href='organizations.php'">Organizations</button>
 				</div>
-				<!-- end of grid-item --><!-- grid-item -->
-				<div class="grid-item">
-					<button class="big square">Frequent Flyer Clubs</button>
-				</div>
-				<!-- end of grid-item -->
+				<!-- end of grid-item -->				
 				<!-- grid-item -->
 				<div class="grid-item">
 					<button class="big square">Clients</button>
@@ -34,7 +30,7 @@ require_once "handler.php";
 				<!-- end of grid-item -->
 				<!-- grid-item -->
 				<div class="grid-item">
-					<button class="big square">Passport Expiry</button>
+					<button class="big square">Passports Expiry</button>
 				</div>
 				<!-- end of grid-item -->
 				<!-- grid-item -->
@@ -45,6 +41,7 @@ require_once "handler.php";
 			</div>
 			<!-- end of grid-div -->
 		</main>
+		<?php include "includes/footer.php"; ?>
 	</div>
 	<!-- end of content -->
 </body>
