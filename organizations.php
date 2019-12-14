@@ -22,7 +22,7 @@ include "includes/head.php";
 					<a href="new_organization.php" title="New Organization">Add New</a>
 				</li>
 				<li>
-					<a href="table_organization.php" title="View as Table" target="_blank">Table View</a>
+					<a href="table_organizations.php" title="View as Table" target="_blank">Table View</a>
 				</li>
 			</ul>
 		</div>

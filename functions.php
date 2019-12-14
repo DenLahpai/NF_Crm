@@ -66,6 +66,52 @@ function table_Branches ($job, $var, $var2) {
 	}
 }
 
+//function to use data from the table Departments
+function table_Departments ($job, $var1, $var2) {
+	$database = new Database();
+
+	switch ($job) {
+		case 'check_before_insert':
+			# getting data from the form
+			$Department = trim($_REQUEST['Department']);
+			$query = "SELECT * FROM Departments 
+				WHERE Department = :Department
+			;";
+			$database->query($query);
+			$database->bind(':Department', $Department);
+			return $r = $database->rowCount();
+			break;
+
+		case 'insert':
+			# getting data from the form
+			$Department = trim($_REQUEST['Department']);
+			$query = "INSERT INTO Departments SET 
+				Department = :Department
+			;";
+			$database->query($query);
+			$database->bind(':Department', $Department);
+			if ($database->execute()) {
+				header("location: departments.php");
+			}
+			break;
+
+		case 'select_all':
+			# getting all the data from the table Departments
+			$query = "SELECT * FROM Departments ;";
+			$database->query($query);
+			return $r = $database->resultset();
+			break;
+
+		case 'value':
+			# code...
+			break;
+		
+		default:
+			# code...
+			break;
+	}
+}
+
 //function to use data from the table Users
 function table_Users ($job, $var1, $var2) {
 	$database = new Database();
@@ -308,6 +354,87 @@ function table_Organizations ($job, $var1, $var2) {
 				header("location: organizations.php");
 			}
 			break;
+		default:
+			# code...
+			break;
+	}
+}
+
+# funtion to use data from the table Clients
+function table_Clients ($job, $var1, $var2) {
+	$database = new Database();
+
+	switch ($job) {
+		case 'check_before_insert':
+			# getting data from the form
+			$Title = $_REQUEST['Title'];
+			$Name = trim($_REQUEST['Name']);
+			$DOB = $_REQUEST['DOB'];
+			$NRC = trim($_REQUEST['NRC']);
+			$query = "SELECT Id FROM Clients 
+				WHERE Title = :Title 
+				AND Name = :Name
+				AND DOB = :DOB 
+				AND NRC = :NRC
+			;";
+			$database->query($query);
+			$database->bind(':Title', $Title);
+			$database->bind(':Name', $Name);
+			$database->bind(':DOB', $DOB);
+			$database->bind(':NRC', $NRC);
+			return $r = $database->rowCount();
+			break;
+
+		case 'count_rows':
+			# counting rows to generate md5
+			$query = "SELECT * FROM Clients ;";
+			$database->query($query);
+			return $r = $database->rowCount();
+			break;	
+
+		case 'insert':
+			# $var1 = $md5
+			# getting data from the form 
+			$Code = md5($var1);
+			$Title = $_REQUEST['Title'];
+			$Name = trim($_REQUEST['Name']);
+			$DOB = $_REQUEST['DOB'];
+			$Mobile = trim($_REQUEST['Mobile']);
+			$NRC = trim($_REQUEST['NRC']);
+			$PassportNo = trim($_REQUEST['PassportNo']);
+			$Expiry = $_REQUEST['Expiry'];
+			$CountriesId = $_REQUEST['CountriesId'];
+			$UsersId = $_SESSION['UsersId'];
+
+			# inserting data to the table Clients
+			$query = "INSERT INTO Clients SET 
+				Code = :Code, 
+				Title = :Title, 
+				Name = :Name, 
+				DOB = :DOB,
+				Mobile = :Mobile, 
+				NRC = :NRC,
+				PassportNo = :PassportNo,
+				Expiry = :Expiry,
+				CountriesId = :CountriesId,
+				UsersId = :UsersId
+			;";
+			$database->query($query);
+			$database->bind(':Code', $Code);
+			$database->bind(':Title', $Title);
+			$database->bind(':Name', $Name);
+			$database->bind(':DOB', $DOB);
+			$database->bind(':Mobile', $Mobile);
+			$database->bind(':NRC', $NRC);
+			$database->bind(':PassportNo', $PassportNo);
+			$database->bind(':Expiry', $Expiry);
+			$database->bind(':CountriesId', $CountriesId);
+			$database->bind(':UsersId', $_SESSION['UsersId']);
+			if ($database->execute()) {
+				header("location: clients.php");
+			}
+			break;	
+	
 		default:
 			# code...
 			break;

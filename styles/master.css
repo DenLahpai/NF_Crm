@@ -187,7 +187,7 @@ main {
 	background: var(--color3);
 	padding: 12px;
 	border-collapse: collapse;
-	border-radius: 60px 0px 0px 0px;
+	border-radius: 6px 0px 0px 0px;
 }
 
 .form table thead tr th {

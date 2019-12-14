@@ -25,7 +25,7 @@ require_once "handler.php";
 				<!-- end of grid-item -->				
 				<!-- grid-item -->
 				<div class="grid-item">
-					<button class="big square">Clients</button>
+					<button class="big square" onclick="window.location.href='clients.php'">Clients</button>
 				</div>
 				<!-- end of grid-item -->
 				<!-- grid-item -->

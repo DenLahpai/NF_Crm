@@ -42,10 +42,7 @@ include "includes/head.php";
 							</li>
 							<li style="text-align: center;">
 								<button class="medium button">Edit</button>
-							</li>
-							<li style="text-align: center;">
-								<button class="medium button">Edit</button>
-							</li>
+							</li>							
 						</ul>
 					</div>	
 					<!-- end of grid-item -->
@@ -53,6 +50,7 @@ include "includes/head.php";
 			</div>
 			<!-- end of grid-div -->
 		</main>
+		<?php include "includes/footer.php"; ?>
 	</div>
 	<!-- end of content -->
 </body>
