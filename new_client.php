@@ -73,6 +73,12 @@ include "includes/head.php";
 								</td>
 							</tr>
 							<tr>
+								<td>Email:</td>
+								<td>
+									<input type="text" name="Email" id="Email" placeholder="email@email.com">
+								</td>
+							</tr>
+							<tr>
 								<td>N.R.C:</td>
 								<td>
 									<input type="text" name="NRC" id="NRC" placeholder="12/SaKhaNa(N)000444">
@@ -104,7 +110,7 @@ include "includes/head.php";
 									</select>
 								</td>
 							</tr>
-							 <tr>
+							<tr>
                                 <th colspan="2" class="error">
                                     <?php 
                                     if (!empty($error)) {
@@ -112,9 +118,10 @@ include "includes/head.php";
                                     }
                                     ?>
                                 </th>
+                            </tr>    
 							<tr>
 								<th colspan="2">
-                                    <button type="button" class="medium button" name="buttonSubmit" id="buttonSubmit" onclick="checkSixFields('Title', 'Name', 'Mobile', 'NRC', 'PassportNo', 'CountriesId');">Update</button>
+                                    <button type="button" class="medium button" name="buttonSubmit" id="buttonSubmit" onclick="checkSixFields('Title', 'Name', 'Mobile', 'NRC', 'PassportNo', 'CountriesId');">Submit</button>
                                 </th>
 							</tr>
 						</tbody>
@@ -123,6 +130,7 @@ include "includes/head.php";
 			</div>
 			<!-- end of big form -->
 		</main>
+		<?php include "includes/footer.php"; ?>
 	</div>
 	<!-- end of content -->
 </body>

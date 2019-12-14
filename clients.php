@@ -1,5 +1,8 @@
 <?php  
 require_once "functions.php";
+
+# getting data from the table Clients
+$rows_Clients = table_Clients ('select_all', NULL, NULL);
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -27,6 +30,30 @@ include "includes/head.php";
 			</ul>
 		</div>
 		<!-- end of sub-menu -->
+		<main>
+			<!-- grid-div -->
+			<div class="grid-div">
+				<?php foreach ($rows_Clients as $row_Clients): ?>
+				<!-- grid-item -->
+				<div class="grid-item">
+					<ul>
+						<li class="bold">
+							<? echo $row_Clients->Title." ".$row_Clients->Name; ?>
+						</li>
+						<li>
+							D.O.B: <span class="bold"><? echo date("d-M-Y", strtotime($row_Clients->DOB)); ?></span>
+						</li>
+						<li style="text-align: center;">
+							<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Edit</button></a>
+						</li>
+					</ul>
+				</div>
+				<!-- end of grid-item -->
+				<?php endforeach ?>
+			</div>
+			<!-- end of grid-div -->
+		</main>
+		<?php include "includes/footer.php"; ?>
 	</div>
 	<!-- end of content -->
 </body>

@@ -434,6 +434,21 @@ function table_Clients ($job, $var1, $var2) {
 				header("location: clients.php");
 			}
 			break;	
+
+		case 'select_all':
+			# getting data from the table Clients
+			$query = "SELECT * FROM Clients ;";
+			$database->query($query);
+			return $r = $database->resultset();
+			break;
+
+		case 'select_one':
+			# $var1 = ClientsId
+			$query = "SELECT * FROM Clients WHERE Id = :ClientsId;";
+			$database->query($query);
+			$database->bind(':ClientsId', $var1);
+			return $r = $database->resultset();	
+			break;		
 	
 		default:
 			# code...
