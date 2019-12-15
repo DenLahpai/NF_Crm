@@ -4,6 +4,20 @@ require_once "functions.php";
 # checking if ClientsId is a number
 check_num($_REQUEST['ClientsId']);
 
+# submitting data from the form 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	# checking for duplicated entry
+	$rowCount = table_Clients ('check_before_update', $_REQUEST['ClientsId'], NULL);
+
+	if ($rowCount == 0) {
+		# updating
+		table_Clients ('update', $_REQUEST['ClientsId'], NULL);
+	}
+	else {
+		$error = 'Duplicate entry!';
+	}
+}
+
 # getting data from the table Clients
 $rows_Clients = table_Clients ('select_one', $_REQUEST['ClientsId'], NULL);
 foreach ($rows_Clients as $row_Clients) {
@@ -93,7 +107,7 @@ include "includes/head.php";
                             	<td>Country:</td>
                             	<td>
                             		<span class="invisible" id="selected_Country"></span>
-                            		<select name="CountriedId" id="CountriesId">
+                            		<select name="CountriesId" id="CountriesId">
 	                            		<?php  
 	                            		# getting data from the table Countries
 	                            		$rows_Countries = table_Countries ('select_all', NULL, NULL);

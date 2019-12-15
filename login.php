@@ -3,7 +3,7 @@ require_once "handler.php";
 
 $database = new Database();
 $Username = trim($_REQUEST['Username']);
-$Password = $_REQUEST['Password'];
+$Password = md5($_REQUEST['Password']);
 
 $query = "SELECT * FROM Users  
 	WHERE BINARY Username = :Username

@@ -1,5 +1,8 @@
 <?php 
 require_once "functions.php";
+
+# getting data from the table Organizations
+$rows_Organizations = table_Organizations ('select_all', NULL, NULL);
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -35,7 +38,10 @@ include "includes/head.php";
 					<div class="grid-item">
 						<ul>
 							<li class="bold"><? echo $row_Organizations->Name; ?></li>
-							<!-- TODO -->
+							<li><? echo $row_Organizations->City.", ".$row_Organizations->State; ?></li>
+							<li style="text-align: center;">
+								<a href="<? echo "edit_organizaton.php?OrganizationsId=$row_Organizations->Id"; ?>"><button class="medium button">Edit</button></a>
+							</li>
 						</ul>
 					</div>
 					<!-- end of grid-item -->

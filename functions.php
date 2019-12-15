@@ -117,6 +117,56 @@ function table_Users ($job, $var1, $var2) {
 	$database = new Database();
 	switch ($job) {
 
+		case 'check_before_insert':
+			# getting data from the form
+			$Username = trim($_REQUEST['Username']);
+
+			$query = "SELECT Id FROM Users WHERE Username = :Username ;";
+			$database->query($query);
+			$database->bind(':Username', $Username);
+			return $r = $database->rowCount();
+			break;
+
+		case 'insert':
+			# gettings data from the form
+			$Username = trim($_REQUEST['Username']);
+			$Title = $_REQUEST['Title'];
+			$Name = trim($_REQUEST['Name']);
+			$Password = md5($_REQUEST['Password']);
+			$Email = trim($_REQUEST['Email']);
+			$Position = trim($_REQUEST['Position']);
+			$DepartmentsId = $_REQUEST['DepartmentsId'];
+			$BranchesId = $_REQUEST['BranchesId'];
+			$Status = $_REQUEST['Status'];
+
+			$query = "INSERT INTO Users SET 
+				Username = :Username,
+				Title = :Title,
+				Name = :Name,
+				Password = :Password,
+				Email = :Email, 
+				Position = :Position,
+				DepartmentsId = :DepartmentsId,
+				BranchesId = :BranchesId,
+				Access = :Access,
+				Status = :Status
+			;";
+			$database->query($query);
+			$database->bind(':Username', $Username);
+			$database->bind(':Title', $Title);
+			$database->bind(':Name', $Name);
+			$database->bind(':Password', $Password);
+			$database->bind(':Email', $Email);
+			$database->bind(':Position', $Position);
+			$database->bind(':DepartmentsId', $DepartmentsId);
+			$database->bind(':BranchesId', $BranchesId);
+			$database->bind('Access', 1);
+			$database->bind(':Status', $Status);
+			if ($database->execute()) {
+				header("location:users.php");
+			}
+			break;	
+
 		case 'check_before_update':
 			# var1 = Users.Id
 			$Name = trim($_REQUEST['Name']);
@@ -146,7 +196,7 @@ function table_Users ($job, $var1, $var2) {
 			# getting data from the form
 			$Title = trim($_REQUEST['Title']);
 			$Name = trim($_REQUEST['Name']);
-			$Password = $_REQUEST['Password'];
+			$Password = md5($_REQUEST['Password']);
 			$Email = trim($_REQUEST['Email']);
 			if (empty($Password) || $Password == NULL || $Password == " ") {
 				# If Password is not set by the user
@@ -184,7 +234,24 @@ function table_Users ($job, $var1, $var2) {
 			break;
 
 		case 'select_all':
-			$query = "SELECT * FROM Users ;";
+			$query = "SELECT  
+				Users.Id, 
+				Users.Username,
+				Users.Title,
+				Users.Name,
+				Users.Password,
+				Users.Email,
+				Users.Position,
+				Departments.Department, 
+				Branches.Name AS BranchesName,
+				Users.Access,
+				Users.Status
+				FROM Users 
+				LEFT JOIN Departments 
+				ON Departments.Id = Users.DepartmentsId
+				LEFT JOIN Branches 
+				ON Branches.Id = Users.BranchesId
+			;";
 			$database->query($query);
 			return $r = $database->resultset();
 			break;	
@@ -354,6 +421,13 @@ function table_Organizations ($job, $var1, $var2) {
 				header("location: organizations.php");
 			}
 			break;
+
+		case 'select_all':
+			# getting data from the table Organizations
+			$query = "SELECT * FROM Organizations ;";
+			$database->query($query);
+			return $r = $database->resultset();
+			break;	
 		default:
 			# code...
 			break;
@@ -448,6 +522,75 @@ function table_Clients ($job, $var1, $var2) {
 			$database->query($query);
 			$database->bind(':ClientsId', $var1);
 			return $r = $database->resultset();	
+			break;
+
+		case 'check_before_update':
+			# getting data from the form
+			$Title = $_REQUEST['Title'];
+			$Name = trim($_REQUEST['Name']);
+			$DOB = $_REQUEST['DOB'];
+			$Mobile = trim($_REQUEST['Mobile']);
+			$Email = trim($_REQUEST['Email']);
+			$NRC = trim($_REQUEST['NRC']);
+			$PassportNo = trim($_REQUEST['PassportNo']);
+			$Expiry = $_REQUEST['Expiry'];
+			$CountriesId = $_REQUEST['CountriesId'];
+			# checking for duplicate entry
+			$query = "SELECT Id FROM Clients 
+				WHERE Title = :Title 
+				AND Name = :Name 
+				AND DOB = :DOB 
+				AND NRC = :NRC
+				AND Id != :ClientsId 
+			;";
+			$database->query($query);
+			$database->bind(':Title', $Title);
+			$database->bind(':Name', $Name);
+			$database->bind(':DOB', $DOB);
+			$database->bind(':NRC', $NRC);
+			$database->bind(':ClientsId', $var1);
+			return $r = $database->rowCount();
+			break;
+
+		case 'update':
+			# getting data from the form
+			$Title = $_REQUEST['Title'];
+			$Name = trim($_REQUEST['Name']);
+			$DOB = $_REQUEST['DOB'];
+			$Mobile = trim($_REQUEST['Mobile']);
+			$Email = trim($_REQUEST['Email']);
+			$NRC = trim($_REQUEST['NRC']);
+			$PassportNo = trim($_REQUEST['PassportNo']);
+			$Expiry = $_REQUEST['Expiry'];
+			$CountriesId = $_REQUEST['CountriesId'];
+
+			# updating 
+			$query = "UPDATE Clients SET 
+				Title = :Title,
+				Name = :Name,
+				DOB = :DOB,
+				Mobile = :Mobile,
+				Email = :Email, 
+				NRC = :NRC,
+				PassportNo = :PassportNo,
+				Expiry = :Expiry,
+				CountriesId = :CountriesId
+				WHERE Id = :ClientsId
+			;";
+			$database->query($query);
+			$database->bind(':Title', $Title);
+			$database->bind(':Name', $Name);
+			$database->bind(':DOB', $DOB);
+			$database->bind(':Mobile', $Mobile);
+			$database->bind(':Email', $Email);
+			$database->bind(':NRC', $NRC);
+			$database->bind(':PassportNo', $PassportNo);
+			$database->bind(':Expiry', $Expiry);
+			$database->bind(':CountriesId', $CountriesId);
+			$database->bind(':ClientsId', $var1);
+			if ($database->execute()) {
+				header ("location: clients.php");
+			}
 			break;		
 	
 		default:

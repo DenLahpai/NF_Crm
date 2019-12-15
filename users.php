@@ -40,8 +40,12 @@ include "includes/head.php";
 							<li class="bold">
 								<? echo $row_Users->Title." ".$row_Users->Name; ?>
 							</li>
+							<li>
+								Department: 
+								<? echo $row_Users->Department; ?>
+							</li>
 							<li style="text-align: center;">
-								<button class="medium button">Edit</button>
+								<a href="<? echo "edit_user.php?UsersId=$row_Users->Id"; ?>"><button class="medium button">Edit</button></a>
 							</li>							
 						</ul>
 					</div>	
