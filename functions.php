@@ -191,13 +191,15 @@ function table_Users ($job, $var1, $var2) {
 			return $r = $database->resultset();
 			break;	
 
-		case 'update':
+		case 'update_by_user':
 			# $var1 = Users.Id
 			# getting data from the form
 			$Title = trim($_REQUEST['Title']);
 			$Name = trim($_REQUEST['Name']);
 			$Password = md5($_REQUEST['Password']);
 			$Email = trim($_REQUEST['Email']);
+
+			# no password is set by the user
 			if (empty($Password) || $Password == NULL || $Password == " ") {
 				# If Password is not set by the user
 				$query = "UPDATE Users SET 
@@ -213,7 +215,7 @@ function table_Users ($job, $var1, $var2) {
 				$database->bind(':UsersId', $var1);
 			} 
 			else {
-				# If Password is et the user 
+				# If Password is set by the user 
 				$query = "UPDATE Users SET 
 					Title = :Title,
 					Name = :Name, 
@@ -232,6 +234,44 @@ function table_Users ($job, $var1, $var2) {
 				header("location: logout.php");
 			}
 			break;
+
+		case 'update':
+			# $var1 = UsersId
+			$Username = trim($_REQUEST['Username']);
+			$Title = $_REQUEST['Title'];
+			$Name = trim($_REQUEST['Name']);
+			$Email = trim($_REQUEST['Email']);
+			$Position = trim($_REQUEST['Position']);
+			$DepartmentsId = $_REQUEST['DepartmentsId'];
+			$BranchesId = $_REQUEST['BranchesId'];
+			$Status = $_REQUEST['Status'];
+
+			# updating
+			$query = "UPDATE Users SET 
+				Username = :Username,
+				Title = :Title,
+				Name = :Name,
+				Email = :Email,
+				Position = :Position,
+				DepartmentsId = :DepartmentsId,
+				BranchesId = :BranchesId,
+				Status = :Status
+				WHERE Id = :UsersId
+			;";
+			$database->query($query);
+			$database->bind(':Username', $Username);
+			$database->bind(':Title', $Title);
+			$database->bind(':Name', $Name);
+			$database->bind(':Email', $Email);
+			$database->bind(':Position', $Position);
+			$database->bind(':DepartmentsId', $DepartmentsId);
+			$database->bind(':BranchesId', $BranchesId);
+			$database->bind(':Status', $Status);
+			$database->bind(':UsersId', $var1);
+			if ($database->execute()) {
+				header("location: users.php");
+			}
+			break;	
 
 		case 'select_all':
 			$query = "SELECT  
@@ -254,7 +294,36 @@ function table_Users ($job, $var1, $var2) {
 			;";
 			$database->query($query);
 			return $r = $database->resultset();
-			break;	
+			break;
+
+		case 'reset_password':
+			# $var1 = UsersId
+			# $var2 = Email
+			$Password = md5('goodluck'.date('d'));
+			$query = "UPDATE Users SET 
+				Password = :Password
+				WHERE Id = :UsersId
+			;";
+			$database->query($query);
+			$database->bind(':Password', $Password);
+			$database->bind(':UsersId', $var1);
+			if ($database->execute()) {
+				$subject = 'Password Reset';
+				$message = " 
+				<p>
+					Dear User, <br>
+					Your new password is: 
+					<span class=\"bold\">goodluck".date('d')."</span>
+				<br>
+				Best regards,
+				<br>
+				Database Team	
+				</p>";
+				$mail_header = "FROM: No Reply <noreply@nicefare-travels.com>\r\n";
+				mail($var2, $subject, $message, $mail_header);
+				header("location: users.php");
+			}
+			break;		
 		
 		default:
 			# code...

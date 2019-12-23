@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $rowCount = table_Users ('check_before_update', $_REQUEST['UsersId'], NULL);
     if ($rowCount == 0) {
         # updating data to the the table Users
-        table_Users ('update', $_REQUEST['UsersId'], NULL);
+        table_Users ('update_by_user', $_REQUEST['UsersId'], NULL);
     }
     else {
         $error = "Duplicate Entry!";
