@@ -20,6 +20,8 @@ if ($rowCount > 0) {
         $_SESSION['UsersId'] = $row->Id;
         $_SESSION['Username'] = $row->Username;
         $_SESSION['Name'] = $row->Name;
+        $_SESSION['DepartmentsId'] = $row->DepartmentsId;
+        $_SESSION['BranchesId'] = $row->BranchesId;
     }
 }
 else {

@@ -40,7 +40,7 @@ include "includes/head.php";
 							<li class="bold"><? echo $row_Organizations->Name; ?></li>
 							<li><? echo $row_Organizations->City.", ".$row_Organizations->State; ?></li>
 							<li style="text-align: center;">
-								<a href="<? echo "edit_organizaton.php?OrganizationsId=$row_Organizations->Id"; ?>"><button class="medium button">Edit</button></a>
+								<a href="<? echo "edit_organization.php?OrganizationsId=$row_Organizations->Id"; ?>"><button class="medium button">Edit</button></a>
 							</li>
 						</ul>
 					</div>

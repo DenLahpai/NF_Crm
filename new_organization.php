@@ -29,6 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		include "includes/nav.php";		
 		?>
 		<main>
+			<!-- big form -->
 			<div class="big form">
 				<form action="#" method="post">
 					<table>

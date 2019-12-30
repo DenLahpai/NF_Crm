@@ -497,6 +497,86 @@ function table_Organizations ($job, $var1, $var2) {
 			$database->query($query);
 			return $r = $database->resultset();
 			break;	
+
+		case 'select_one':
+			# $var1 = OrganizationsId 
+			$query = "SELECT 
+				Organizations.Name, 
+				Organizations.Branch,
+				Organizations.Type,
+				Organizations.Address,
+				Organizations.Township,
+				Organizations.City,
+				Organizations.State,
+				Countries.Country,
+				Organizations.Website
+				FROM Organizations 
+				LEFT OUTER JOIN Countries
+				ON Organizations.CountriesId = Countries.Id
+				WHERE Organizations.Id = :OrganizationsId
+			;";
+			$database->query($query);
+			$database->bind(':OrganizationsId', $var1);
+			return $r = $database->resultset();
+			break;
+
+		case 'check_before_update':
+			# $var1 = OrganizationsId
+			# getting data from the form 
+			$Name = trim($_REQUEST['Name']);
+			$Branch = trim($_REQUEST['Branch']);
+			$query = "SELECT * FROM Organizations 
+				WHERE Name = :Name 
+				AND Branch = :Branch 
+				AND Id != :OrganizationsId
+			;";
+			$database->query($query);
+			$database->bind(':Name', $Name);
+			$database->bind(':Branch', $Branch);
+			$database->bind(':OrganizationsId', $var1);
+			return $r = $database->rowCount();
+			break;	
+
+		case 'update':
+			# $var1 = OrganizationsId
+			$Name = trim($_REQUEST['Name']);
+			$Branch = trim($_REQUEST['Branch']);
+			$Type = trim($_REQUEST['Type']);
+			$Address = trim($_REQUEST['Address']);
+			$Township = trim($_REQUEST['Township']);
+			$City = trim($_REQUEST['City']);
+			$State = trim($_REQUEST['State']);
+			$CountriesId = $_REQUEST['CountriesId'];
+			$Website = trim($_REQUEST['Website']);
+
+			$query = "UPDATE Organizations SET 
+				Name = :Name,
+				Branch = :Branch,
+				Type = :Type,
+				Address = :Address,
+				Township = :Township,
+				City = :City,
+				State = :State, 
+				CountriesId = :CountriesId,
+				Website = :Website
+				WHERE Id = :OrganizationsId
+			;";
+			$database->query($query);
+			$database->bind(':Name', $Name);
+			$database->bind(':Branch', $Branch);
+			$database->bind(':Type', $Type);
+			$database->bind(':Address', $Address);
+			$database->bind(':Township', $Township);
+			$database->bind(':City', $City);
+			$database->bind(':State', $State);
+			$database->bind(':CountriesId', $CountriesId);
+			$database->bind(':Website', $Website);
+			$database->bind(':OrganizationsId', $var1);
+			if ($database->execute()) {
+				header("location: organizations.php");
+			}
+			break;	
+			
 		default:
 			# code...
 			break;
@@ -538,24 +618,64 @@ function table_Clients ($job, $var1, $var2) {
 		case 'insert':
 			# $var1 = $md5
 			# getting data from the form 
-			$Code = md5($var1);
 			$Title = $_REQUEST['Title'];
 			$Name = trim($_REQUEST['Name']);
 			$DOB = $_REQUEST['DOB'];
 			$Mobile = trim($_REQUEST['Mobile']);
+			$Email = trim($_REQUEST['Email']);
 			$NRC = trim($_REQUEST['NRC']);
 			$PassportNo = trim($_REQUEST['PassportNo']);
 			$Expiry = $_REQUEST['Expiry'];
 			$CountriesId = $_REQUEST['CountriesId'];
 			$UsersId = $_SESSION['UsersId'];
+			$rowCount = table_Clients ('count_rows', NULL, NULL);
+			if ($_SESSION['BranchesId'] > 9) {
+				$branch = $_SESSION['BranchesId'];
+			}
+			else {
+				$branch = '0'.$_SESSION['BranchesId'];
+			}
+
+			if ($_SESSION['DepartmentsId'] > 9) {
+				$dpt = $_SESSION['DepartmentsId'];
+			}
+			else {
+				$dpt = '0'.$_SESSION['DepartmentsId'];
+			}
+
+			$clients = $rowCount + 1;
+
+			if ($clients <= 9) {
+				$zeros = '00000';
+			}
+			elseif ($clients <= 99) {
+				$zeros = '0000';
+			}
+			elseif ($clients <= 999) {
+				$zeros = '000';
+			}
+			elseif ($clients <= 9999) {
+				$zeros = '00';
+			}
+			elseif ($clients <= 99999) {
+				$zeros = '0';
+			}
+			else {
+				$zeros = '';
+			}
+
+			$Member = $branch.$dpt.$zeros.$clients;
+			$Code = md5($Member);
 
 			# inserting data to the table Clients
 			$query = "INSERT INTO Clients SET 
+				Member = :Member,
 				Code = :Code, 
 				Title = :Title, 
 				Name = :Name, 
 				DOB = :DOB,
 				Mobile = :Mobile, 
+				Email = :Email,
 				NRC = :NRC,
 				PassportNo = :PassportNo,
 				Expiry = :Expiry,
@@ -563,11 +683,13 @@ function table_Clients ($job, $var1, $var2) {
 				UsersId = :UsersId
 			;";
 			$database->query($query);
+			$database->bind(':Member', $Member);
 			$database->bind(':Code', $Code);
 			$database->bind(':Title', $Title);
 			$database->bind(':Name', $Name);
 			$database->bind(':DOB', $DOB);
 			$database->bind(':Mobile', $Mobile);
+			$database->bind(':Email', $Email);
 			$database->bind(':NRC', $NRC);
 			$database->bind(':PassportNo', $PassportNo);
 			$database->bind(':Expiry', $Expiry);
@@ -580,7 +702,24 @@ function table_Clients ($job, $var1, $var2) {
 
 		case 'select_all':
 			# getting data from the table Clients
-			$query = "SELECT * FROM Clients ;";
+			$query = "SELECT 
+				Clients.Id,
+				Clients.Code,
+				Clients.QRLink,
+				Clients.Member,
+				Clients.Title,
+				Clients.Name,
+				Clients.DOB,
+				Clients.Mobile,
+				Clients.Email, 
+				Clients.NRC,
+				Clients.PassportNo,
+				Clients.Expiry,
+				Countries.Country
+				FROM Clients 
+				LEFT JOIN Countries 
+				ON Clients.CountriesId = Countries.Id
+			;";
 			$database->query($query);
 			return $r = $database->resultset();
 			break;
