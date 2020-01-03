@@ -431,6 +431,206 @@ function table_Countries ($job, $var1, $var2) {
 	}
 }
 
+//functoin to use data from the table Airlines
+function table_Airlines ($job, $var1, $var2) {
+	$database = new Database();
+
+	switch ($job) {
+		case 'check_before_insert':
+			# getting data from the form
+			$FlightCode = trim($_REQUEST['FlightCode']);
+			$Airline = trim($_REQUEST['Airline']);
+			$query = "SELECT Id FROM Airlines 
+				WHERE FlightCode = :FlightCode
+				OR Airline = :Airline
+			;";
+			$database->query($query);
+			$database->bind(':FlightCode', $FlightCode);
+			$database->bind(':Airline', $Airline);
+			return $r = $database->rowCount();
+			break;
+
+		case 'insert':
+			# getting data from the from
+			$FlightCode = trim($_REQUEST['FlightCode']);
+			$Airline = trim($_REQUEST['Airline']);
+			$CountriesId = $_REQUEST['CountriesId'];
+
+			# inserting
+			$query = "INSERT INTO Airlines SET 
+				FlightCode = :FlightCode,
+				Airline = :Airline,
+				CountriesId = :CountriesId
+			;";
+			$database->query($query);
+			$database->bind(':FlightCode', $FlightCode);
+			$database->bind(':Airline', $Airline);
+			$database->bind(':CountriesId', $CountriesId);
+			if ($database->execute()) {
+				header("location:airlines.php");
+			}
+			break;
+
+		case 'select_all':
+			# getting data form the table 
+			$query = "SELECT 
+				Airlines.Id AS Id,
+				Airlines.FlightCode,
+				Airlines.Airline,
+				Airlines.CountriesId,
+				Countries.Country
+				FROM Airlines 
+				LEFT OUTER JOIN Countries
+				ON Airlines.CountriesId = Countries.Id
+				ORDER BY Airline
+			;";
+			$database->query($query);
+			return $r = $database->resultset();
+			break;
+
+		case 'select_one':
+			# $var1 = AirlinesId
+			$query = "SELECT 
+				Airlines.FlightCode,
+				Airlines.Airline,
+				Airlines.CountriesId
+				FROM Airlines 
+				WHERE Id = :AirlinesId
+			;";
+			$database->query($query);
+			$database->bind(':AirlinesId', $var1);
+			return $r = $database->resultset();
+			break;
+
+		case 'check_before_update':
+			# $var1 = AirlinesId
+			$FlightCode = trim($_REQUEST['FlightCode']);
+			$Airline = trim($_REQUEST['Airline']);
+			$query = "SELECT Id FROM Airlines 
+				WHERE (FlightCode = :FlightCode
+				OR Airline = :Airline)
+				AND Id != :AirlinesId
+			;";
+			$database->query($query);
+			$database->bind(':FlightCode', $FlightCode);
+			$database->bind(':Airline', $Airline);
+			$database->bind(':AirlinesId', $var1);
+			return $r = $database->rowCount();
+			break;				
+		
+		default:
+			# code...
+			break;
+	}
+}
+
+//function to user data from the table FrequentFlyers
+function table_FrequentFlyers ($job, $var1, $var2) {
+	$database = new Database();
+
+	switch ($job) {
+
+		case 'check_before_insert':
+			# getting data from the form
+			$FrequentFlyer = trim($_REQUEST['FrequentFlyer']);
+			$query = "SELECT * FROM FrequentFlyers 
+				WHERE FrequentFlyer = :FrequentFlyer
+			;";
+			$database->query($query);
+			$database->bind(':FrequentFlyer', $FrequentFlyer);
+			return $r = $database->rowCount();
+			break;
+
+		case 'insert':
+			# getting data from the form
+			$FrequentFlyer = trim($_REQUEST['FrequentFlyer']);
+			$AirlinesId = $_REQUEST['AirlinesId'];
+			$Alliance = trim($_REQUEST['Alliance']);
+
+			$query = "INSERT INTO FrequentFlyers SET 
+				FrequentFlyer = :FrequentFlyer,
+				AirlinesId = :AirlinesId,
+				Alliance = :Alliance
+			;";
+			$database->query($query);
+			$database->bind(':FrequentFlyer', $FrequentFlyer);
+			$database->bind(':AirlinesId', $AirlinesId);
+			$database->bind(':Alliance', $Alliance);
+			if ($database->execute()) {
+				header("location: frequentflyers.php");
+			}
+			break;
+
+		case 'select_all':
+			$query = "SELECT 
+				FrequentFlyers.Id,
+				FrequentFlyers.FrequentFlyer,
+				FrequentFlyers.AirlinesId,
+				FrequentFlyers.Alliance,
+				Airlines.Airline
+				FROM FrequentFlyers 
+				LEFT OUTER JOIN Airlines 
+				ON FrequentFlyers.AirlinesId = Airlines.Id
+			;";
+			$database->query($query);
+			return $r = $database->resultset();
+			break;
+
+		case 'select_one':
+			# $var1 = FrequentFlyersId
+			$query = "SELECT 
+				FrequentFlyers.Id, 
+				FrequentFlyers.FrequentFlyer,
+				FrequentFlyers.AirlinesId,
+				FrequentFlyers.Alliance
+				FROM FrequentFlyers
+				WHERE Id = :FrequentFlyersId
+			;";
+			$database->query($query);
+			$database->bind(':FrequentFlyersId', $var1);
+			return $r = $database->resultset();
+			break;
+			
+		case 'check_before_update':
+			# $var1 = FrequentFlyersId
+			$FrequentFlyer = trim($_REQUEST['FrequentFlyer']);
+			$query = "SELECT * FROM FrequentFlyers 
+				WHERE FrequentFlyer = :FrequentFlyer
+				AND Id != :FrequentFlyersId
+			;";
+			$database->query($query);
+			$database->bind(':FrequentFlyer', $FrequentFlyer);
+			$database->bind(':FrequentFlyersId', $var1);
+			return $r = $database->rowCount();
+			break;
+
+		case 'update':	
+			# $var1 = FrequentFlyersId 
+			$FrequentFlyer = trim($_REQUEST['FrequentFlyer']);
+			$AirlinesId = $_REQUEST['AirlinesId'];
+			$Alliance = trim($_REQUEST['Alliance']);
+			$query = "UPDATE FrequentFlyers SET 
+				FrequentFlyer = :FrequentFlyer,
+				AirlinesId = :AirlinesId,
+				Alliance = :Alliance
+				WHERE Id = :FrequentFlyersId
+			;";
+			$database->query($query);
+			$database->bind(':FrequentFlyer', $FrequentFlyer);
+			$database->bind(':AirlinesId', $AirlinesId);
+			$database->bind(':Alliance', $Alliance);
+			$database->bind(':FrequentFlyersId', $var1);
+			if ($database->execute()) {
+				header("location: frequentflyers.php");
+			}
+			break;
+		default:
+			# code...
+			break;
+	}
+}
+
+
 //function to use data from the table Organizations
 function table_Organizations ($job, $var1, $var2) {
 	$database = new Database();

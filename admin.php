@@ -45,6 +45,11 @@ include "includes/head.php";
 				<!-- end of grid-item -->
 				<!-- grid-item -->
 				<div class="grid-item">
+					<button class="big square" onclick="window.location.href='airlines.php'">Airlines</button>
+				</div>
+				<!-- end of grid-item -->
+				<!-- grid-item -->
+				<div class="grid-item">
 					<button class="big square" onclick="window.location.href='frequentflyers.php'">Frequent Flyers</button>
 				</div>
 				<!-- end of grid-item -->

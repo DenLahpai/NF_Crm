@@ -88,6 +88,9 @@ include "includes/head.php";
 			 				<li>
 			 					Country: <? echo $row_Clients->Country; ?>
 			 				</li>
+			 				<li>
+			 					Frequent Flyers: <a href="<? echo "add_frequentflyer.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Add</button></a>
+			 				</li>
 			 			</ul>
 			 		</div>
 			 		<!-- end of modalClient -->
