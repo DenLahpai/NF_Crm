@@ -6,7 +6,15 @@ check_num ($_REQUEST['ClientsId']);
 
 # submitting data from the form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	
+	# checking for duplcate entry
+	$rowCount = table_FFMembers ('check_before_insert', $_REQUEST['ClientsId'], NULL);
+	if ($rowCount == 0) {
+		# inserting data to the table FFMembers
+		table_FFMembers ('insert', $_REQUEST['ClientsId'], NULL);
+	}
+	else {
+		$error = "Duplicate entry!";
+	}
 }
 
 
@@ -63,7 +71,7 @@ include "includes/head.php";
 								</td>
 							</tr>
 							<tr>
-							<th colspan="2" class="error">
+								<th colspan="2" class="error">
 									<?php if (!empty($error)) { echo $error; } ?>
 								</th>		
 							</tr>

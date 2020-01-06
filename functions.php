@@ -1007,4 +1007,98 @@ function table_Clients ($job, $var1, $var2) {
 	}
 }
 
+# function to use data from the table FFMembers 
+function table_FFMembers ($job, $var1, $var2) {
+	$database = new Database();
+
+	switch ($job) {
+		case 'check_before_insert':
+			# $var1 = ClientsId
+			$FFNumber = trim($_REQUEST['FFNumber']);
+			$FrequentFlyersId = $_REQUEST['FrequentFlyersId'];
+
+			$query = "SELECT * FROM FFMembers 
+				WHERE FrequentFlyersId = :FrequentFlyersId
+				AND ClientsId = :ClientsId
+			;";
+			$database->query($query);
+			$database->bind(':FrequentFlyersId', $FrequentFlyersId);
+			$database->bind(':ClientsId', $var1);
+			return $r = $database->rowCount();
+			break;
+
+		case 'insert':
+			# $var1 = ClientsId
+			$FFNumber = trim($_REQUEST['FFNumber']);
+			$FrequentFlyersId = $_REQUEST['FrequentFlyersId'];
+			$query = "INSERT INTO FFMembers SET 
+				ClientsId = :ClientsId,
+				FFNumber = :FFNumber,
+				FrequentFlyersId = :FrequentFlyersId,
+				UsersId = :UsersId
+			;";
+			$database->query($query);
+			$database->bind(':ClientsId', $var1);
+			$database->bind(':FFNumber', $FFNumber);
+			$database->bind(':FrequentFlyersId', $FrequentFlyersId);
+			$database->bind(':UsersId', $_SESSION['UsersId']);
+			if ($database->execute()) {
+				header ("location: add_frequentflyer.php?ClientsId=$var1");
+			}
+			break;
+
+		case 'select_all':
+			# $var1 = ClientsId
+			$query = "SELECT  
+				FFMembers.Id,
+				FFMembers.FFNumber,
+				FrequentFlyers.FrequentFlyer
+				FROM FFMembers
+				LEFT OUTER JOIN FrequentFlyers
+				ON FFMembers.FrequentFlyersId = FrequentFlyers.Id
+				WHERE ClientsId = :ClientsId
+			;";
+			$database->query($query);
+			$database->bind(':ClientsId', $var1);
+			return $r = $database->resultset();
+			break;
+
+		case 'select_one':
+			# $var1 = FFMembersId
+			$query = "SELECT 
+				FFMembers.Id,
+				FFMembers.FFNumber,
+				FrequentFlyers.FrequentFlyer
+				FROM FFMembers 
+				LEFT OUTER JOIN FrequentFlyers
+				ON FFMembers.FrequentFlyersId = FrequentFlyers.Id
+				WHERE FFMembers.Id = :FFMembersId
+			;";
+			$database->query($query);
+			$database->bind(':FFMembersId', $var1);
+			return $r = $database->resultset();
+			break;			
+		
+		case 'update':
+			$FFNumber = trim($_REQUEST['FFNumber']);
+			# $var1 = FFMembersId
+			$query = "UPDATE FFMembers SET 
+				FFNumber = :FFNumber
+				WHERE Id = :FFMembersId
+			;";
+			$database->query($query);
+			$database->bind(':FFNumber', $FFNumber);
+			$database->bind(':FFMembersId', $var1);
+			if ($database->execute()) {
+				header ("location: clients.php");
+			}
+			break;
+
+		default:
+			# code...
+			break;
+	}
+	
+}
+
 ?>

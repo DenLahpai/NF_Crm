@@ -296,7 +296,6 @@ footer {
     overfl#menu buttonow: auto;
     background: silver;
     opacity: 0.9;
-
 }
 
 .modalClient li {
@@ -318,6 +317,22 @@ footer {
 	background: white;
 	opacity: 1;
 	padding-bottom: 120px;
+}
+
+
+.modalClient table {
+	border-collapse: collapse;
+	margin: 12px auto;
+}
+
+.modalClient table tr th {
+	border: 1px solid silver;
+	padding: 6px;
+}
+
+.modalClient table tr td {
+	border: 1px solid silver;
+	padding: 6px;
 }
 
 .bold {

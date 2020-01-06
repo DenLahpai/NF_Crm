@@ -91,7 +91,27 @@ include "includes/head.php";
 			 				<li>
 			 					Frequent Flyers: <a href="<? echo "add_frequentflyer.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Add</button></a>
 			 				</li>
-			 			</ul>
+			 			</ul>			 			
+			 			<table>
+			 				<thead>
+			 					<tr>
+			 						<th>Membership No</th>
+			 						<th>Frequent Flyer</th>
+			 						<th>#</th>
+			 					</tr>
+			 					<?php  
+			 					# getting data from the talbe FFMembers
+			 					$rows_FFMembers = table_FFMembers ('select_all', $row_Clients->Id, NULL);
+			 					foreach ($rows_FFMembers as $row_FFMembers) {
+			 						echo "<tr>";
+			 						echo "<td>".$row_FFMembers->FFNumber."</td>";
+			 						echo "<td>".$row_FFMembers->FrequentFlyer."</td>";
+			 						echo "<td><a href=\"update_frequentflyer.php?FFMembersId=$row_FFMembers->Id\">Edit</a>";
+			 						echo "</tr>";
+			 					}
+			 					?>
+			 				</thead>
+			 			</table>
 			 		</div>
 			 		<!-- end of modalClient -->
 			 	<?php endforeach ?>
