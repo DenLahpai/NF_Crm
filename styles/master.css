@@ -141,6 +141,25 @@ nav	{
 	color: var(--color2);
 }
 
+section {
+	grid-area: section;
+}
+
+.search table {
+	margin: 6px auto;
+}
+
+.search table thead tr td input {
+	border: 0px;
+	border-bottom: 1px solid var(--color2);
+	background: none;
+	font-size: 1.2em;
+}
+
+.search table thead tr td input:active {
+	background: red;
+}
+
 .username {
 	text-align: right;
 	font-style: italic;
@@ -234,6 +253,26 @@ main {
 
 .small table tbody tr td {
 	padding: 6px 12px;
+}
+
+.report {
+	
+}
+
+.report table {	
+	margin: 60px auto;
+	width: 90%;
+	border-collapse: collapse;
+}
+
+.report table thead tr th {
+	border: 1px solid black;
+	padding: 6px;
+}
+
+.report table tbody tr td {
+	border: 1px solid black;
+	padding: 12px 6px;
 }
 
 

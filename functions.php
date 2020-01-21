@@ -693,7 +693,21 @@ function table_Organizations ($job, $var1, $var2) {
 
 		case 'select_all':
 			# getting data from the table Organizations
-			$query = "SELECT * FROM Organizations ;";
+			$query = "SELECT 
+				Organizations.Id,
+				Organizations.Name,
+				Organizations.Branch,
+				Organizations.Type,
+				Organizations.Address,
+				Organizations.Township,
+				Organizations.City,
+				Organizations.State,
+				Countries.Country,
+				Organizations.Website 
+				FROM Organizations 
+				LEFT OUTER JOIN Countries
+				ON Organizations.CountriesId = Countries.Id
+			;";
 			$database->query($query);
 			return $r = $database->resultset();
 			break;	
@@ -775,7 +789,42 @@ function table_Organizations ($job, $var1, $var2) {
 			if ($database->execute()) {
 				header("location: organizations.php");
 			}
-			break;	
+			break;
+
+		case 'search':
+			# searching data from the table Organizations
+			$search = trim($_REQUEST['search']);
+			$mySearch = '%'.$search.'%';
+			$query = "SELECT
+				Organizations.Id, 
+				Organizations.Name, 
+				Organizations.Branch,
+				Organizations.Type,
+				Organizations.Address,
+				Organizations.Township,
+				Organizations.City,
+				Organizations.State,
+				Countries.Country,
+				Organizations.Website
+				FROM Organizations 
+				LEFT OUTER JOIN Countries
+				ON Organizations.CountriesId = Countries.Id
+				WHERE CONCAT (
+				Organizations.Name, 
+				Organizations.Branch,
+				Organizations.Type,
+				Organizations.Address,
+				Organizations.Township,
+				Organizations.City,
+				Organizations.State,
+				Countries.Country,
+				Organizations.Website
+				) LIKE :mySearch
+			;";
+			$database->query($query);
+			$database->bind(':mySearch', $mySearch);
+			return $r = $database->resultset();
+			break;		
 			
 		default:
 			# code...
@@ -915,10 +964,13 @@ function table_Clients ($job, $var1, $var2) {
 				Clients.NRC,
 				Clients.PassportNo,
 				Clients.Expiry,
-				Countries.Country
+				Countries.Country, 
+				Users.Username
 				FROM Clients 
 				LEFT JOIN Countries 
 				ON Clients.CountriesId = Countries.Id
+				LEFT JOIN Users 
+				ON Clients.UsersId = Users.Id
 			;";
 			$database->query($query);
 			return $r = $database->resultset();
