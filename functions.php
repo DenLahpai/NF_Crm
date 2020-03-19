@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once "handler.php";
 
 // checking if the user is logged in
@@ -40,7 +40,7 @@ function table_Branches ($job, $var, $var2) {
 				Name = :Name,
 				Address = :Address,
 				Township = :Township,
-				City = :City, 
+				City = :City,
 				Phone = :Phone
 			;";
 			$database->query($query);
@@ -54,7 +54,7 @@ function table_Branches ($job, $var, $var2) {
 			}
 			break;
 
-		case 'select_all':		
+		case 'select_all':
 			# code...
 			$query = "SELECT * FROM Branches ;";
 			$database->query($query);
@@ -74,7 +74,7 @@ function table_Departments ($job, $var1, $var2) {
 		case 'check_before_insert':
 			# getting data from the form
 			$Department = trim($_REQUEST['Department']);
-			$query = "SELECT * FROM Departments 
+			$query = "SELECT * FROM Departments
 				WHERE Department = :Department
 			;";
 			$database->query($query);
@@ -85,7 +85,7 @@ function table_Departments ($job, $var1, $var2) {
 		case 'insert':
 			# getting data from the form
 			$Department = trim($_REQUEST['Department']);
-			$query = "INSERT INTO Departments SET 
+			$query = "INSERT INTO Departments SET
 				Department = :Department
 			;";
 			$database->query($query);
@@ -105,7 +105,7 @@ function table_Departments ($job, $var1, $var2) {
 		case 'value':
 			# code...
 			break;
-		
+
 		default:
 			# code...
 			break;
@@ -139,12 +139,12 @@ function table_Users ($job, $var1, $var2) {
 			$BranchesId = $_REQUEST['BranchesId'];
 			$Status = $_REQUEST['Status'];
 
-			$query = "INSERT INTO Users SET 
+			$query = "INSERT INTO Users SET
 				Username = :Username,
 				Title = :Title,
 				Name = :Name,
 				Password = :Password,
-				Email = :Email, 
+				Email = :Email,
 				Position = :Position,
 				DepartmentsId = :DepartmentsId,
 				BranchesId = :BranchesId,
@@ -165,15 +165,15 @@ function table_Users ($job, $var1, $var2) {
 			if ($database->execute()) {
 				header("location:users.php");
 			}
-			break;	
+			break;
 
 		case 'check_before_update':
 			# var1 = Users.Id
 			$Name = trim($_REQUEST['Name']);
 			$Email = trim($_REQUEST['Email']);
-			$query = "SELECT * FROM Users 
+			$query = "SELECT * FROM Users
 				WHERE Name = :Name
-				AND Email = :Email 
+				AND Email = :Email
 				AND Id != :UsersId
 			;";
 			$database->query($query);
@@ -189,7 +189,7 @@ function table_Users ($job, $var1, $var2) {
 			$database->query($query);
 			$database->bind(':UsersId', $var1);
 			return $r = $database->resultset();
-			break;	
+			break;
 
 		case 'update_by_user':
 			# $var1 = Users.Id
@@ -202,9 +202,9 @@ function table_Users ($job, $var1, $var2) {
 			# no password is set by the user
 			if (empty($Password) || $Password == NULL || $Password == " ") {
 				# If Password is not set by the user
-				$query = "UPDATE Users SET 
-					Title = :Title, 
-					Name = :Name, 
+				$query = "UPDATE Users SET
+					Title = :Title,
+					Name = :Name,
 					Email = :Email
 					WHERE Id = :UsersId
 				;";
@@ -213,14 +213,14 @@ function table_Users ($job, $var1, $var2) {
 				$database->bind(':Name', $Name);
 				$database->bind(':Email', $Email);
 				$database->bind(':UsersId', $var1);
-			} 
+			}
 			else {
-				# If Password is set by the user 
-				$query = "UPDATE Users SET 
+				# If Password is set by the user
+				$query = "UPDATE Users SET
 					Title = :Title,
-					Name = :Name, 
+					Name = :Name,
 					Password = :Password,
-					Email = :Email 
+					Email = :Email
 					WHERE Id = :UsersId
 				;";
 				$database->query($query);
@@ -247,7 +247,7 @@ function table_Users ($job, $var1, $var2) {
 			$Status = $_REQUEST['Status'];
 
 			# updating
-			$query = "UPDATE Users SET 
+			$query = "UPDATE Users SET
 				Username = :Username,
 				Title = :Title,
 				Name = :Name,
@@ -271,25 +271,25 @@ function table_Users ($job, $var1, $var2) {
 			if ($database->execute()) {
 				header("location: users.php");
 			}
-			break;	
+			break;
 
 		case 'select_all':
-			$query = "SELECT  
-				Users.Id, 
+			$query = "SELECT
+				Users.Id,
 				Users.Username,
 				Users.Title,
 				Users.Name,
 				Users.Password,
 				Users.Email,
 				Users.Position,
-				Departments.Department, 
+				Departments.Department,
 				Branches.Name AS BranchesName,
 				Users.Access,
 				Users.Status
-				FROM Users 
-				LEFT JOIN Departments 
+				FROM Users
+				LEFT JOIN Departments
 				ON Departments.Id = Users.DepartmentsId
-				LEFT JOIN Branches 
+				LEFT JOIN Branches
 				ON Branches.Id = Users.BranchesId
 			;";
 			$database->query($query);
@@ -300,7 +300,7 @@ function table_Users ($job, $var1, $var2) {
 			# $var1 = UsersId
 			# $var2 = Email
 			$Password = md5('goodluck'.date('d'));
-			$query = "UPDATE Users SET 
+			$query = "UPDATE Users SET
 				Password = :Password
 				WHERE Id = :UsersId
 			;";
@@ -309,29 +309,29 @@ function table_Users ($job, $var1, $var2) {
 			$database->bind(':UsersId', $var1);
 			if ($database->execute()) {
 				$subject = 'Password Reset';
-				$message = " 
+				$message = "
 				<p>
 					Dear User, <br>
-					Your new password is: 
+					Your new password is:
 					<span class=\"bold\">goodluck".date('d')."</span>
 				<br>
 				Best regards,
 				<br>
-				Database Team	
+				Database Team
 				</p>";
 				$mail_header = "FROM: No Reply <noreply@nicefare-travels.com>\r\n";
 				mail($var2, $subject, $message, $mail_header);
 				header("location: users.php");
 			}
-			break;		
-		
+			break;
+
 		default:
 			# code...
 			break;
 	}
 }
 
-//function to use data from the table Countries 
+//function to use data from the table Countries
 function table_Countries ($job, $var1, $var2) {
 	$database = new Database();
 
@@ -341,22 +341,22 @@ function table_Countries ($job, $var1, $var2) {
 			$Code = $_REQUEST['Code'];
 			$Country = trim($_REQUEST['Country']);
 			# checking for duplication
-			$query = "SELECT Id FROM Countries 
-				WHERE Code = :Code 
+			$query = "SELECT Id FROM Countries
+				WHERE Code = :Code
 				OR Country = :Country
 				;";
 			$database->query($query);
 			$database->bind(':Code', $Code);
 			$database->bind(':Country', $Country);
-			return $r = $database->rowCount();	
+			return $r = $database->rowCount();
 			break;
 
 		case 'insert':
-			# getting data from the form 
+			# getting data from the form
 			$Code = $_REQUEST['Code'];
 			$Country = trim($_REQUEST['Country']);
 			# inserting data to the table Countries
-			$query = "INSERT INTO Countries SET 
+			$query = "INSERT INTO Countries SET
 				Code = :Code,
 				Country = :Country
 			;";
@@ -366,7 +366,7 @@ function table_Countries ($job, $var1, $var2) {
 			if ($database->execute()) {
 				header("location: countries.php");
 			}
-			break;	
+			break;
 
 		case 'select_all':
 			$query = "SELECT * FROM Countries WHERE Status != 0 ORDER BY Id ;";
@@ -380,7 +380,7 @@ function table_Countries ($job, $var1, $var2) {
 			$database->query($query);
 			$database->bind(':CountriesId', $var1);
 			return $r = $database->resultset();
-			break;	
+			break;
 
 		case 'check_before_update':
 			# $var1 = CountriesId
@@ -390,9 +390,9 @@ function table_Countries ($job, $var1, $var2) {
 			$Country = trim($_REQUEST['Country']);
 
 			# checking by row count
-			$query = "SELECT * FROM Countries WHERE 
-				( Code = :Code 
-				OR Country = :Country) 
+			$query = "SELECT * FROM Countries WHERE
+				( Code = :Code
+				OR Country = :Country)
 				AND Id != :CountriesId
 			;";
 			$database->query($query);
@@ -400,7 +400,7 @@ function table_Countries ($job, $var1, $var2) {
 			$database->bind(':Country', $Country);
 			$database->bind(':CountriesId', $var1);
 			return $r = $database->rowCount();
-			break;		
+			break;
 
 		case 'update':
 			# $var1 = CountriesId
@@ -410,9 +410,9 @@ function table_Countries ($job, $var1, $var2) {
 			$Country = trim($_REQUEST['Country']);
 
 			# updating
-			$query = "UPDATE Countries SET 
-				Code = :Code, 
-				Country = :Country 
+			$query = "UPDATE Countries SET
+				Code = :Code,
+				Country = :Country
 				WHERE Id = :CountriesId
 			;";
 			$database->query($query);
@@ -424,10 +424,10 @@ function table_Countries ($job, $var1, $var2) {
 			}
 			break;
 
-		
+
 		default:
 			# code...
-			break;	
+			break;
 	}
 }
 
@@ -440,7 +440,7 @@ function table_Airlines ($job, $var1, $var2) {
 			# getting data from the form
 			$FlightCode = trim($_REQUEST['FlightCode']);
 			$Airline = trim($_REQUEST['Airline']);
-			$query = "SELECT Id FROM Airlines 
+			$query = "SELECT Id FROM Airlines
 				WHERE FlightCode = :FlightCode
 				OR Airline = :Airline
 			;";
@@ -457,7 +457,7 @@ function table_Airlines ($job, $var1, $var2) {
 			$CountriesId = $_REQUEST['CountriesId'];
 
 			# inserting
-			$query = "INSERT INTO Airlines SET 
+			$query = "INSERT INTO Airlines SET
 				FlightCode = :FlightCode,
 				Airline = :Airline,
 				CountriesId = :CountriesId
@@ -472,14 +472,14 @@ function table_Airlines ($job, $var1, $var2) {
 			break;
 
 		case 'select_all':
-			# getting data form the table 
-			$query = "SELECT 
+			# getting data form the table
+			$query = "SELECT
 				Airlines.Id AS Id,
 				Airlines.FlightCode,
 				Airlines.Airline,
 				Airlines.CountriesId,
 				Countries.Country
-				FROM Airlines 
+				FROM Airlines
 				LEFT OUTER JOIN Countries
 				ON Airlines.CountriesId = Countries.Id
 				ORDER BY Airline
@@ -490,11 +490,11 @@ function table_Airlines ($job, $var1, $var2) {
 
 		case 'select_one':
 			# $var1 = AirlinesId
-			$query = "SELECT 
+			$query = "SELECT
 				Airlines.FlightCode,
 				Airlines.Airline,
 				Airlines.CountriesId
-				FROM Airlines 
+				FROM Airlines
 				WHERE Id = :AirlinesId
 			;";
 			$database->query($query);
@@ -506,7 +506,7 @@ function table_Airlines ($job, $var1, $var2) {
 			# $var1 = AirlinesId
 			$FlightCode = trim($_REQUEST['FlightCode']);
 			$Airline = trim($_REQUEST['Airline']);
-			$query = "SELECT Id FROM Airlines 
+			$query = "SELECT Id FROM Airlines
 				WHERE (FlightCode = :FlightCode
 				OR Airline = :Airline)
 				AND Id != :AirlinesId
@@ -516,8 +516,8 @@ function table_Airlines ($job, $var1, $var2) {
 			$database->bind(':Airline', $Airline);
 			$database->bind(':AirlinesId', $var1);
 			return $r = $database->rowCount();
-			break;				
-		
+			break;
+
 		default:
 			# code...
 			break;
@@ -533,7 +533,7 @@ function table_FrequentFlyers ($job, $var1, $var2) {
 		case 'check_before_insert':
 			# getting data from the form
 			$FrequentFlyer = trim($_REQUEST['FrequentFlyer']);
-			$query = "SELECT * FROM FrequentFlyers 
+			$query = "SELECT * FROM FrequentFlyers
 				WHERE FrequentFlyer = :FrequentFlyer
 			;";
 			$database->query($query);
@@ -547,7 +547,7 @@ function table_FrequentFlyers ($job, $var1, $var2) {
 			$AirlinesId = $_REQUEST['AirlinesId'];
 			$Alliance = trim($_REQUEST['Alliance']);
 
-			$query = "INSERT INTO FrequentFlyers SET 
+			$query = "INSERT INTO FrequentFlyers SET
 				FrequentFlyer = :FrequentFlyer,
 				AirlinesId = :AirlinesId,
 				Alliance = :Alliance
@@ -562,14 +562,14 @@ function table_FrequentFlyers ($job, $var1, $var2) {
 			break;
 
 		case 'select_all':
-			$query = "SELECT 
+			$query = "SELECT
 				FrequentFlyers.Id,
 				FrequentFlyers.FrequentFlyer,
 				FrequentFlyers.AirlinesId,
 				FrequentFlyers.Alliance,
 				Airlines.Airline
-				FROM FrequentFlyers 
-				LEFT OUTER JOIN Airlines 
+				FROM FrequentFlyers
+				LEFT OUTER JOIN Airlines
 				ON FrequentFlyers.AirlinesId = Airlines.Id
 			;";
 			$database->query($query);
@@ -578,8 +578,8 @@ function table_FrequentFlyers ($job, $var1, $var2) {
 
 		case 'select_one':
 			# $var1 = FrequentFlyersId
-			$query = "SELECT 
-				FrequentFlyers.Id, 
+			$query = "SELECT
+				FrequentFlyers.Id,
 				FrequentFlyers.FrequentFlyer,
 				FrequentFlyers.AirlinesId,
 				FrequentFlyers.Alliance
@@ -590,11 +590,11 @@ function table_FrequentFlyers ($job, $var1, $var2) {
 			$database->bind(':FrequentFlyersId', $var1);
 			return $r = $database->resultset();
 			break;
-			
+
 		case 'check_before_update':
 			# $var1 = FrequentFlyersId
 			$FrequentFlyer = trim($_REQUEST['FrequentFlyer']);
-			$query = "SELECT * FROM FrequentFlyers 
+			$query = "SELECT * FROM FrequentFlyers
 				WHERE FrequentFlyer = :FrequentFlyer
 				AND Id != :FrequentFlyersId
 			;";
@@ -604,12 +604,12 @@ function table_FrequentFlyers ($job, $var1, $var2) {
 			return $r = $database->rowCount();
 			break;
 
-		case 'update':	
-			# $var1 = FrequentFlyersId 
+		case 'update':
+			# $var1 = FrequentFlyersId
 			$FrequentFlyer = trim($_REQUEST['FrequentFlyer']);
 			$AirlinesId = $_REQUEST['AirlinesId'];
 			$Alliance = trim($_REQUEST['Alliance']);
-			$query = "UPDATE FrequentFlyers SET 
+			$query = "UPDATE FrequentFlyers SET
 				FrequentFlyer = :FrequentFlyer,
 				AirlinesId = :AirlinesId,
 				Alliance = :Alliance
@@ -630,7 +630,6 @@ function table_FrequentFlyers ($job, $var1, $var2) {
 	}
 }
 
-
 //function to use data from the table Organizations
 function table_Organizations ($job, $var1, $var2) {
 	$database = new Database();
@@ -641,7 +640,7 @@ function table_Organizations ($job, $var1, $var2) {
 			$Name = trim($_REQUEST['Name']);
 			$Branch = trim($_REQUEST['Branch']);
 			$CountriesId = $_REQUEST['CountriesId'];
-			$query = "SELECT Id FROM Organizations 
+			$query = "SELECT Id FROM Organizations
 				WHERE Name = :Name
 				AND Branch = :Branch
 				AND CountriesId = :CountriesId
@@ -652,9 +651,9 @@ function table_Organizations ($job, $var1, $var2) {
 			$database->bind(':CountriesId', $CountriesId);
 			return $r = $database->rowCount();
 			break;
-		
-		case 'insert': 
-			# getting data from the form 
+
+		case 'insert':
+			# getting data from the form
 			$Name = trim($_REQUEST['Name']);
 			$Branch = trim($_REQUEST['Branch']);
 			$Type = trim($_REQUEST['Type']);
@@ -666,8 +665,8 @@ function table_Organizations ($job, $var1, $var2) {
 			$Website = trim($_REQUEST['Website']);
 			# inserting data to the table
 			$query = "INSERT INTO Organizations SET
-				Name = :Name, 
-				Branch = :Branch, 
+				Name = :Name,
+				Branch = :Branch,
 				Type = :Type,
 				Address = :Address,
 				Township = :Township,
@@ -675,7 +674,7 @@ function table_Organizations ($job, $var1, $var2) {
 				State = :State,
 				CountriesId = :CountriesId,
 				Website = :Website
-			;"; 
+			;";
 			$database->query($query);
 			$database->bind(':Name', $Name);
 			$database->bind(':Branch', $Branch);
@@ -693,7 +692,7 @@ function table_Organizations ($job, $var1, $var2) {
 
 		case 'select_all':
 			# getting data from the table Organizations
-			$query = "SELECT 
+			$query = "SELECT
 				Organizations.Id,
 				Organizations.Name,
 				Organizations.Branch,
@@ -703,19 +702,19 @@ function table_Organizations ($job, $var1, $var2) {
 				Organizations.City,
 				Organizations.State,
 				Countries.Country,
-				Organizations.Website 
-				FROM Organizations 
+				Organizations.Website
+				FROM Organizations
 				LEFT OUTER JOIN Countries
 				ON Organizations.CountriesId = Countries.Id
 			;";
 			$database->query($query);
 			return $r = $database->resultset();
-			break;	
+			break;
 
 		case 'select_one':
-			# $var1 = OrganizationsId 
-			$query = "SELECT 
-				Organizations.Name, 
+			# $var1 = OrganizationsId
+			$query = "SELECT
+				Organizations.Name,
 				Organizations.Branch,
 				Organizations.Type,
 				Organizations.Address,
@@ -724,7 +723,7 @@ function table_Organizations ($job, $var1, $var2) {
 				Organizations.State,
 				Countries.Country,
 				Organizations.Website
-				FROM Organizations 
+				FROM Organizations
 				LEFT OUTER JOIN Countries
 				ON Organizations.CountriesId = Countries.Id
 				WHERE Organizations.Id = :OrganizationsId
@@ -736,12 +735,12 @@ function table_Organizations ($job, $var1, $var2) {
 
 		case 'check_before_update':
 			# $var1 = OrganizationsId
-			# getting data from the form 
+			# getting data from the form
 			$Name = trim($_REQUEST['Name']);
 			$Branch = trim($_REQUEST['Branch']);
-			$query = "SELECT * FROM Organizations 
-				WHERE Name = :Name 
-				AND Branch = :Branch 
+			$query = "SELECT * FROM Organizations
+				WHERE Name = :Name
+				AND Branch = :Branch
 				AND Id != :OrganizationsId
 			;";
 			$database->query($query);
@@ -749,7 +748,7 @@ function table_Organizations ($job, $var1, $var2) {
 			$database->bind(':Branch', $Branch);
 			$database->bind(':OrganizationsId', $var1);
 			return $r = $database->rowCount();
-			break;	
+			break;
 
 		case 'update':
 			# $var1 = OrganizationsId
@@ -763,14 +762,14 @@ function table_Organizations ($job, $var1, $var2) {
 			$CountriesId = $_REQUEST['CountriesId'];
 			$Website = trim($_REQUEST['Website']);
 
-			$query = "UPDATE Organizations SET 
+			$query = "UPDATE Organizations SET
 				Name = :Name,
 				Branch = :Branch,
 				Type = :Type,
 				Address = :Address,
 				Township = :Township,
 				City = :City,
-				State = :State, 
+				State = :State,
 				CountriesId = :CountriesId,
 				Website = :Website
 				WHERE Id = :OrganizationsId
@@ -796,8 +795,8 @@ function table_Organizations ($job, $var1, $var2) {
 			$search = trim($_REQUEST['search']);
 			$mySearch = '%'.$search.'%';
 			$query = "SELECT
-				Organizations.Id, 
-				Organizations.Name, 
+				Organizations.Id,
+				Organizations.Name,
 				Organizations.Branch,
 				Organizations.Type,
 				Organizations.Address,
@@ -806,11 +805,11 @@ function table_Organizations ($job, $var1, $var2) {
 				Organizations.State,
 				Countries.Country,
 				Organizations.Website
-				FROM Organizations 
+				FROM Organizations
 				LEFT OUTER JOIN Countries
 				ON Organizations.CountriesId = Countries.Id
 				WHERE CONCAT (
-				Organizations.Name, 
+				Organizations.Name,
 				Organizations.Branch,
 				Organizations.Type,
 				Organizations.Address,
@@ -824,8 +823,8 @@ function table_Organizations ($job, $var1, $var2) {
 			$database->query($query);
 			$database->bind(':mySearch', $mySearch);
 			return $r = $database->resultset();
-			break;		
-			
+			break;
+
 		default:
 			# code...
 			break;
@@ -843,10 +842,10 @@ function table_Clients ($job, $var1, $var2) {
 			$Name = trim($_REQUEST['Name']);
 			$DOB = $_REQUEST['DOB'];
 			$NRC = trim($_REQUEST['NRC']);
-			$query = "SELECT Id FROM Clients 
-				WHERE Title = :Title 
+			$query = "SELECT Id FROM Clients
+				WHERE Title = :Title
 				AND Name = :Name
-				AND DOB = :DOB 
+				AND DOB = :DOB
 				AND NRC = :NRC
 			;";
 			$database->query($query);
@@ -862,11 +861,11 @@ function table_Clients ($job, $var1, $var2) {
 			$query = "SELECT * FROM Clients ;";
 			$database->query($query);
 			return $r = $database->rowCount();
-			break;	
+			break;
 
 		case 'insert':
 			# $var1 = $md5
-			# getting data from the form 
+			# getting data from the form
 			$Title = $_REQUEST['Title'];
 			$Name = trim($_REQUEST['Name']);
 			$DOB = $_REQUEST['DOB'];
@@ -917,13 +916,13 @@ function table_Clients ($job, $var1, $var2) {
 			$Code = md5($Member);
 
 			# inserting data to the table Clients
-			$query = "INSERT INTO Clients SET 
+			$query = "INSERT INTO Clients SET
 				Member = :Member,
-				Code = :Code, 
-				Title = :Title, 
-				Name = :Name, 
+				Code = :Code,
+				Title = :Title,
+				Name = :Name,
 				DOB = :DOB,
-				Mobile = :Mobile, 
+				Mobile = :Mobile,
 				Email = :Email,
 				NRC = :NRC,
 				PassportNo = :PassportNo,
@@ -947,11 +946,11 @@ function table_Clients ($job, $var1, $var2) {
 			if ($database->execute()) {
 				header("location: clients.php");
 			}
-			break;	
+			break;
 
 		case 'select_all':
 			# getting data from the table Clients
-			$query = "SELECT 
+			$query = "SELECT
 				Clients.Id,
 				Clients.Code,
 				Clients.QRLink,
@@ -960,16 +959,16 @@ function table_Clients ($job, $var1, $var2) {
 				Clients.Name,
 				Clients.DOB,
 				Clients.Mobile,
-				Clients.Email, 
+				Clients.Email,
 				Clients.NRC,
 				Clients.PassportNo,
 				Clients.Expiry,
-				Countries.Country, 
+				Countries.Country,
 				Users.Username
-				FROM Clients 
-				LEFT JOIN Countries 
+				FROM Clients
+				LEFT JOIN Countries
 				ON Clients.CountriesId = Countries.Id
-				LEFT JOIN Users 
+				LEFT JOIN Users
 				ON Clients.UsersId = Users.Id
 			;";
 			$database->query($query);
@@ -981,7 +980,7 @@ function table_Clients ($job, $var1, $var2) {
 			$query = "SELECT * FROM Clients WHERE Id = :ClientsId;";
 			$database->query($query);
 			$database->bind(':ClientsId', $var1);
-			return $r = $database->resultset();	
+			return $r = $database->resultset();
 			break;
 
 		case 'check_before_update':
@@ -996,12 +995,12 @@ function table_Clients ($job, $var1, $var2) {
 			$Expiry = $_REQUEST['Expiry'];
 			$CountriesId = $_REQUEST['CountriesId'];
 			# checking for duplicate entry
-			$query = "SELECT Id FROM Clients 
-				WHERE Title = :Title 
-				AND Name = :Name 
-				AND DOB = :DOB 
+			$query = "SELECT Id FROM Clients
+				WHERE Title = :Title
+				AND Name = :Name
+				AND DOB = :DOB
 				AND NRC = :NRC
-				AND Id != :ClientsId 
+				AND Id != :ClientsId
 			;";
 			$database->query($query);
 			$database->bind(':Title', $Title);
@@ -1024,13 +1023,13 @@ function table_Clients ($job, $var1, $var2) {
 			$Expiry = $_REQUEST['Expiry'];
 			$CountriesId = $_REQUEST['CountriesId'];
 
-			# updating 
-			$query = "UPDATE Clients SET 
+			# updating
+			$query = "UPDATE Clients SET
 				Title = :Title,
 				Name = :Name,
 				DOB = :DOB,
 				Mobile = :Mobile,
-				Email = :Email, 
+				Email = :Email,
 				NRC = :NRC,
 				PassportNo = :PassportNo,
 				Expiry = :Expiry,
@@ -1051,15 +1050,54 @@ function table_Clients ($job, $var1, $var2) {
 			if ($database->execute()) {
 				header ("location: clients.php");
 			}
-			break;		
-	
+			break;
+
+		case 'search':
+			# searching data from the table Clients
+			$search = trim($_REQUEST['search']);
+			$mySearch = '%'.$search.'%';
+			$query = "SELECT
+				Clients.Id,
+				Clients.Code,
+				Clients.QRLink,
+				Clients.Member,
+				Clients.Title,
+				Clients.Name,
+				Clients.DOB,
+				Clients.Mobile,
+				Clients.Email,
+				Clients.NRC,
+				Clients.PassportNo,
+				Clients.Expiry,
+				Countries.Country,
+				Users.Username
+				FROM Clients
+				LEFT JOIN Countries
+				ON Clients.CountriesId = Countries.Id
+				LEFT JOIN Users
+				ON Clients.UsersId = Users.Id
+				WHERE CONCAT (
+				Clients.Member,
+				Clients.Name,
+				Clients.Mobile,
+				Clients.Email,
+				Clients.NRC,
+				Clients.PassportNo,
+				Countries.Country
+				) LIKE :mySearch
+			;";
+			$database->query($query);
+			$database->bind(':mySearch', $mySearch);
+			return $r = $database->resultset();
+			break;
+
 		default:
 			# code...
 			break;
 	}
 }
 
-# function to use data from the table FFMembers 
+# function to use data from the table FFMembers
 function table_FFMembers ($job, $var1, $var2) {
 	$database = new Database();
 
@@ -1069,7 +1107,7 @@ function table_FFMembers ($job, $var1, $var2) {
 			$FFNumber = trim($_REQUEST['FFNumber']);
 			$FrequentFlyersId = $_REQUEST['FrequentFlyersId'];
 
-			$query = "SELECT * FROM FFMembers 
+			$query = "SELECT * FROM FFMembers
 				WHERE FrequentFlyersId = :FrequentFlyersId
 				AND ClientsId = :ClientsId
 			;";
@@ -1083,7 +1121,7 @@ function table_FFMembers ($job, $var1, $var2) {
 			# $var1 = ClientsId
 			$FFNumber = trim($_REQUEST['FFNumber']);
 			$FrequentFlyersId = $_REQUEST['FrequentFlyersId'];
-			$query = "INSERT INTO FFMembers SET 
+			$query = "INSERT INTO FFMembers SET
 				ClientsId = :ClientsId,
 				FFNumber = :FFNumber,
 				FrequentFlyersId = :FrequentFlyersId,
@@ -1101,7 +1139,7 @@ function table_FFMembers ($job, $var1, $var2) {
 
 		case 'select_all':
 			# $var1 = ClientsId
-			$query = "SELECT  
+			$query = "SELECT
 				FFMembers.Id,
 				FFMembers.FFNumber,
 				FrequentFlyers.FrequentFlyer
@@ -1117,11 +1155,11 @@ function table_FFMembers ($job, $var1, $var2) {
 
 		case 'select_one':
 			# $var1 = FFMembersId
-			$query = "SELECT 
+			$query = "SELECT
 				FFMembers.Id,
 				FFMembers.FFNumber,
 				FrequentFlyers.FrequentFlyer
-				FROM FFMembers 
+				FROM FFMembers
 				LEFT OUTER JOIN FrequentFlyers
 				ON FFMembers.FrequentFlyersId = FrequentFlyers.Id
 				WHERE FFMembers.Id = :FFMembersId
@@ -1129,12 +1167,12 @@ function table_FFMembers ($job, $var1, $var2) {
 			$database->query($query);
 			$database->bind(':FFMembersId', $var1);
 			return $r = $database->resultset();
-			break;			
-		
+			break;
+
 		case 'update':
 			$FFNumber = trim($_REQUEST['FFNumber']);
 			# $var1 = FFMembersId
-			$query = "UPDATE FFMembers SET 
+			$query = "UPDATE FFMembers SET
 				FFNumber = :FFNumber
 				WHERE Id = :FFMembersId
 			;";
@@ -1150,7 +1188,31 @@ function table_FFMembers ($job, $var1, $var2) {
 			# code...
 			break;
 	}
-	
+
+}
+
+# function to use data from the table BirthdayWhishes
+function table_BirthdayWishes ($job, $var1, $var2) {
+    $database = new Database();
+
+    switch ($job) {
+        case 'check_wish_for_this_year':
+            # $var1 = ClientsId
+            # $var2 = YearOfWish
+            $query = "SELECT * FROM BirthdayWhishes
+                WHERE ClientsId = :ClientsId
+                AND YearOfWish = :YearOfWish
+            ;";
+            $database->query($query);
+            $database->bind(':ClientsId', $var1);
+			$database->bind(':YearOfWish', $var2);
+			return $r = $database->rowCount();
+            break;
+
+        default:
+            // code...
+            break;
+    }
 }
 
 ?>

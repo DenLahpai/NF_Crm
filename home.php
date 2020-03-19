@@ -1,9 +1,9 @@
-<?php  
+<?php
 require_once "handler.php";
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-	<?php 
+	<?php
 	$page_title = "Home";
 	include "includes/head.php";
 	?>
@@ -22,7 +22,7 @@ require_once "handler.php";
 				<div class="grid-item">
 					<button class="big square" onclick="window.location.href='organizations.php'">Organizations</button>
 				</div>
-				<!-- end of grid-item -->				
+				<!-- end of grid-item -->
 				<!-- grid-item -->
 				<div class="grid-item">
 					<button class="big square" onclick="window.location.href='clients.php'">Clients</button>
@@ -35,7 +35,7 @@ require_once "handler.php";
 				<!-- end of grid-item -->
 				<!-- grid-item -->
 				<div class="grid-item">
-					<button class="big square">Birthdays</button>
+					<button class="big square" onclick="window.location.href='birthdays.php'">Birthdays</button>
 				</div>
 				<!-- end of grid-item -->
 			</div>
