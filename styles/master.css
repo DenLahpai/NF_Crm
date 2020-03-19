@@ -182,8 +182,17 @@ section {
 
 .grid-item ul li {
 	padding: 6px 12px;
-	list-style: none;
+	list-style: none;	
 }
+
+.grid-item ul li input {
+	border: 0px;
+	background: none;
+	outline: 0px;
+	padding-top: 6px;
+	border-bottom: 0.5px solid black;
+}
+
 
 .login {
 	text-align: center;
@@ -357,7 +366,6 @@ footer {
 	opacity: 1;
 	padding-bottom: 120px;
 }
-
 
 .modalClient table {
 	border-collapse: collapse;

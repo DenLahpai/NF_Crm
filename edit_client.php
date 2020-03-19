@@ -142,7 +142,7 @@ include "includes/head.php";
 	</div>
 	<!-- end of content -->
 </body>
- <script type="text/javascript" src="scripts/main.js"></script>
+<script type="text/javascript" src="scripts/main.js"></script>
 <script type="text/javascript">
     window.onload = selectOption("selected_Title", "Title");
 </script>

@@ -1199,7 +1199,7 @@ function table_BirthdayWishes ($job, $var1, $var2) {
         case 'check_wish_for_this_year':
             # $var1 = ClientsId
             # $var2 = YearOfWish
-            $query = "SELECT * FROM BirthdayWhishes
+            $query = "SELECT * FROM BirthdayWishes
                 WHERE ClientsId = :ClientsId
                 AND YearOfWish = :YearOfWish
             ;";
