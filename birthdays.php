@@ -5,7 +5,7 @@ require_once "functions.php";
 $rows_Clients = table_Clients ('select_all', NULL, NULL);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    echo Submit;
+    echo $_REQUEST['Method'];
 }
 ?>
 <!DOCTYPE html>
@@ -43,12 +43,20 @@ include "includes/head.php";
                         # checking the clients data in the the table BirthdayWish
                         $rowCount = table_BirthdayWishes ('check_wish_for_this_year', $row_Clients->Id, $this_year);
                         if ($rowCount == 0) {
-                            echo "<input type=\"text\" name=\"Method$i\" id=\"Method$i\" placeholder=\"Phone, SMS or Email\">";
+                            echo "<input type=\"text\" name=\"Method\" id=\"Method$i\" placeholder=\"Phone, SMS or Email\">";
                             echo "&nbsp;";
                             echo "<button type=\"button\" class=\"medium button\" id=\"buttonSubmit$i\" name=\"buttonSubmit\" onclick=\"submitWish($i);\">Record</button>";
                         }
                         else {
-
+                            $rows_BirthdayWishes = table_BirthdayWishes ('select_one', $row_Clients->Id, $this_year);
+                            foreach ($rows_BirthdayWishes as $row_BirthdayWishes) {
+                                // code...
+                            }
+                            $rows_Users = table_Users ('select_one', $row_BirthdayWishes->UsersId, NULL);
+                            foreach ($rows_Users as $row_Users) {
+                                // code...
+                            }
+                            echo "Wish Sent by: ".$row_BirthdayWishes->Method. " - ".$row_Users->Username;
                         }
                         echo "</li>";
                         echo "</ul>";
@@ -62,6 +70,7 @@ include "includes/head.php";
             </div>
             <!-- end of grid-div -->
         </main>
+        <?php include "includes/footer.php"; ?>
     </div>
     <!-- end of content -->
 </body>
@@ -73,8 +82,10 @@ function submitWish (i) {
     if (!Method.value || Method.value == " ") {
         Method.style.background = '#A52B2A';
     }
-    // alert(Method.value);
-    
+    else {
+        document.getElementById('buttonSubmit' + i).type = 'submit'
+    }
+
 }
 
 </script>

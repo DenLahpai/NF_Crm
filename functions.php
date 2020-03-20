@@ -1209,6 +1209,52 @@ function table_BirthdayWishes ($job, $var1, $var2) {
 			return $r = $database->rowCount();
             break;
 
+        case 'select_for_one_client_this_year':
+            // $var1 = ClientsId
+            // $var2 = YearOfWish
+            $query = "SELECT * FROM BirthdayWishes
+                WHERE ClientsId = :ClientsId
+                AND YearOfWish = :YearOfWish
+            ;";
+            $database->query($query);
+            $database->bind(':ClientsId', $var1);
+            $database->bind(':YearOfWish', $var2);
+            return $r = $database->resultset();
+            break;
+
+        case 'insert':
+            # $var2 = ClientsId
+            $Method = $_REQUEST['Method'];
+            $YearOfWish = date('Y');
+            $query = "INSERT INTO BirthdayWishes SET
+                ClientsId = :ClientsId,
+                Method = :Method,
+                YearOfWish = :YearOfWish,
+                UsersId = :UsersId
+            ;";
+            $database->query($query);
+            $database->bind(':ClientsId', $var2);
+            $database->bind(':Method', $Method);
+            $database->bind(':YearOfWish', $YearOfWish);
+            $database->bind(':UsersId', $_SESSION['UsersId']);
+            if ($database->execute()) {
+                header("location: birthdays.php");
+            }
+            break;
+
+            case 'select_one':
+                // $var1 = ClientsId
+                // $var2 = YearOfWish
+                $query = "SELECT * FROM BirthdayWishes
+                    WHERE ClientsId = :ClientsId
+                    AND YearOfWish = :YearOfWish
+                ;";
+                $database->query($query);
+                $database->bind(':ClientsId', $var1);
+                $database->bind(':YearOfWish', $var2);
+                return $r = $database->resultset();
+                break;
+
         default:
             // code...
             break;
