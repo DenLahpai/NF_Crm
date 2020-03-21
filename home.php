@@ -20,22 +20,22 @@ require_once "handler.php";
 			<div class="grid-div">
 				<!-- grid-item -->
 				<div class="grid-item">
-					<button class="big square" onclick="window.location.href='organizations.php'">Organizations</button>
+					<button class="big square" onclick="window.location.href='organizations.php';">Organizations</button>
 				</div>
 				<!-- end of grid-item -->
 				<!-- grid-item -->
 				<div class="grid-item">
-					<button class="big square" onclick="window.location.href='clients.php'">Clients</button>
+					<button class="big square" onclick="window.location.href='clients.php';">Clients</button>
 				</div>
 				<!-- end of grid-item -->
 				<!-- grid-item -->
 				<div class="grid-item">
-					<button class="big square">Passports Expiry</button>
+					<button class="big square" onclick="window.location.href='passport_expiry.php';">Passports Expiry</button>
 				</div>
 				<!-- end of grid-item -->
 				<!-- grid-item -->
 				<div class="grid-item">
-					<button class="big square" onclick="window.location.href='birthdays.php'">Birthdays</button>
+					<button class="big square" onclick="window.location.href='birthdays.php';">Birthdays</button>
 				</div>
 				<!-- end of grid-item -->
 			</div>
