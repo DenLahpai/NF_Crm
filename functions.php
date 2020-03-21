@@ -1261,4 +1261,46 @@ function table_BirthdayWishes ($job, $var1, $var2) {
     }
 }
 
+# function to use data from the table PassportReminders
+function table_PassportReminders ($job, $var1, $var2) {
+    $database = new Database();
+
+    switch ($job) {
+        case 'insert':
+            $query = "INSERT INTO PassportReminders SET
+                ClientsId = :ClientsId,
+                Method = :Method,
+                UsersId = :UsersId
+            ;";
+            $database->query($query);
+            $database->bind(':ClientsId', $_REQUEST['ClientsId']);
+            $database->bind(':Method', $_REQUEST['Method']);
+            $database->bind(':UsersId', $_SESSION['UsersId']);
+            if ($database->execute()) {
+                header("location:passport_expiry.php");
+            }
+            break;
+
+        case 'select_for_one_client':
+            // $var1 = ClientsId
+            $query = "SELECT
+                PassportReminders.Id,
+                PassportReminders.Method,
+                PassportReminders.UsersId,
+                Users.Username,
+                PassportReminders.Created
+                FROM PassportReminders
+                LEFT OUTER JOIN Users ON PassportReminders.UsersId = Users.Id
+                WHERE PassportReminders.ClientsId = :ClientsId ;";
+            $database->query($query);
+            $database->bind(':ClientsId', $var1);
+            return $r = $database->resultset();
+            break;
+
+        default:
+            // code...
+            break;
+    }
+}
+
 ?>
