@@ -1091,6 +1091,36 @@ function table_Clients ($job, $var1, $var2) {
 			return $r = $database->resultset();
 			break;
 
+		case 'passport_expiry':
+			$today = date('Y-m-d');
+			$limit = date('Y-m-d', strtotime($today.' + 210 days'));
+			$query = "SELECT
+				Clients.Id,
+				Clients.Code,
+				Clients.QRLink,
+				Clients.Member,
+				Clients.Title,
+				Clients.Name,
+				Clients.DOB,
+				Clients.Mobile,
+				Clients.Email,
+				Clients.NRC,
+				Clients.PassportNo,
+				Clients.Expiry,
+				Countries.Country,
+				Users.Username
+				FROM Clients
+				LEFT JOIN Countries
+				ON Clients.CountriesId = Countries.Id
+				LEFT JOIN Users
+				ON Clients.UsersId = Users.Id
+				WHERE Expiry <= :limit
+			;";
+			$database->query($query);
+			$database->bind(':limit', $limit);
+			return $r = $database->resultset();
+			break;		
+
 		default:
 			# code...
 			break;
