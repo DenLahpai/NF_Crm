@@ -2,7 +2,7 @@
 require_once "functions.php";
 
 # getting data from the table Clients
-$rows_Clients = table_Clients ('select_all', NULL, NULL);
+# $rows_Clients = table_Clients ('select_all', NULL, NULL);
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
