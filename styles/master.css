@@ -2,7 +2,7 @@
 	--color1: #FFFFFF;
 	--color2: #E4007B;
 	--color3: #E8E8E8;
-	--color4: #F7F8FC;	
+	--color4: #F7F8FC;
 }
 * {
 	margin: 0;
@@ -21,7 +21,7 @@ body {
 	display: grid;
 	grid-gap: 6px;
 	grid-template-columns: repeat(3, 1fr);
-	grid-template-areas: 
+	grid-template-areas:
 	" nav nav nav "
 	" header header header "
 	" sub-menu sub-menu sub-menu "
@@ -29,7 +29,7 @@ body {
 	" main main main "
 	" aside aside aside "
 	" footer footer footer "
-	;	
+	;
 }
 
 header {
@@ -124,7 +124,7 @@ nav	{
 
 .sub-menu ul li {
 	display: inline-block;
-	padding: 6px 18px;	
+	padding: 6px 18px;
 }
 
 .sub-menu ul li a {
@@ -182,7 +182,7 @@ section {
 
 .grid-item ul li {
 	padding: 6px 12px;
-	list-style: none;	
+	list-style: none;
 }
 
 .grid-item ul li input {
@@ -233,7 +233,7 @@ main {
 }
 
 .form table tbody tr td input:focus {
-	background: var(--color1);	
+	background: var(--color1);
 }
 
 .form table tbody tr td textarea {
@@ -245,13 +245,13 @@ main {
 }
 
 .small table thead tr th {
-	padding: 6px;	
+	padding: 6px;
 }
 
 .small table thead tr td {
 	padding: 6px 6px 12px 6px;
 	/*padding-bottom: 12px;*/
-	border-bottom: 2px solid var(--color2); 
+	border-bottom: 2px solid var(--color2);
 }
 
 .small table thead input {
@@ -265,10 +265,10 @@ main {
 }
 
 .report {
-	
+
 }
 
-.report table {	
+.report table {
 	margin: 60px auto;
 	width: 90%;
 	border-collapse: collapse;
@@ -284,6 +284,9 @@ main {
 	padding: 12px 6px;
 }
 
+.report table tbody tr td button {
+	padding: 6px 3px;
+}
 
 footer {
 	grid-area: footer;
@@ -325,7 +328,7 @@ footer {
 	border: none;
 	outline: none;
 	border-radius: 6px;
-	box-shadow: 0 9px #999;	
+	box-shadow: 0 9px #999;
 }
 
 .square:active {

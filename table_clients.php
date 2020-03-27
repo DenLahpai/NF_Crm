@@ -1,7 +1,7 @@
-<?php  
+<?php
 require_once "functions.php";
 
-#getting data from the table Clients 
+#getting data from the table Clients
 $rows_Clients = table_Clients ('select_all', NULL, NULL);
 if (isset($_REQUEST['buttonSearch'])) {
 	$search = trim($_REQUEST['search']);
@@ -15,14 +15,14 @@ if (isset($_REQUEST['buttonSearch'])) {
 ?>
 <!DOCTYPE html>
 <html>
-<?php  
+<?php
 $page_title = "Table Clients";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Clients";
 		include "includes/header.php";
 		include "includes/nav.php";
@@ -55,11 +55,11 @@ include "includes/head.php";
 								<td><? echo "<a href=\"mailto: $row_Clients->Email\">$row_Clients->Email</a>"; ?></td>
 								<td><? echo $row_Clients->Username; ?></td>
 								<td style="text-align: center;">
-									<button class="medium button" onclick="openClientModal('<? echo "modalClient$row_Clients->Id"; ?>');">View</button>
-									<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Edit</button></a>
+									<button class="" onclick="openClientModal('<? echo "modalClient$row_Clients->Id"; ?>');">View</button>
+									<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="">Edit</button></a>
 									<a href="<? echo "client"; ?>"></a>
 								</td>
-							</tr>							
+							</tr>
 						<?php endforeach; ?>
 					</tbody>
 				</table>
@@ -100,7 +100,7 @@ include "includes/head.php";
 			 				<li>
 			 					Frequent Flyers: <a href="<? echo "add_frequentflyer.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Add</button></a>
 			 				</li>
-			 			</ul>			 			
+			 			</ul>
 			 			<table>
 			 				<thead>
 			 					<tr>
@@ -108,7 +108,7 @@ include "includes/head.php";
 			 						<th>Frequent Flyer</th>
 			 						<th>#</th>
 			 					</tr>
-			 					<?php  
+			 					<?php
 			 					# getting data from the talbe FFMembers
 			 					$rows_FFMembers = table_FFMembers ('select_all', $row_Clients->Id, NULL);
 			 					foreach ($rows_FFMembers as $row_FFMembers) {
