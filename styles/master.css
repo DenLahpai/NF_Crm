@@ -120,6 +120,7 @@ nav	{
 .sub-menu {
 	grid-area: sub-menu;
 	background: var(--color2);
+	display: flex;	
 }
 
 .sub-menu ul li {
@@ -139,6 +140,31 @@ nav	{
 .sub-menu ul li a:active {
 	background: var(--color3);
 	color: var(--color2);
+}
+
+.search-form {
+	margin: 3px auto;	
+}
+
+.search-form ul li {
+	padding: 3px;
+}
+
+.search-form ul li input {
+	outline: 0px;
+	border: 0px;
+	background-color: var(--color2);
+	border-bottom: 1px solid white;
+	color: white;
+	font-size: 1.5em;
+}
+
+.search-form ul li button {
+	padding: 6px 12px;
+}
+
+.search input {
+	outline: 0px;
 }
 
 section {
@@ -192,7 +218,6 @@ section {
 	padding-top: 6px;
 	border-bottom: 0.5px solid black;
 }
-
 
 .login {
 	text-align: center;
@@ -264,28 +289,29 @@ main {
 	padding: 6px 12px;
 }
 
-.report {
-
-}
-
-.report table {
-	margin: 60px auto;
+.report table {	
+	margin: 12px auto;
 	width: 90%;
-	border-collapse: collapse;
+	border-collapse: collapse;	
 }
 
 .report table thead tr th {
-	border: 1px solid black;
+	background-color: var(--color2);
 	padding: 6px;
+	color: white;
+	text-align: left;
 }
 
 .report table tbody tr td {
-	border: 1px solid black;
-	padding: 12px 6px;
+	padding: 6px;
 }
 
-.report table tbody tr td button {
-	padding: 6px 3px;
+.report table tbody tr:nth-of-type(even) {
+	background-color: var(--color1);
+}
+
+.report table tbody tr:nth-of-type(odd) {
+	background-color: var(--color3);
 }
 
 footer {
@@ -344,7 +370,7 @@ footer {
     top: 0;
     width: 100%;
     height: 100%;
-    overfl#menu buttonow: auto;
+    overflow: auto;
     background: silver;
     opacity: 0.9;
 }
@@ -371,23 +397,50 @@ footer {
 }
 
 .modalClient table {
+	width: 30%;
 	border-collapse: collapse;
 	margin: 12px auto;
 }
 
 .modalClient table tr th {
-	border: 1px solid silver;
+	border: 1px solid black;
 	padding: 6px;
 }
 
 .modalClient table tr td {
-	border: 1px solid silver;
+	border: 1px solid black;
 	padding: 6px;
+}
+
+.load-button {
+	text-align: center;
+}
+
+.load-button button {
+	width: 90%;
+	padding: 12px;
+	font-weight: bold;
+	font-size: 1.2em;
+	color: var(--color2);
+}
+
+.sorter {
+	cursor: pointer;
+	font-size: 1.2em;
+}
+
+.sorter:hover {
+	color: blue;
+}
+
+.sorter:active {
+	color: red;
 }
 
 .bold {
 	font-weight: bold;
 }
+
 
 .error {
 	font-weight: bold;

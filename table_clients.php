@@ -1,5 +1,6 @@
 <?php
 require_once "functions.php";
+<<<<<<< HEAD
 
 #getting data from the table Clients
 $rows_Clients = table_Clients ('select_all', NULL, NULL);
@@ -12,6 +13,8 @@ if (isset($_REQUEST['buttonSearch'])) {
 		$rows_Clients = table_Clients ('search', NULL, NULL);
 	}
 }
+=======
+>>>>>>> jqueryadded
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,28 +28,16 @@ include "includes/head.php";
 		<?php
 		$header = "Clients";
 		include "includes/header.php";
-		include "includes/nav.php";
-		include "includes/search.php";
+		include "includes/nav.php";		
 		?>
-		<main>
-			<!-- report table -->
-			<div class="report table">
-				<table>
-					<thead>
-						<tr>
-							<th>Member</th>
-							<th>Title</th>
-							<th>Name</th>
-							<th>D.O.B</th>
-							<th>Mobile</th>
-							<th>Email</th>
-							<th>Created By</th>
-							<th>##</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($rows_Clients as $row_Clients): ?>
+		<section>
+			<!-- search	 -->
+			<div class="search">
+				<form>
+					<table>
+						<thead>
 							<tr>
+<<<<<<< HEAD
 								<td><? echo $row_Clients->Member; ?></td>
 								<td><? echo $row_Clients->Title; ?></td>
 								<td><? echo $row_Clients->Name; ?></td>
@@ -63,9 +54,27 @@ include "includes/head.php";
 						<?php endforeach; ?>
 					</tbody>
 				</table>
+=======
+								<td>
+									<input type="text" name="search" id="Search" placeholder="Search">
+									<button type="button" class="button medium" name="btnSearch" id="btnSearch" onclick="searchTableClients();">Search</button>
+									<button type="button" class="button medium" name="btnClear" id="btnClear" onclick="loadClients('table_clientsphp.php', '#clients-table');">Clear</button>
+								</td>
+							</tr>
+						</thead>
+					</table>
+				</form>
 			</div>
-			<!-- end of report table -->
+			<!-- end of search -->
+		</section>
+		<main>
+			<!-- report table -->
+			<div class="report table" id="clients-table">	
+>>>>>>> jqueryadded
+			</div>
+			<!-- end of report table -->			
 		</main>
+<<<<<<< HEAD
 		<!-- modalClients -->
 		<div class="modalClients" id="modalClients">
 			 	<?php foreach ($rows_Clients as $row_Clients): ?>
@@ -126,24 +135,17 @@ include "includes/head.php";
 			 	<?php endforeach ?>
 		</div>
 		<!-- end of modalClient -->
+=======
+		<?php include "includes/footer.php"; ?>
+>>>>>>> jqueryadded
 	</div>
 	<!-- end of content -->
 </body>
+<script type="text/javascript" src="scripts/jQuery.js"></script>
 <script type="text/javascript" src="scripts/main.js"></script>
 <script type="text/javascript">
-	var modal = document.getElementById('modalClients');
-
-	//function to open modal
-        function openClientModal(modalToOpen) {
-            modal.style.display = 'block';
-            var modalToOpen = document.getElementById(modalToOpen);
-            modalToOpen.style.display = 'block';
-        }
-
-        //function to close modal
-        function modalClose() {
-            modal.style.display = 'none';
-            window.location.href = 'table_clients.php';
-        }
+		$(document).ready(function() {
+			loadClients('table_clientsphp.php', '#clients-table');
+		});
 </script>
 </html>

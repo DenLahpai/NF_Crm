@@ -7,11 +7,11 @@ check_num($_REQUEST['ClientsId']);
 # submitting data from the form 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	# checking for duplicated entry
-	$rowCount = table_Clients ('check_before_update', $_REQUEST['ClientsId'], NULL);
+	$rowCount = table_Clients ('check_before_update', $_REQUEST['ClientsId'], NULL, NULL, NULL);
 
 	if ($rowCount == 0) {
 		# updating
-		table_Clients ('update', $_REQUEST['ClientsId'], NULL);
+		table_Clients ('update', $_REQUEST['ClientsId'], NULL, NULL, NULL);
 	}
 	else {
 		$error = 'Duplicate entry!';
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 # getting data from the table Clients
-$rows_Clients = table_Clients ('select_one', $_REQUEST['ClientsId'], NULL);
+$rows_Clients = table_Clients ('select_one', $_REQUEST['ClientsId'], NULL, NULL, NULL);
 foreach ($rows_Clients as $row_Clients) {
 	# code...
 }

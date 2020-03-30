@@ -832,7 +832,7 @@ function table_Organizations ($job, $var1, $var2) {
 }
 
 # funtion to use data from the table Clients
-function table_Clients ($job, $var1, $var2) {
+function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 	$database = new Database();
 
 	switch ($job) {
@@ -950,6 +950,7 @@ function table_Clients ($job, $var1, $var2) {
 
 		case 'select_all':
 			# getting data from the table Clients
+
 			$query = "SELECT
 				Clients.Id,
 				Clients.Code,
@@ -963,6 +964,7 @@ function table_Clients ($job, $var1, $var2) {
 				Clients.NRC,
 				Clients.PassportNo,
 				Clients.Expiry,
+				Clients.Created,
 				Countries.Country,
 				Users.Username
 				FROM Clients
@@ -970,8 +972,11 @@ function table_Clients ($job, $var1, $var2) {
 				ON Clients.CountriesId = Countries.Id
 				LEFT JOIN Users
 				ON Clients.UsersId = Users.Id
+				$sorting 
+				LIMIT $limit
 			;";
 			$database->query($query);
+			$database->bind(':limit', $limit);		
 			return $r = $database->resultset();
 			break;
 
@@ -1053,9 +1058,8 @@ function table_Clients ($job, $var1, $var2) {
 			break;
 
 		case 'search':
-			# searching data from the table Clients
-			$search = trim($_REQUEST['search']);
-			$mySearch = '%'.$search.'%';
+			# $var2 = Search
+			$Search = '%'.$var2.'%';		
 			$query = "SELECT
 				Clients.Id,
 				Clients.Code,
@@ -1069,6 +1073,7 @@ function table_Clients ($job, $var1, $var2) {
 				Clients.NRC,
 				Clients.PassportNo,
 				Clients.Expiry,
+				Clients.Created,
 				Countries.Country,
 				Users.Username
 				FROM Clients
@@ -1084,10 +1089,12 @@ function table_Clients ($job, $var1, $var2) {
 				Clients.NRC,
 				Clients.PassportNo,
 				Countries.Country
-				) LIKE :mySearch
+				) LIKE :Search
+				$sorting 
+				LIMIT $limit
 			;";
 			$database->query($query);
-			$database->bind(':mySearch', $mySearch);
+			$database->bind(':Search', $Search);
 			return $r = $database->resultset();
 			break;
 
