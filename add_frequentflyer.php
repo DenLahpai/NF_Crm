@@ -17,9 +17,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 
-
 # getting data from the table Clients
-$rows_Clients = table_Clients ('select_one', $_REQUEST['ClientsId'], NULL);
+$rows_Clients = table_Clients ('select_one', $_REQUEST['ClientsId'], NULL, NULL, NULL);
 foreach ($rows_Clients as $row_Clients) {
 	# code...
 }

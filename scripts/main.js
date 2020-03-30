@@ -75,3 +75,74 @@ function selectOption (value, select) {
 		}
 	}
 }
+
+var limit = 30;
+var job = 'select_all';
+var sorting = 'ORDER BY Id ASC';
+var Search = $("#Search").val();
+
+//function to load from table Clients 
+function loadClients (file, destinationId) {
+    $(destinationId).load(file, {
+        limit: limit, 
+        job: job, 
+        sorting: sorting,
+        Search: Search
+    }); 
+    $("#Search").val("");
+}
+
+//function to update number of rows 
+function updateLimit() {
+    var limit = $("#limit").val();
+    var Search = $("#Search").val(); 
+    if (Search == "") {
+        var job = 'select_all';
+    }
+    else {
+        var job = 'search';
+    }
+    $("#clients-table").load("table_clientsphp.php", {
+        limit: limit, 
+        job: job, 
+        sorting: sorting,
+        Search: Search
+    });      
+}
+
+//sorting functions //
+function sortTableClients(column, order) {
+    var limit = $("#limit").val();
+    var Search = $("#Search").val(); 
+    if (Search == "") {
+        var job = 'select_all';
+    }
+    else {
+        var job = 'search';
+    }
+
+    var sorting = 'ORDER BY '+ column + ' '+ order;
+      
+
+    $("#clients-table").load("table_clientsphp.php", {
+        limit: limit, 
+        job: job, 
+        sorting: sorting,
+        Search: Search
+    });  
+}
+
+//search functions
+function searchTableClients() {
+    var limit = $("#limit").val();
+    var job = 'search';
+    var sorting = 'ORDER BY Id ASC';
+    var Search = $("#Search").val(); 
+
+    $("#clients-table").load("table_clientsphp.php", {
+        limit: limit, 
+        job: job, 
+        sorting: sorting,
+        Search: Search
+    });  
+}    

@@ -4,14 +4,14 @@ require_once "functions.php";
 # submitting data from the form 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	# checking for duplicate entry
-	$row_Count = table_Clients ('check_before_insert', NULL, NULL);
+	$row_Count = table_Clients ('check_before_insert', NULL, NULL, NULL, NULL);
 	if ($row_Count == 0) {
 		# getting Id number to generate md5 code
-		$md5 = table_Clients ('count_rows', NULL, NULL);
+		$md5 = table_Clients ('count_rows', NULL, NULL, NULL, NULL);
 		$md5 = $md5 + 1;
 
 		# inserting data to the table Clients
-		echo table_Clients ('insert', $md5, NULL);
+		table_Clients ('insert', $md5, NULL, NULL, NULL);
 	}
 	else {
 		$error = "Duplicate entry!";

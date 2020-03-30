@@ -1,13 +1,13 @@
 <section>
 	<!-- search	 -->
 	<div class="search">
-		<form action="#" method="post">
+		<form>
 			<table>
 				<thead>
 					<tr>
 						<td>
-							<input type="text" name="search" id="search" placeholder="Search" value="<? if (!empty($_REQUEST['search'])) { echo $_REQUEST['search']; } ?>">
-							<button class="button medium" name="buttonSearch" id="buttonSearch">Search</button>
+							<input type="text" name="search" id="Search" placeholder="Search">
+							<button type="button" class="button medium" name="btnSearch" id="btnSearch">Search</button>
 						</td>
 					</tr>
 				</thead>

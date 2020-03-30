@@ -1,141 +1,101 @@
-<?php  
+<?php 
 require_once "functions.php";
-
-# getting data from the table Clients
-# $rows_Clients = table_Clients ('select_all', NULL, NULL);
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <?php
-$page_title = "Clients";  
+$page_title = "Clients";
 include "includes/head.php";
 ?>
+<script type="text/javascript" src="scripts/jQuery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function () {
+		var limit = 30;
+		var job = 'select_all';
+		$(".grid-div").load("clientsphp.php", {
+			limit: limit, 
+			job: job	
+		});
+
+		$("#load").click(function () {
+			limit = limit + 30;
+			$(".grid-div").load("clientsphp.php", {
+				limit: limit,
+				job: job
+			});
+			$("#load").html('Load More');
+			$("#Search").val("");
+		});	
+
+		$("#btnSearch").click(function () {
+			var Search = $("#Search").val();
+			var job = 'search';
+			var limit = "";
+			$(".grid-div").load("clientsphp.php", {
+				Search: Search, 
+				limit: limit, 
+				job: job
+			});
+			$("#load").html('Clear Search');			
+		});
+		
+	});
+</script>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
-		$header = "Clients";
-		include "includes/header.php";
-		include "includes/nav.php";
+		<?php
+			include "includes/nav.php";
+			$header = "Clients";
+			include "includes/header.php";
 		?>
 		<!-- sub-menu -->
 		<div class="sub-menu">
-			<ul>
-				<li>
-					<a href="new_client.php" title="New Client">Add New</a>
-				</li>
-				<li>
-					<a href="table_clients.php" title="View as Table" target="_blank">Table View</a>
-				</li>
-			</ul>
+			<!-- menu-links -->
+			<div class="menu-links">
+				<ul>
+					<li>
+						<a href="new_client.php" title="New Client">Add New</a>
+					</li>
+					<li>
+						<a href="table_clients.php" title="View as Table" target="_blank">Table View</a>
+					</li>
+				</ul>
+			</div>
+			<!-- end of menu-links -->
+			<!-- search-form -->
+			<div class="search-form">
+				<form method="post">
+					<ul>
+						<li>
+							<input type="text" name="Search" id="Search">
+						</li>
+						<li>
+							<button type="button" id="btnSearch">Search</button>
+						</li>
+					</ul>
+				</form>
+			</div>
+			<!-- end of search-form -->
 		</div>
 		<!-- end of sub-menu -->
 		<main>
+			<!-- result-message -->
+			<div class="result-message">
+				
+			</div>
+			<!-- end of result-message	 -->
 			<!-- grid-div -->
 			<div class="grid-div">
-				<?php foreach ($rows_Clients as $row_Clients): ?>
-				<!-- grid-item -->
-				<div class="grid-item">
-					<ul>
-						<li class="bold">
-							<? echo $row_Clients->Title." ".$row_Clients->Name; ?>
-						</li>
-						<li>
-							MemberId: <span class="bold"><? echo $row_Clients->Member; ?></span>
-						</li>
-						<li>
-							D.O.B: <span class="bold"><? echo date("d-M-Y", strtotime($row_Clients->DOB)); ?></span>
-						</li>
-						<li style="text-align: center;">
-							<button class="medium button" onclick="openClientModal('<? echo "modalClient$row_Clients->Id"; ?>');">View</button>
-							<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Edit</button></a>
-						</li>
-					</ul>
-				</div>
-				<!-- end of grid-item -->
-				<?php endforeach ?>
 			</div>
 			<!-- end of grid-div -->
+			<div class="load-button">
+				<button id="load">Load More</button>
+			</div>
 		</main>
-		<!-- modalClients -->
-		<div class="modalClients" id="modalClients">
-			 	<?php foreach ($rows_Clients as $row_Clients): ?>
-			 		<!-- modalClient -->
-			 		<div class="modalClient" id="<? echo "modalClient$row_Clients->Id"; ?>">
-			 			<ul>
-			 				<h1 id="modalClose" onclick="modalClose();" title="Close">&times;</h3>
-			 				<li class="bold">
-			 				<? echo $row_Clients->Title." ".$row_Clients->Name; ?>
-			 				</li>
-			 				<li>
-			 					Member Id: <? echo $row_Clients->Member; ?>
-			 				</li>
-			 				<li>
-			 					D.O.B: <? echo date("d-M-Y", strtotime($row_Clients->DOB)); ?>
-			 				</li>
-			 				<li>
-			 					Mobile: <? echo $row_Clients->Mobile; ?>
-			 				</li>
-			 				<li>
-			 					Email: <a href="<? echo "mailto: $row_Clients->Email; " ?>"><? echo $row_Clients->Email; ?></a>
-			 				</li>
-			 				<li>
-			 					NRC: <? echo $row_Clients->NRC; ?>
-			 				</li>
-			 				<li>
-			 					Passport No: <? echo $row_Clients->PassportNo." | Expiry: ".date('d-M-Y', strtotime($row_Clients->Expiry)); ?>
-			 				</li>
-			 				<li>
-			 					Country: <? echo $row_Clients->Country; ?>
-			 				</li>
-			 				<li>
-			 					Frequent Flyers: <a href="<? echo "add_frequentflyer.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Add</button></a>
-			 				</li>
-			 			</ul>			 			
-			 			<table>
-			 				<thead>
-			 					<tr>
-			 						<th>Membership No</th>
-			 						<th>Frequent Flyer</th>
-			 						<th>#</th>
-			 					</tr>
-			 					<?php  
-			 					# getting data from the talbe FFMembers
-			 					$rows_FFMembers = table_FFMembers ('select_all', $row_Clients->Id, NULL);
-			 					foreach ($rows_FFMembers as $row_FFMembers) {
-			 						echo "<tr>";
-			 						echo "<td>".$row_FFMembers->FFNumber."</td>";
-			 						echo "<td>".$row_FFMembers->FrequentFlyer."</td>";
-			 						echo "<td><a href=\"update_frequentflyer.php?FFMembersId=$row_FFMembers->Id\">Edit</a>";
-			 						echo "</tr>";
-			 					}
-			 					?>
-			 				</thead>
-			 			</table>
-			 		</div>
-			 		<!-- end of modalClient -->
-			 	<?php endforeach ?>
-		</div>
-		<!-- end of modalClient -->
 		<?php include "includes/footer.php"; ?>
 	</div>
 	<!-- end of content -->
 </body>
-<script type="text/javascript" src="scripts/main.js"></script>
-<script type="text/javascript">
-	var modal = document.getElementById('modalClients');
 
-	//function to open modal
-        function openClientModal(modalToOpen) {
-            modal.style.display = 'block';
-            var modalToOpen = document.getElementById(modalToOpen);
-            modalToOpen.style.display = 'block';
-        }
-
-        //function to close modal
-        function modalClose() {
-            modal.style.display = 'none';
-            window.location.href = 'clients.php';
-        }
-</script>
 </html>
