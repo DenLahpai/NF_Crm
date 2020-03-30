@@ -3,13 +3,10 @@ require_once "functions.php";
 
 $job = $_REQUEST['job'];
 $limit = $_REQUEST['limit'];
-if (!empty($_REQUEST['Search'])) {
-	$Search = trim($_REQUEST['Search']);
-	$rows_Clients = table_Clients ($job, NULL, $Search, $limit, "ORDER BY Id DESC");
-}
-else {
-	$rows_Clients = table_Clients ($job, NULL, NULL, $limit, "ORDER BY Id DESC");
-}
+$Search = $_REQUEST['Search'];
+
+$rows_Clients = table_Clients ($job, NULL, $Search, $limit, "ORDER BY Id DESC");
+
 ?>
 
 <?php foreach ($rows_Clients as $row_Clients): ?>

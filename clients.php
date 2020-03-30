@@ -12,7 +12,9 @@ include "includes/head.php";
 	$(document).ready(function () {
 		var limit = 30;
 		var job = 'select_all';
+		var Search = $("#Search").val();
 		$(".grid-div").load("clientsphp.php", {
+			Search: Search,
 			limit: limit, 
 			job: job	
 		});
@@ -20,6 +22,7 @@ include "includes/head.php";
 		$("#load").click(function () {
 			limit = limit + 30;
 			$(".grid-div").load("clientsphp.php", {
+				Search: Search,	
 				limit: limit,
 				job: job
 			});
@@ -28,9 +31,8 @@ include "includes/head.php";
 		});	
 
 		$("#btnSearch").click(function () {
-			var Search = $("#Search").val();
 			var job = 'search';
-			var limit = "";
+			
 			$(".grid-div").load("clientsphp.php", {
 				Search: Search, 
 				limit: limit, 
