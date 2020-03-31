@@ -133,13 +133,13 @@ function sortTableClients(column, order) {
 }
 
 //search functions
-function searchTableClients() {
+function searchTableClients(file, destinationId) {
     var limit = $("#limit").val();
     var job = 'search';
     var sorting = 'ORDER BY Id ASC';
     var Search = $("#Search").val(); 
 
-    $("#clients-table").load("table_clientsphp.php", {
+    $(destinationId).load(file, {
         limit: limit, 
         job: job, 
         sorting: sorting,

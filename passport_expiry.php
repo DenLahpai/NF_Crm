@@ -22,6 +22,19 @@ include "includes/head.php";
         include "includes/header.php";
         include "includes/nav.php";
         ?>
+        <!-- sub-menu -->
+        <div class="sub-menu">
+            <!-- menu-link  -->
+            <div class="menu-link">
+                <ul>
+                    <li>
+                        <a href="table_passport_expiry.php" target="_blank">Table View</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- end of menu-link  -->
+        </div>
+        <!-- end of sub-menu  -->
         <main>
             <!-- grid-div -->
             <div class="grid-div">

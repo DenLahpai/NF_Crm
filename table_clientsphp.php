@@ -12,7 +12,6 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 	<thead>
 		<tr>
 			<th>
-				Show: 
 				<select name="limit" id="limit" onchange="updateLimit();">
 					<?php  
 					$i = 30;
@@ -67,7 +66,7 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 				<td><? echo $row_Clients->Name; ?></td>
 				<td><? echo date('d-M-Y', strtotime($row_Clients->DOB)); ?></td>
 				<td><? echo $row_Clients->Mobile; ?></td>
-				<td><? echo "<a href=\"mailto: $row_Clients->Email\">$row_Clients->Email</a>"; ?></td>
+				<td><? echo "<a href=\"mailto: $row_Clients->Email\" title=\"$row_Clients->Email\">Email</a>"; ?></td>
 				<td><? echo $row_Clients->Username; ?></td>
 				<td><? echo date("d-M-Y @ H:i", strtotime($row_Clients->Created));?></td>
 				<td style="text-align: center;">

@@ -24,7 +24,7 @@ include "includes/head.php";
 							<tr>
 								<td>
 									<input type="text" name="search" id="Search" placeholder="Search">
-									<button type="button" class="button medium" name="btnSearch" id="btnSearch" onclick="searchTableClients();">Search</button>
+									<button type="button" class="button medium" name="btnSearch" id="btnSearch" onclick="searchTableClients('table_clientsphp.php', '#clients-table');">Search</button>
 									<button type="button" class="button medium" name="btnClear" id="btnClear" onclick="loadClients('table_clientsphp.php', '#clients-table');">Clear</button>
 								</td>
 							</tr>
