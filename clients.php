@@ -32,15 +32,14 @@ include "includes/head.php";
 
 		$("#btnSearch").click(function () {
 			var job = 'search';
-			
+			var Search = $("#Search").val();
 			$(".grid-div").load("clientsphp.php", {
 				Search: Search, 
 				limit: limit, 
 				job: job
 			});
 			$("#load").html('Clear Search');			
-		});
-		
+		});		
 	});
 </script>
 <body>

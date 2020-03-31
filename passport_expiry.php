@@ -2,7 +2,7 @@
 require_once "functions.php";
 
 #getting data from the table Clients
-$rows_Clients = table_Clients ('passport_expiry', NULL, NULL);
+$rows_Clients = table_Clients ('passport_expiry', NULL, NULL, NULL, NULL);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     table_PassportReminders ('insert', NULL, NULL);
