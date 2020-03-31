@@ -68,7 +68,7 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 				<td><? echo $row_Clients->Mobile; ?></td>
 				<td><? echo "<a href=\"mailto: $row_Clients->Email\" title=\"$row_Clients->Email\">Email</a>"; ?></td>
 				<td><? echo $row_Clients->Username; ?></td>
-				<td><? echo date("d-M-Y @ H:i", strtotime($row_Clients->Created));?></td>
+				<td title="<? echo date("d-M-Y @ H:i", strtotime($row_Clients->Created));?>"><? echo date("d-M-Y", strtotime($row_Clients->Created));?></td>
 				<td style="text-align: center;">
 					<button class="medium button" onclick="openClientModal('<? echo "modalClient$row_Clients->Id"; ?>');">View</button>
 					<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Edit</button></a>
@@ -155,7 +155,6 @@ var modal = document.getElementById('modalClients');
     //function to close modal
     function modalClose() {
         modal.style.display = 'none';
-        window.location.href = 'table_clients.php';
     }
     
 </script>

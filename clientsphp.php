@@ -105,6 +105,5 @@ $rows_Clients = table_Clients ($job, NULL, $Search, $limit, "ORDER BY Id DESC");
         //function to close modal
         function modalClose() {
             modal.style.display = 'none';
-            window.location.href = 'clients.php';
         }
 </script>

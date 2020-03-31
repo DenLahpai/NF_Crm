@@ -98,5 +98,4 @@ include "includes/head.php";
 	</div>
 	<!-- end of content -->
 </body>
-
 </html>
