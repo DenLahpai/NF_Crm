@@ -8,11 +8,11 @@
 	<!-- end of menuSwitch -->
 	<!-- menu -->
 	<div id="menu">
-		<a href="home.php"><button type="button" class="button menu" onclick="window.location.href='home.php'">Home</button></a>
-		<a href="reports.php"><button type="button" class="button menu">Reports</button></a>
-        <a href="admin.php"><button type="button" class="button menu">Admin</button></a>
-        <a href="logout.php"><button type="button" class="button menu">Logout</button></a>
-		<a href="#"><button type="button" class="button menu" name="button" onclick="closeMenu();">Close</button></a>
+		<button type="button" class="button menu" onclick="window.location.href='home.php'"><a href="home.php">Home</a></button>
+		<button type="button" class="button menu"><a href="reports.php">Reports</a></button>
+        <button type="button" class="button menu"><a href="admin.php">Admin</a></button>
+        <button type="button" class="button menu"><a href="logout.php">Logout</a></button>
+		<button type="button" class="button menu" name="button" onclick="closeMenu();">Close</button>
 	</div>
 	<!-- end of menu -->
     <!-- username -->

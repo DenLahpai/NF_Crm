@@ -22,9 +22,11 @@ $rows_Clients = table_Clients ($job, NULL, $Search, $limit, "ORDER BY Id DESC");
 			<li>
 				D.O.B: <span class="bold"><? echo date("d-M-Y", strtotime($row_Clients->DOB)); ?></span>
 			</li>
+			<li style="text-align: center;"><a href="<? echo "uploadDocument.php?ClientsId=$row_Clients->Id"; ?>">Upload Documents</a></li>
 			<li style="text-align: center;">
 				<button class="medium button" onclick="openClientModal('<? echo "modalClient$row_Clients->Id"; ?>');">View</button>
 				<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Edit</button></a>
+
 			</li>
 		</ul>
 	</div>

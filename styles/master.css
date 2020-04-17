@@ -108,13 +108,18 @@ nav	{
 	color: var(--color2);
 }
 
+#menu button:hover a{
+	color: var(--color2);
+}
+
 #menu button:active {
 	box-shadow: 0 6px #666;
 	transform: translateY(3px);
 }
 
-#menu a {
+#menu button a {
     text-decoration: none;
+    color: white;
 }
 
 .sub-menu {
