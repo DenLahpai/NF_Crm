@@ -1,6 +1,5 @@
 <?php
 require_once "functions.php";
-
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -26,8 +25,8 @@ include "includes/head.php";
                         <tr>
                             <td>
                                 <input type="text" name="search" id="Search" placeholder="Search">
-                                <button type="button" class="button medium" name="btnSearch" id="btnSearch" onclick="searchTableClients();">Search</button>
-                                <button type="button" class="button medium" name="btnClear" id="btnClear" onclick="loadClients('table_clientsphp.php', '#clients-table');">Clear</button>
+                                <button type="button" class="button medium" name="btnSearch" id="btnSearch" onclick="searchPassportExpiry();">Search</button>
+                                <button type="button" class="button medium" name="btnClear" id="btnClear" onclick="loadPassportExpiry();">Clear</button>
                             </td>
                         </tr>
                     </thead>
@@ -49,7 +48,7 @@ include "includes/head.php";
 <script type="text/javascript" src="scripts/main.js"></script>
 <script type="text/javascript">
 		$(document).ready(function() {
-			// loadClients('table_passportexpiryphp.php', '#passport-expiry-table');
+			loadPassportExpiry();
 		});
 </script>
 </html>

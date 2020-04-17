@@ -2,7 +2,7 @@
 require_once "functions.php";
 
 #getting data from the table Clients
-$rows_Clients = table_Clients ('passport_expiry', NULL, NULL, NULL, NULL);
+$rows_Clients = table_Clients ('passport_expiry', NULL, NULL, 9999, 'ORDER BY Expiry ASC');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     table_PassportReminders ('insert', NULL, NULL);
@@ -60,7 +60,10 @@ include "includes/head.php";
                             $today = date('Y-m-d');
                             $six_month = date('Y-m-d', strtotime('180 days'));
                             if ($today > $row_Clients->Expiry) {
-                                echo "<span class=\"error\">".date('d-M-Y', strtotime($row_Clients->Expiry))." EXPIRED!!!";
+                                echo "<span class=\"error\">".date('d-M-Y', strtotime($row_Clients->Expiry))." EXPIRED!!!</span>";
+                            }
+                            elseif ($six_month > $row_Clients->Expiry) {
+                                echo "<span class=\"error\">".date('d-M-Y', strtotime($row_Clients->Expiry))." No Travel!!!</span>";        
                             }
                             else {
                                 echo date('d-M-Y', strtotime($row_Clients->Expiry));
@@ -93,12 +96,7 @@ include "includes/head.php";
                                                 <td colspan="2">
                                                     <input type="text" name="Method" id="Method" placeholder="Phone, Email, SMS" required>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <th>Date Time</th>
-                                                <th>Method</th>
-                                                <th>User</th>
-                                            </tr>
+                                            </tr>                                            
                                         </thead>
                                         <tbody>
                                             <?php

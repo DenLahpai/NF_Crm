@@ -42,7 +42,7 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 			<th>Mobile</th>
 			<th>Email</th>
 			<th>
-				Created By
+				Created by
 				<span class="sorter" onclick="sortTableClients('Username', 'ASC');" title="A -> Z">&#9650;</span>
 				<span class="sorter" onclick="sortTableClients('Username', 'DESC');" title="Z -> A">&#9660;</span>
 			</th>

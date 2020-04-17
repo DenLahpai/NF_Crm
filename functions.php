@@ -975,8 +975,7 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 				$sorting 
 				LIMIT $limit
 			;";
-			$database->query($query);
-			$database->bind(':limit', $limit);		
+			$database->query($query);					
 			return $r = $database->resultset();
 			break;
 
@@ -1100,7 +1099,7 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 
 		case 'passport_expiry':
 			$today = date('Y-m-d');
-			$limit = date('Y-m-d', strtotime($today.' + 210 days'));
+			$expiry_limit = date('Y-m-d', strtotime($today.' + 210 days'));
 			$query = "SELECT
 				Clients.Id,
 				Clients.Code,
@@ -1114,6 +1113,7 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 				Clients.NRC,
 				Clients.PassportNo,
 				Clients.Expiry,
+				Clients.Created,
 				Countries.Country,
 				Users.Username
 				FROM Clients
@@ -1121,12 +1121,59 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 				ON Clients.CountriesId = Countries.Id
 				LEFT JOIN Users
 				ON Clients.UsersId = Users.Id
-				WHERE Expiry <= :limit
+				WHERE Expiry <= :expiry_limit 
+				$sorting 
+				LIMIT $limit
 			;";
 			$database->query($query);
-			$database->bind(':limit', $limit);
+			$database->bind(':expiry_limit', $expiry_limit);
 			return $r = $database->resultset();
-			break;		
+			break;
+			
+			case 'search_passport_expiry':
+				# $var2 = Search
+				$Search = '%'.$var2.'%';	
+				$today = date('Y-m-d');
+				$expiry_limit = date('Y-m-d', strtotime($today.' + 210 days'));	
+				$query = "SELECT
+					Clients.Id,
+					Clients.Code,
+					Clients.QRLink,
+					Clients.Member,
+					Clients.Title,
+					Clients.Name,
+					Clients.DOB,
+					Clients.Mobile,
+					Clients.Email,
+					Clients.NRC,
+					Clients.PassportNo,
+					Clients.Expiry,
+					Clients.Created,
+					Countries.Country,
+					Users.Username
+					FROM Clients
+					LEFT JOIN Countries
+					ON Clients.CountriesId = Countries.Id
+					LEFT JOIN Users
+					ON Clients.UsersId = Users.Id
+					WHERE Expiry <= :expiry_limit
+					AND CONCAT (
+					Clients.Member,
+					Clients.Name,
+					Clients.Mobile,
+					Clients.Email,
+					Clients.NRC,
+					Clients.PassportNo,
+					Countries.Country
+					) LIKE :Search
+					$sorting 
+					LIMIT $limit
+				;";
+				$database->query($query);
+				$database->bind(':expiry_limit', $expiry_limit);
+				$database->bind(':Search', $Search);
+				return $r = $database->resultset();
+				break;	
 
 		default:
 			# code...
