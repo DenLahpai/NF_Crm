@@ -22,7 +22,42 @@ $rows_Clients = table_Clients ($job, NULL, $Search, $limit, "ORDER BY Id DESC");
 			<li>
 				D.O.B: <span class="bold"><? echo date("d-M-Y", strtotime($row_Clients->DOB)); ?></span>
 			</li>
-			<li style="text-align: center;"><a href="<? echo "uploadDocument.php?ClientsId=$row_Clients->Id"; ?>">Upload Documents</a></li>
+			<li>
+			<?php
+			# getting data from the table Documents
+			$rows_Documents = table_Documents ('select_for_one_client', 'Passport', $row_Clients->Id);
+			if ($rows_Documents == 0) {
+				echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id\">Passport</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+			}
+			else {
+				foreach ($rows_Documents as $row_Documents) {
+					echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+				}				
+			}
+
+			# getting data from the table Documents
+			$rows_Documents = table_Documents ('select_for_one_client', 'NRC', $row_Clients->Id);
+			if ($rows_Documents == 0) {
+				echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=NRC\">NRC</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+			}
+			else {
+				foreach ($rows_Documents as $row_Documents) {
+					echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+				}				
+			}	
+			# getting data from the table Documents
+			$rows_Documents = table_Documents ('select_for_one_client', 'Profile', $row_Clients->Id);
+			if ($rows_Documents == 0) {
+				echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=Profile\">Profile</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+			}
+			else {
+				foreach ($rows_Documents as $row_Documents) {
+					echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+				}				
+			}					
+			?>
+			</li>			
+			<li></li>
 			<li style="text-align: center;">
 				<button class="medium button" onclick="openClientModal('<? echo "modalClient$row_Clients->Id"; ?>');">View</button>
 				<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Edit</button></a>

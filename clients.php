@@ -73,9 +73,9 @@ include "includes/head.php";
 						</li>
 						<li>
 							<button type="button" id="btnSearch">Search</button>
-						</li>
+						</li>						
 					</ul>
-				</form>
+				</form>				
 			</div>
 			<!-- end of search-form -->
 		</div>

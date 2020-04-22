@@ -55,6 +55,11 @@ class Database {
         return $this->stm->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function resultArray() {
+        $this->execute();
+        return $this->stm->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function rowCount() {
         $this->execute();
         return $this->stm->rowCount();

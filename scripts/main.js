@@ -96,6 +96,7 @@ function loadClients (file, destinationId) {
 function updateLimit() {
     var limit = $("#limit").val();
     var Search = $("#Search").val(); 
+    var sorting = 'ORDER BY Id ASC';
     if (Search == "") {
         var job = 'select_all';
     }
@@ -221,6 +222,5 @@ function insertReminder(Id) {
         job: job,
         ClientsId: ClientsId, 
         Method: Method
-    });
-    
+    });    
 }

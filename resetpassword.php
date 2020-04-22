@@ -10,6 +10,6 @@ foreach ($rows_Users as $row_Users) {
 	# code...
 }
 
-echo table_Users ('reset_password', $_REQUEST['UsersId'], $row_Users->Email);
+table_Users ('reset_password', $_REQUEST['UsersId'], $row_Users->Email);
 
 ?>

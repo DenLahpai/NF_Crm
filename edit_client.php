@@ -23,6 +23,7 @@ $rows_Clients = table_Clients ('select_one', $_REQUEST['ClientsId'], NULL, NULL,
 foreach ($rows_Clients as $row_Clients) {
 	# code...
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -117,6 +118,44 @@ include "includes/head.php";
 	                            		?>
                             		</select>
                             	</td>
+							</tr>
+                            <tr>
+                                <td colspan="2">
+    							<?php
+                                # getting data from the table Documents
+                                $rows_Documents = table_Documents ('select_for_one_client', 'Passport', $row_Clients->Id);
+                                if ($rows_Documents == 0) {
+                                    echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id\">Passport</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+                                }
+                                else {
+                                    foreach ($rows_Documents as $row_Documents) {
+                                        echo "<a href=\"update_document.php?DocumentsId=$row_Documents->Id\" target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+                                    }               
+                                }
+
+                                # getting data from the table Documents
+                                $rows_Documents = table_Documents ('select_for_one_client', 'NRC', $row_Clients->Id);
+                                if ($rows_Documents == 0) {
+                                    echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=NRC\">NRC</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+                                }
+                                else {
+                                    foreach ($rows_Documents as $row_Documents) {
+                                        echo "<a href=\"update_document.php?DocumentsId=$row_Documents->Id\" target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+                                    }               
+                                }
+
+                                # getting data from the table Documents
+                                $rows_Documents = table_Documents ('select_for_one_client', 'Profile', $row_Clients->Id);
+                                if ($rows_Documents == 0) {
+                                    echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=Profile\">Profile</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+                                }
+                                else {
+                                    foreach ($rows_Documents as $row_Documents) {
+                                        echo "<a href=\"update_document.php?DocumentsId=$row_Documents->Id\" target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+                                    }               
+                                }                                              
+    							?>
+                                </td>
                             </tr>
                             <tr>
                                 <th colspan="2" class="error">

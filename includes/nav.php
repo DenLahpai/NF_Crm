@@ -8,10 +8,11 @@
 	<!-- end of menuSwitch -->
 	<!-- menu -->
 	<div id="menu">
-		<button type="button" class="button menu" onclick="window.location.href='home.php'"><a href="home.php">Home</a></button>
-		<button type="button" class="button menu"><a href="reports.php">Reports</a></button>
-        <button type="button" class="button menu"><a href="admin.php">Admin</a></button>
-        <button type="button" class="button menu"><a href="logout.php">Logout</a></button>
+		<button type="button" class="button menu" onclick="window.location.href='home.php'">Home</button>
+		<button type="button" class="button menu">Reports</button>
+        <button type="button" class="button menu" onclick="window.location.href='admin.php'">Admin</button>
+        <button type="button" class="button menu" onclick="window.location.href='help.php'">Help</button>
+        <button type="button" class="button menu" onclick="window.location.href='logout.php'">Logout</button>
 		<button type="button" class="button menu" name="button" onclick="closeMenu();">Close</button>
 	</div>
 	<!-- end of menu -->

@@ -320,6 +320,7 @@ function table_Users ($job, $var1, $var2) {
 				Database Team
 				</p>";
 				$mail_header = "FROM: No Reply <noreply@nicefare-travels.com>\r\n";
+				$mail_header .= "Content-type: text/html\r\n";
 				mail($var2, $subject, $message, $mail_header);
 				header("location: users.php");
 			}
@@ -976,7 +977,12 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 				LIMIT $limit
 			;";
 			$database->query($query);					
-			return $r = $database->resultset();
+			if ($var1 == 'array') {
+                return $r = $database->resultArray();
+            }
+            else {
+                return $r = $database->resultset();
+            }
 			break;
 
 		case 'select_one':
@@ -1173,20 +1179,6 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 			$database->bind(':expiry_limit', $expiry_limit);
 			$database->bind(':Search', $Search);
 			return $r = $database->resultset();
-			break;
-
-		case 'upload':
-			# code...
-			$ClientsId = $_REQUEST['ClientsId'];
-			$DocType = $_REQUEST['DocType'];
-			$file = $_FILES['file'];
-			$fileExt = strtolower(end($Ext));
-			if ($file['error'] == 0) {
-								
-			}
-			else {
-				echo "There was an error uploading file!";
-			}
 			break;	
 
 		default:
@@ -1399,6 +1391,103 @@ function table_PassportReminders ($job, $var1, $var2) {
             // code...
             break;
     }
+}
+
+# function to use data from the table Documents
+function table_Documents ($job, $var1, $var2) {
+	$database = new Database ();
+
+	switch ($job) {
+
+		case 'check_before_insert': 
+			$DocType = $_REQUEST['DocType'];
+			$ClientsId = $_REQUEST['ClientsId'];
+			$query = "SELECT * FROM Documents WHERE 
+				DocType = :DocType
+				AND ClientsId = :ClientsId
+			;";	
+			$database->query($query);
+			$database->bind(':DocType', $DocType);
+			$database->bind(':ClientsId', $ClientsId);
+			return $r = $database->rowCount();	
+			break;
+		
+		case 'insert': 
+			# var2 = File_name
+			$DocType = $_REQUEST['DocType'];
+			$ClientsId = $_REQUEST['ClientsId'];
+			$query = "INSERT INTO Documents SET 
+				FileName = :FileName, 
+				DocType = :DocType,
+				ClientsId = :ClientsId,
+				UsersId = :UsersId
+			;";
+			$database->query($query);
+			$database->bind(':FileName', $var2);
+			$database->bind(':DocType', $DocType);
+			$database->bind(':ClientsId', $ClientsId);
+			$database->bind(':UsersId', $_SESSION['UsersId']);
+			if ($database->execute()) {
+				header("location: clients.php");
+			}
+			break;
+
+		case 'select_for_one_client':
+			# $var2 = ClientsId;
+			$query = "SELECT * FROM Documents WHERE 
+				DocType = :DocType
+				AND ClientsId = :ClientsId ;";
+			$database->query($query);
+			$database->bind(':DocType', $var1);
+			$database->bind(':ClientsId', $var2);
+			if ($database->rowCount() == 0) {
+				return $r = $database->rowCount();
+			}
+			else {
+				return $r = $database->resultset();
+			}
+			break;	
+		
+		case 'select_one':
+			#$var1 = DocumentsId
+			$query = "SELECT * FROM Documents WHERE Id = :DocumentsId ;";
+			$database->query($query);
+			$database->bind(':DocumentsId', $var1);
+			return $r = $database->resultset();
+			break;
+
+		case 'unlink_image':
+			#$var1 = DocumentsId
+			$query = "UPDATE Documents SET 
+				ClientsId = 0
+				WHERE Id = :DocumentsId
+			;";	
+			$database->query($query);
+			$database->bind(':DocumentsId', $var1);
+			if ($database->execute()) {
+				header("location: clients.php");
+			}
+			break;
+		case 'update': 
+			# var1 = DocumentsId
+			# var2 = FileName
+			$query = "UPDATE Documents SET 
+				FileName = :FileName,
+				UsersId = :UsersId
+				WHERE Id = :DocumentsId
+			;";
+			$database->query($query);
+			$database->bind(':FileName', $var2);
+			$database->bind(':UsersId', $_SESSION['UsersId']);
+			$database->bind(':DocumentsId', $var1);
+			if ($database->execute()) {
+				header("location: update_document.php?DocumentsId=$var1");
+			}
+			break;	
+		default:
+            // code...
+            break;
+	}
 }
 
 ?>

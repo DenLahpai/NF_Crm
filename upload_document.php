@@ -10,9 +10,6 @@ foreach ($rows_Clients as $row_Clients) {
 	# code...
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	table_Clients ('upload', NULL, NULL, NULL, NULL);
-}
 ?>
 <!DOCTYPE html>
 <?php  
@@ -30,7 +27,7 @@ include "includes/head.php";
 		<main>
 			<!-- big form -->
 			<div class="big form">
-				<form action="#" method="post" enctype="multipart/form-data">
+				<form action="<? echo "upload.php?ClientsId=".$_REQUEST['ClientsId']; ?>" method="post" enctype="multipart/form-data">
 					<table>
 						<thead>
 							<tr>
@@ -40,10 +37,12 @@ include "includes/head.php";
 						<tbody>
 							<tr>
 								<td>
+									<span id="value" class="invisible"><? echo $_REQUEST['DocType'];?></span>
+									Document Type: 
 									<select name="DocType" id="DocType">
-										<option value="">Select Document Type</option>
 										<option value="Passport">Passport</option>
 										<option value="NRC">NRC</option>
+										<option value="Profile">Profile</option>
 									</select>
 								</td>
 							</tr>
@@ -74,5 +73,9 @@ include "includes/head.php";
 	</div>
 	<!-- end of content -->
 </body>
+<script src="scripts/jQuery.js"></script>
 <script type="text/javascript" src="scripts/main.js"></script>
+<script type="text/javascript">
+	selectOption ('value', 'DocType');	
+</script>
 </html>

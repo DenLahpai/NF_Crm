@@ -51,6 +51,7 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 				<span class="sorter" onclick="sortTableClients('Created', 'ASC');" title="Old -> New">&#9650;</span>
 				<span class="sorter" onclick="sortTableClients('Created', 'DESC');" title="New -> Old">&#9660;</span>
 			</th>
+			<th>Documents</th>
 			<th>##</th>
 		</tr>
 	</thead>	
@@ -69,10 +70,44 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 				<td><? echo "<a href=\"mailto: $row_Clients->Email\" title=\"$row_Clients->Email\">Email</a>"; ?></td>
 				<td><? echo $row_Clients->Username; ?></td>
 				<td title="<? echo date("d-M-Y @ H:i", strtotime($row_Clients->Created));?>"><? echo date("d-M-Y", strtotime($row_Clients->Created));?></td>
-				<td style="text-align: center;">
+				<td>
+					<?php
+					# getting data from the table Documents
+					$rows_Documents = table_Documents ('select_for_one_client', 'Passport', $row_Clients->Id);
+					if ($rows_Documents == 0) {
+						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id\">Passport</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+					}
+					else {
+						foreach ($rows_Documents as $row_Documents) {
+							echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+						}				
+					}
+
+					# getting data from the table Documents
+					$rows_Documents = table_Documents ('select_for_one_client', 'NRC', $row_Clients->Id);
+					if ($rows_Documents == 0) {
+						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=NRC\">NRC</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+					}
+					else {
+						foreach ($rows_Documents as $row_Documents) {
+							echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+						}				
+					}
+					# getting data from the table Documents
+					$rows_Documents = table_Documents ('select_for_one_client', 'Profile', $row_Clients->Id);
+					if ($rows_Documents == 0) {
+						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=Profile\">Profile</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+					}
+					else {
+						foreach ($rows_Documents as $row_Documents) {
+							echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
+						}				
+					}					
+					?>
+				</td>
+				<td>
 					<button class="medium button" onclick="openClientModal('<? echo "modalClient$row_Clients->Id"; ?>');">View</button>
 					<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Edit</button></a>
-					<a href="<? echo "client"; ?>"></a>
 				</td>
 			</tr>							
 		<?php 
