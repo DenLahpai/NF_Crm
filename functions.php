@@ -16,7 +16,7 @@ function check_num ($num) {
 }
 
 //function to use data from the table Branches
-function table_Branches ($job, $var, $var2) {
+function table_Branches ($job, $var1, $var2) {
 	$database = new Database();
 
 	switch ($job) {
@@ -60,6 +60,56 @@ function table_Branches ($job, $var, $var2) {
 			$database->query($query);
 			return $r = $database->resultset();
 			break;
+
+        case 'select_one':
+            // $var1 = BranchesId
+            $query = "SELECT * FROM Branches WHERE Id = :BranchesId ;";
+            $database->query($query);
+            $database->bind(':BranchesId', $var1);
+            return $r = $database->resultset();
+            break;
+
+        case 'check_before_update':
+            // $var1 = BranchesId
+            $Name = trim($_REQUEST['Name']);
+            $query = "SELECT * FROM Branches
+                WHERE Name = :Name
+                AND Id != :BranchesId
+            ;";
+            $database->query($query);
+            $database->bind(':Name', $Name);
+            $database->bind(':BranchesId', $var1);
+            return $r = $database->rowCount();
+            break;
+
+        case 'update':
+            // $var1 = BranchesId
+            $Name = trim($_REQUEST['Name']);
+            $Address = trim($_REQUEST['Address']);
+            $Township = trim($_REQUEST['Township']);
+            $City = trim($_REQUEST['City']);
+            $Phone = trim($_REQUEST['Phone']);
+            $query = "UPDATE Branches SET
+                Name = :Name,
+                Address = :Address,
+                Township = :Township,
+                City = :City,
+                Phone = :Phone
+                WHERE Id = :BranchesId
+            ;";
+            $database->query($query);
+            $database->bind(':Name', $Name);
+            $database->bind(':Address', $Address);
+            $database->bind(':Township', $Township);
+            $database->bind(':City', $City);
+            $database->bind(':Phone', $Phone);
+            $database->bind(':BranchesId', $var1);
+            if ($database->execute()) {
+                header("location: branches.php");
+            }
+            break;
+
+
 		default:
 			# code...
 			break;
