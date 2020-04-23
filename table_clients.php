@@ -27,7 +27,7 @@ include "includes/head.php";
 									<button type="button" class="button medium" name="btnSearch" id="btnSearch" onclick="updateTableClients();">Search</button>
 									<button type="button" class="button medium" name="btnClear" onclick="document.getElementById('Search').value='';";>Clear</button>
 									<!-- <button type="button" class="button medium" name="btnExport" id="btnExport" onclick="window.location.href='export_table_clients.php';">Export</button> -->
-									<button type="button" class="button medium" name="btnExport" id="btnExport" onclick="exportData();">Export</button>
+									<button type="button" class="button medium" name="btnExport" id="btnExport" onclick="exportData('export_table_clients.php');">Export</button>
 								</td>
 							</tr>
 						</thead>

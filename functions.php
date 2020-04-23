@@ -1138,7 +1138,12 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 			;";
 			$database->query($query);
 			$database->bind(':expiry_limit', $expiry_limit);
-			return $r = $database->resultset();
+			if ($var1 == 'array') {
+                return $r = $database->resultArray();
+            }
+            else {
+                return $r = $database->resultset();
+            }
 			break;
 
 		case 'search_passport_expiry':
@@ -1183,7 +1188,12 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 			$database->query($query);
 			$database->bind(':expiry_limit', $expiry_limit);
 			$database->bind(':Search', $Search);
-			return $r = $database->resultset();
+            if ($var1 == 'array') {
+                return $r = $database->resultArray();
+            }
+            else {
+                return $r = $database->resultset();
+            }
 			break;
 
 		default:

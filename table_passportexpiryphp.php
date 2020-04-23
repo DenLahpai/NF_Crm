@@ -1,7 +1,7 @@
 <?php
 require_once "functions.php";
 
-#getting data from the table Clients 
+#getting data from the table Clients
 $job = $_REQUEST['job'];
 if ($job == 'insert') {
     table_PassportReminders ('insert', NULL, NULL);
@@ -10,18 +10,19 @@ if ($job == 'insert') {
 else {
     $Search = $_REQUEST['Search'];
     $limit = 9999;
-    $sorting = $_REQUEST['sorting'];
+    if (empty($_REQUEST['sorting'])) {
+        $sorting = "ORDER BY Expiry ASC ";
+    }
+    else {
+        $sorting = $_REQUEST['sorting'];
+    }
     $rows_Clients = table_Clients ($job, NULL, $Search, $limit, $sorting);
-} 
+}
 ?>
-
 <table>
     <thead>
         <tr>
         <th></th>
-            <th>
-                Title
-            </th>
             <th>
                 Name
                 <span class="sorter" onclick="sortTablePassportExpiry('Name', 'ASC');" title="A -> Z">&#9650;</span>
@@ -52,31 +53,35 @@ else {
                 <span class="sorter" onclick="sortTablePassportExpiry('Created', 'DESC');" title="Newest -> Oldest">&#9660;</span>
             </th>
             <th>
-               Show All 
+               Show All
                <label class="switch">
                     <input type="checkbox" onclick="openAllReminders();">
                     <span class="slider round"></span>
                 </label>
             </th>
         </tr>
+        <tr>
+            <th colspan="9" style="text-align: center">
+                <input type="text" name="sorting" id="sorting" value="<? echo $sorting; ?>">
+            </th>
+        </tr>
     </thead>
     <tbody>
-        <?php 
+        <?php
         $i = 1;
         foreach ($rows_Clients as $row_Clients):
         ?>
         <tr>
             <td><? echo $i; ?></td>
-            <td><? echo $row_Clients->Title; ?></td>
-            <td><? echo $row_Clients->Name; ?></td>
+            <td><? echo $row_Clients->Title." ".$row_Clients->Name; ?></td>
             <td><? echo $row_Clients->PassportNo; ?></td>
             <td>
                 <?php
                 $today = date('Y-m-d');
                 $six_month = date('Y-m-d', strtotime('180 days'));
                 if ($six_month > $row_Clients->Expiry) {
-                    echo "<span class=\"error\">".date('d-M-Y', strtotime($row_Clients->Expiry))."</span>"; 
-                }  
+                    echo "<span class=\"error\">".date('d-M-Y', strtotime($row_Clients->Expiry))."</span>";
+                }
                 else {
                     echo date('d-M-Y', strtotime($row_Clients->Expiry));
                 }
@@ -87,7 +92,7 @@ else {
             </td>
             <td>
                 <a href="<? echo "mailto: $row_Clients->Email"; ?>" title="<? echo $row_Clients->Email ;?>">Email</a>
-            </td> 
+            </td>
             <td>
                 <? echo $row_Clients->Username; ?>
             </td>
@@ -98,7 +103,7 @@ else {
                 <input type="checkbox" onclick="openReminder('<? echo $row_Clients->Id;?>');">
                 <span class="slider"></span>
                 </label>
-            </td>            
+            </td>
         </tr>
         <tr>
             <td colspan="10">
@@ -110,7 +115,7 @@ else {
                                 <input type="hidden" readonly name="ClientsId" id="<? echo "ClientsId".$row_Clients->Id; ?>" value="<? echo $row_Clients->Id?>">
                                 <input type="text" name="Method" id="<? echo "Method".$row_Clients->Id; ?>" placeholder="Reminder by Phone, Email or SMS">
                                 <button type="button" onclick="insertReminder('<? echo $row_Clients->Id; ?>');">Submit</button>
-                            </li>                            
+                            </li>
                         </ul>
                     </form>
                     <ul>
@@ -127,9 +132,9 @@ else {
                     </ul>
                 </div>
                 <!-- end of small form -->
-            </td>               
-        </tr>        
-        <?php 
+            </td>
+        </tr>
+        <?php
         $i++;
         endforeach;
         ?>
@@ -137,4 +142,3 @@ else {
 </table>
 <script src="scripts/jQuery.js"></script>
 <script src="scripts/main.js"></script>
-

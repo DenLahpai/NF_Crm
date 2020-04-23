@@ -25,8 +25,9 @@ include "includes/head.php";
                         <tr>
                             <td>
                                 <input type="text" name="search" id="Search" placeholder="Search">
-                                <button type="button" class="button medium" name="btnSearch" id="btnSearch" onclick="searchPassportExpiry();">Search</button>
-                                <button type="button" class="button medium" name="btnClear" id="btnClear" onclick="loadPassportExpiry();">Clear</button>
+                                <button type="button" class="button medium" name="btnSearch" id="btnSearch" onclick="loadpassportExpiry();">Search</button>
+                                <button type="button" class="button medium" name="btnClear" id="btnClear" onclick="document.getElementById('Search').value=''; loadPassportExpiry();">Clear</button>
+                                <button type="button" class="button medium" name="btnExport" id="btnExport" onclick="exportData('export_table_passport_expiry.php');">Export</button>
                             </td>
                         </tr>
                     </thead>
@@ -37,10 +38,10 @@ include "includes/head.php";
 	</section>
     <main>
         <!-- report table -->
-        <div class="report table" id="passport-expiry-table">	
+        <div class="report table" id="passport-expiry-table">
         </div>
         <!-- end of report table -->
-        <?php include "includes/footer.php"; ?>			
+        <?php include "includes/footer.php"; ?>
     </main>
     <!-- end of content -->
 </body>

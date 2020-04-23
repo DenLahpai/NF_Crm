@@ -114,26 +114,6 @@ function updateTableClients () {
 
 }
 
-//
-// //function to update number of rows
-// function updateLimit() {
-//     var limit = $("#limit").val();
-//     var Search = $("#Search").val();
-//     var sorting = 'ORDER BY Id ASC';
-//     if (Search == "") {
-//         var job = 'select_all';
-//     }
-//     else {
-//         var job = 'search';
-//     }
-//     $("#clients-table").load("table_clientsphp.php", {
-//         limit: limit,
-//         job: job,
-//         sorting: sorting,
-//         Search: Search
-//     });
-// }
-
 //sorting functions //
 function sortTableClients(column, order) {
     var limit = $("#limit").val();
@@ -155,28 +135,27 @@ function sortTableClients(column, order) {
         Search: Search
     });
 }
-//
-// //search functions
-// function searchTableClients(file, destinationId) {
-//     var limit = $("#limit").val();
-//     var job = 'search';
-//     var sorting = 'ORDER BY Id ASC';
-//     var Search = $("#Search").val();
-//
-//     $(destinationId).load(file, {
-//         limit: limit,
-//         job: job,
-//         sorting: sorting,
-//         Search: Search
-//     });
-// }
-/* functions for table_passport_expirty */
+// function to clear search and call another function
+function clearSearch(page) {
+    document.getElementById('Search').value = "";
+    alert(page);
+}
 
 //function to load Passport Expiry
 function loadPassportExpiry () {
-    var job = 'passport_expiry';
-    var sorting = 'ORDER BY Expiry ASC';
+    if ($("#sorting").val() == "") {
+        var sorting = "ORDER BY Expiry ASC ";
+    }
+    else {
+        var sorting = $("#sorting").val();
+    }
     var Search = $("#Search").val();
+    if (Search == "") {
+        var job = 'passport_expiry';
+    }
+    else {
+        var job = 'search_passport_expiry';;
+    }
     $("#passport-expiry-table").load("table_passportexpiryphp.php", {
         job: job,
         sorting: sorting,
@@ -184,17 +163,6 @@ function loadPassportExpiry () {
     });
 }
 
-//function to search in Passport Expiry
-function searchPassportExpiry() {
-    var job = 'search_passport_expiry';;
-    var sorting = 'ORDER BY Expiry ASC';
-    var Search = $("#Search").val();
-    $("#passport-expiry-table").load("table_passportexpiryphp.php", {
-        job: job,
-        sorting: sorting,
-        Search: Search
-    });
-}
 
 //function to show all reminder
 function openAllReminders () {
@@ -249,17 +217,27 @@ function insertReminder(Id) {
 }
 
 //function to export data to a cvs file
-function exportData () {
+function exportData (file) {
     var limit = $("#limit").val();
     var Search = $("#Search").val();
     var sorting = $("#sorting").val();
 
-    if (Search == "") {
-        var job = 'select_all';
+    if (file == 'export_table_passport_expiry.php') {
+        if (Search == "") {
+            var job = 'passport_expiry'
+        }
+        else {
+            var job = 'search_passport_expiry';
+        }
     }
-    else {
-        var job = 'search';
+    else if (file == 'export_table_clients.php') {
+        if (Search == "") {
+            var job = 'select_all';
+        }
+        else {
+            var job = 'search';
+        }
     }
 
-    window.location.href = 'export_table_clients.php?job='+job+'&limit='+limit+'&Search='+Search+'&sorting='+sorting;
+    window.location.href = file+'?job='+job+'&limit='+limit+'&Search='+Search+'&sorting='+sorting;
 }
