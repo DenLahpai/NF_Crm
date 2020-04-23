@@ -6,7 +6,7 @@ $Search = $_REQUEST['Search'];
 $sorting = $_REQUEST['sorting'];
 
 header ('Content-Type: text/csv; charset=utf-8');
-header ('Content-Disposition: attachment; filename=data.csv');
+header ('Content-Disposition: attachment; filename=Clients.csv');
 $output = fopen("php://output", "w");
 $table_titles = array(
     'Id',

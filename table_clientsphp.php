@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once "functions.php";
 
 $job = $_REQUEST['job'];
@@ -12,8 +12,8 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 	<thead>
 		<tr>
 			<th>
-				<select name="limit" id="limit" onchange="updateLimit();">
-					<?php  
+				<select name="limit" id="limit" onchange="updateTableClients();">
+					<?php
 					$i = 30;
 					while ($i <= $rowCount + 30) {
 						if ($i == $limit) {
@@ -28,7 +28,6 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 				</select>
 			</th>
 			<th>Member</th>
-			<th>Title</th>
 			<th>
 				Name
 				<span class="sorter" onclick="sortTableClients('Name', 'ASC');" title="A -> Z">&#9650;</span>
@@ -54,17 +53,21 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 			<th>Documents</th>
 			<th>##</th>
 		</tr>
-	</thead>	
+		<tr>
+			<th colspan="10" style="text-align: center;">
+				<input type="hidden" name="sorting" id="sorting" value="<? echo $sorting; ?>">
+			</th>
+		</tr>
+	</thead>
 	<tbody>
-		<?php 
+		<?php
 		$i = 1;
-		foreach ($rows_Clients as $row_Clients): 
+		foreach ($rows_Clients as $row_Clients):
 		?>
 			<tr>
 				<td><? echo $i;?></td>
 				<td><? echo $row_Clients->Member; ?></td>
-				<td><? echo $row_Clients->Title; ?></td>
-				<td><? echo $row_Clients->Name; ?></td>
+				<td><? echo $row_Clients->Title." ".$row_Clients->Name; ?></td>
 				<td><? echo date('d-M-Y', strtotime($row_Clients->DOB)); ?></td>
 				<td><? echo $row_Clients->Mobile; ?></td>
 				<td><? echo "<a href=\"mailto: $row_Clients->Email\" title=\"$row_Clients->Email\">Email</a>"; ?></td>
@@ -75,44 +78,44 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 					# getting data from the table Documents
 					$rows_Documents = table_Documents ('select_for_one_client', 'Passport', $row_Clients->Id);
 					if ($rows_Documents == 0) {
-						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id\">Passport</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id\">Passport</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>";
 					}
 					else {
 						foreach ($rows_Documents as $row_Documents) {
 							echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
-						}				
+						}
 					}
 
 					# getting data from the table Documents
 					$rows_Documents = table_Documents ('select_for_one_client', 'NRC', $row_Clients->Id);
 					if ($rows_Documents == 0) {
-						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=NRC\">NRC</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=NRC\">NRC</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>";
 					}
 					else {
 						foreach ($rows_Documents as $row_Documents) {
 							echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
-						}				
+						}
 					}
 					# getting data from the table Documents
 					$rows_Documents = table_Documents ('select_for_one_client', 'Profile', $row_Clients->Id);
 					if ($rows_Documents == 0) {
-						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=Profile\">Profile</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>"; 
+						echo "<a href=\"upload_document.php?ClientsId=$row_Clients->Id&DocType=Profile\">Profile</a><span style=\"color: red; font-size: 1.2em;\"> &#10008; &nbsp; </span>";
 					}
 					else {
 						foreach ($rows_Documents as $row_Documents) {
 							echo "<a href='Documents/".$row_Documents->FileName."' target='blank' title='View Document'>".$row_Documents->DocType."</a><span style=\"color: green; font-size: 1.2em;\"> &#10004; &nbsp;</span>";
-						}				
-					}					
+						}
+					}
 					?>
 				</td>
 				<td>
 					<button class="medium button" onclick="openClientModal('<? echo "modalClient$row_Clients->Id"; ?>');">View</button>
 					<a href="<? echo "edit_client.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Edit</button></a>
 				</td>
-			</tr>							
-		<?php 
+			</tr>
+		<?php
 		$i++;
-		endforeach; 
+		endforeach;
 		?>
 	</tbody>
 </table>
@@ -150,7 +153,7 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 				<li>
 					Frequent Flyers: <a href="<? echo "add_frequentflyer.php?ClientsId=$row_Clients->Id"; ?>"><button class="medium button">Add</button></a>
 				</li>
-			</ul>			 			
+			</ul>
 			<table>
 				<thead>
 					<tr>
@@ -158,7 +161,7 @@ $rowCount = table_Clients('count_rows', NULL, NULL, NULL, NULL);
 						<th>Frequent Flyer</th>
 						<th>#</th>
 					</tr>
-					<?php  
+					<?php
 					# getting data from the talbe FFMembers
 					$rows_FFMembers = table_FFMembers ('select_all', $row_Clients->Id, NULL);
 					foreach ($rows_FFMembers as $row_FFMembers) {
@@ -191,7 +194,7 @@ var modal = document.getElementById('modalClients');
     function modalClose() {
         modal.style.display = 'none';
     }
-    
+
 </script>
 <script type="text/javascript" src="scripts/jQuery.js"></script>
-<script type="text/javascript" src="scripts/main.js"></script>	
+<script type="text/javascript" src="scripts/main.js"></script>

@@ -91,24 +91,48 @@ function loadClients (file, destinationId) {
     $("#Search").val("");
 }
 
-//function to update number of rows
-function updateLimit() {
+//fucntion to update table Clients
+function updateTableClients () {
     var limit = $("#limit").val();
     var Search = $("#Search").val();
-    var sorting = 'ORDER BY Id ASC';
+
     if (Search == "") {
         var job = 'select_all';
     }
     else {
         var job = 'search';
     }
+
+    var sorting = $("#sorting").val();
+
     $("#clients-table").load("table_clientsphp.php", {
         limit: limit,
         job: job,
         sorting: sorting,
         Search: Search
     });
+
 }
+
+//
+// //function to update number of rows
+// function updateLimit() {
+//     var limit = $("#limit").val();
+//     var Search = $("#Search").val();
+//     var sorting = 'ORDER BY Id ASC';
+//     if (Search == "") {
+//         var job = 'select_all';
+//     }
+//     else {
+//         var job = 'search';
+//     }
+//     $("#clients-table").load("table_clientsphp.php", {
+//         limit: limit,
+//         job: job,
+//         sorting: sorting,
+//         Search: Search
+//     });
+// }
 
 //sorting functions //
 function sortTableClients(column, order) {
@@ -124,28 +148,28 @@ function sortTableClients(column, order) {
     var sorting = 'ORDER BY '+ column + ' '+ order;
 
 
-    $("#clients-table").load("table_clientsphp.php", {
+    $("#clients-table").load("table_clientsphp.php?sorting=$sorting", {
         limit: limit,
         job: job,
         sorting: sorting,
         Search: Search
     });
 }
-
-//search functions
-function searchTableClients(file, destinationId) {
-    var limit = $("#limit").val();
-    var job = 'search';
-    var sorting = 'ORDER BY Id ASC';
-    var Search = $("#Search").val();
-
-    $(destinationId).load(file, {
-        limit: limit,
-        job: job,
-        sorting: sorting,
-        Search: Search
-    });
-}
+//
+// //search functions
+// function searchTableClients(file, destinationId) {
+//     var limit = $("#limit").val();
+//     var job = 'search';
+//     var sorting = 'ORDER BY Id ASC';
+//     var Search = $("#Search").val();
+//
+//     $(destinationId).load(file, {
+//         limit: limit,
+//         job: job,
+//         sorting: sorting,
+//         Search: Search
+//     });
+// }
 /* functions for table_passport_expirty */
 
 //function to load Passport Expiry
@@ -228,7 +252,7 @@ function insertReminder(Id) {
 function exportData () {
     var limit = $("#limit").val();
     var Search = $("#Search").val();
-    var sorting = 'ORDER BY Id ASC';
+    var sorting = $("#sorting").val();
 
     if (Search == "") {
         var job = 'select_all';
