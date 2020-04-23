@@ -973,10 +973,10 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 				ON Clients.CountriesId = Countries.Id
 				LEFT JOIN Users
 				ON Clients.UsersId = Users.Id
-				$sorting 
+				$sorting
 				LIMIT $limit
 			;";
-			$database->query($query);					
+			$database->query($query);
 			if ($var1 == 'array') {
                 return $r = $database->resultArray();
             }
@@ -1064,7 +1064,7 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 
 		case 'search':
 			# $var2 = Search
-			$Search = '%'.$var2.'%';		
+			$Search = '%'.$var2.'%';
 			$query = "SELECT
 				Clients.Id,
 				Clients.Code,
@@ -1095,12 +1095,17 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 				Clients.PassportNo,
 				Countries.Country
 				) LIKE :Search
-				$sorting 
+				$sorting
 				LIMIT $limit
 			;";
 			$database->query($query);
 			$database->bind(':Search', $Search);
-			return $r = $database->resultset();
+			if ($var1 == 'array') {
+                return $r = $database->resultArray();
+            }
+            else {
+                return $r = $database->resultset();
+            }
 			break;
 
 		case 'passport_expiry':
@@ -1127,20 +1132,20 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 				ON Clients.CountriesId = Countries.Id
 				LEFT JOIN Users
 				ON Clients.UsersId = Users.Id
-				WHERE Expiry <= :expiry_limit 
-				$sorting 
+				WHERE Expiry <= :expiry_limit
+				$sorting
 				LIMIT $limit
 			;";
 			$database->query($query);
 			$database->bind(':expiry_limit', $expiry_limit);
 			return $r = $database->resultset();
 			break;
-			
+
 		case 'search_passport_expiry':
 			# $var2 = Search
-			$Search = '%'.$var2.'%';	
+			$Search = '%'.$var2.'%';
 			$today = date('Y-m-d');
-			$expiry_limit = date('Y-m-d', strtotime($today.' + 210 days'));	
+			$expiry_limit = date('Y-m-d', strtotime($today.' + 210 days'));
 			$query = "SELECT
 				Clients.Id,
 				Clients.Code,
@@ -1172,14 +1177,14 @@ function table_Clients ($job, $var1, $var2, $limit, $sorting) {
 				Clients.PassportNo,
 				Countries.Country
 				) LIKE :Search
-				$sorting 
+				$sorting
 				LIMIT $limit
 			;";
 			$database->query($query);
 			$database->bind(':expiry_limit', $expiry_limit);
 			$database->bind(':Search', $Search);
 			return $r = $database->resultset();
-			break;	
+			break;
 
 		default:
 			# code...
@@ -1399,25 +1404,25 @@ function table_Documents ($job, $var1, $var2) {
 
 	switch ($job) {
 
-		case 'check_before_insert': 
+		case 'check_before_insert':
 			$DocType = $_REQUEST['DocType'];
 			$ClientsId = $_REQUEST['ClientsId'];
-			$query = "SELECT * FROM Documents WHERE 
+			$query = "SELECT * FROM Documents WHERE
 				DocType = :DocType
 				AND ClientsId = :ClientsId
-			;";	
+			;";
 			$database->query($query);
 			$database->bind(':DocType', $DocType);
 			$database->bind(':ClientsId', $ClientsId);
-			return $r = $database->rowCount();	
+			return $r = $database->rowCount();
 			break;
-		
-		case 'insert': 
+
+		case 'insert':
 			# var2 = File_name
 			$DocType = $_REQUEST['DocType'];
 			$ClientsId = $_REQUEST['ClientsId'];
-			$query = "INSERT INTO Documents SET 
-				FileName = :FileName, 
+			$query = "INSERT INTO Documents SET
+				FileName = :FileName,
 				DocType = :DocType,
 				ClientsId = :ClientsId,
 				UsersId = :UsersId
@@ -1434,7 +1439,7 @@ function table_Documents ($job, $var1, $var2) {
 
 		case 'select_for_one_client':
 			# $var2 = ClientsId;
-			$query = "SELECT * FROM Documents WHERE 
+			$query = "SELECT * FROM Documents WHERE
 				DocType = :DocType
 				AND ClientsId = :ClientsId ;";
 			$database->query($query);
@@ -1446,8 +1451,8 @@ function table_Documents ($job, $var1, $var2) {
 			else {
 				return $r = $database->resultset();
 			}
-			break;	
-		
+			break;
+
 		case 'select_one':
 			#$var1 = DocumentsId
 			$query = "SELECT * FROM Documents WHERE Id = :DocumentsId ;";
@@ -1458,20 +1463,20 @@ function table_Documents ($job, $var1, $var2) {
 
 		case 'unlink_image':
 			#$var1 = DocumentsId
-			$query = "UPDATE Documents SET 
+			$query = "UPDATE Documents SET
 				ClientsId = 0
 				WHERE Id = :DocumentsId
-			;";	
+			;";
 			$database->query($query);
 			$database->bind(':DocumentsId', $var1);
 			if ($database->execute()) {
 				header("location: clients.php");
 			}
 			break;
-		case 'update': 
+		case 'update':
 			# var1 = DocumentsId
 			# var2 = FileName
-			$query = "UPDATE Documents SET 
+			$query = "UPDATE Documents SET
 				FileName = :FileName,
 				UsersId = :UsersId
 				WHERE Id = :DocumentsId
@@ -1483,7 +1488,7 @@ function table_Documents ($job, $var1, $var2) {
 			if ($database->execute()) {
 				header("location: update_document.php?DocumentsId=$var1");
 			}
-			break;	
+			break;
 		default:
             // code...
             break;

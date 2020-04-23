@@ -61,9 +61,8 @@ function twoPasswords (password, repassword) {
 		repassword.background = 'red';
 		document.getElementsByClassName('error')[0].innerHTML = "Two passwords don't match!";
 		window.die();
-	}	
+	}
 }
-
 
 //function to select and option
 function selectOption (value, select) {
@@ -76,7 +75,7 @@ function selectOption (value, select) {
 	}
 }
 
-//function to load from table Clients 
+//function to load from table Clients
 function loadClients (file, destinationId) {
     var limit = 30;
     var job = 'select_all';
@@ -84,18 +83,18 @@ function loadClients (file, destinationId) {
     var Search = $("#Search").val();
 
     $(destinationId).load(file, {
-        limit: limit, 
-        job: job, 
+        limit: limit,
+        job: job,
         sorting: sorting,
         Search: Search
-    }); 
+    });
     $("#Search").val("");
 }
 
-//function to update number of rows 
+//function to update number of rows
 function updateLimit() {
     var limit = $("#limit").val();
-    var Search = $("#Search").val(); 
+    var Search = $("#Search").val();
     var sorting = 'ORDER BY Id ASC';
     if (Search == "") {
         var job = 'select_all';
@@ -104,17 +103,17 @@ function updateLimit() {
         var job = 'search';
     }
     $("#clients-table").load("table_clientsphp.php", {
-        limit: limit, 
-        job: job, 
+        limit: limit,
+        job: job,
         sorting: sorting,
         Search: Search
-    });      
+    });
 }
 
 //sorting functions //
 function sortTableClients(column, order) {
     var limit = $("#limit").val();
-    var Search = $("#Search").val(); 
+    var Search = $("#Search").val();
     if (Search == "") {
         var job = 'select_all';
     }
@@ -123,14 +122,14 @@ function sortTableClients(column, order) {
     }
 
     var sorting = 'ORDER BY '+ column + ' '+ order;
-      
+
 
     $("#clients-table").load("table_clientsphp.php", {
-        limit: limit, 
-        job: job, 
+        limit: limit,
+        job: job,
         sorting: sorting,
         Search: Search
-    });  
+    });
 }
 
 //search functions
@@ -138,14 +137,14 @@ function searchTableClients(file, destinationId) {
     var limit = $("#limit").val();
     var job = 'search';
     var sorting = 'ORDER BY Id ASC';
-    var Search = $("#Search").val(); 
+    var Search = $("#Search").val();
 
     $(destinationId).load(file, {
-        limit: limit, 
-        job: job, 
+        limit: limit,
+        job: job,
         sorting: sorting,
         Search: Search
-    });  
+    });
 }
 /* functions for table_passport_expirty */
 
@@ -155,7 +154,7 @@ function loadPassportExpiry () {
     var sorting = 'ORDER BY Expiry ASC';
     var Search = $("#Search").val();
     $("#passport-expiry-table").load("table_passportexpiryphp.php", {
-        job: job, 
+        job: job,
         sorting: sorting,
         Search: Search
     });
@@ -167,7 +166,7 @@ function searchPassportExpiry() {
     var sorting = 'ORDER BY Expiry ASC';
     var Search = $("#Search").val();
     $("#passport-expiry-table").load("table_passportexpiryphp.php", {
-        job: job, 
+        job: job,
         sorting: sorting,
         Search: Search
     });
@@ -178,11 +177,11 @@ function openAllReminders () {
     var allDivs = document.getElementsByClassName('reminder-form');
     var i = 0;
     var btnToggle = document.getElementById('btnToggle');
-    
+
     while (i < allDivs.length) {
         $(allDivs[i]).slideToggle(500);
         i++;
-    }    
+    }
 }
 
 //function to open one reminder
@@ -193,8 +192,8 @@ function openReminder(ClientsId) {
 
 //function to sort table Passport Expiry
 function sortTablePassportExpiry (column, order) {
-    
-    var Search = $("#Search").val(); 
+
+    var Search = $("#Search").val();
     if (Search == "") {
         var job = 'passport_expiry';
     }
@@ -203,13 +202,13 @@ function sortTablePassportExpiry (column, order) {
     }
 
     var sorting = 'ORDER BY '+ column + ' '+ order;
-      
+
 
     $("#passport-expiry-table").load("table_passportexpiryphp.php", {
-        job: job, 
+        job: job,
         sorting: sorting,
         Search: Search
-    });  
+    });
 }
 
 //function to insert passport expiry reminder
@@ -217,10 +216,26 @@ function insertReminder(Id) {
     var job = 'insert';
     var ClientsId = document.getElementById('ClientsId'+Id).value;
     var Method = document.getElementById('Method'+Id).value;
-    
+
     $("#passport-expiry-table").load("table_passportexpiryphp.php", {
         job: job,
-        ClientsId: ClientsId, 
+        ClientsId: ClientsId,
         Method: Method
-    });    
+    });
+}
+
+//function to export data to a cvs file
+function exportData () {
+    var limit = $("#limit").val();
+    var Search = $("#Search").val();
+    var sorting = 'ORDER BY Id ASC';
+
+    if (Search == "") {
+        var job = 'select_all';
+    }
+    else {
+        var job = 'search';
+    }
+
+    window.location.href = 'export_table_clients.php?job='+job+'&limit='+limit+'&Search='+Search+'&sorting='+sorting;
 }
