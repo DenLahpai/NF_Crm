@@ -62,7 +62,7 @@ else {
         </tr>
         <tr>
             <th colspan="9" style="text-align: center">
-                <input type="text" name="sorting" id="sorting" value="<? echo $sorting; ?>">
+                <input type="hidden" name="sorting" id="sorting" value="<? echo $sorting; ?>">
             </th>
         </tr>
     </thead>

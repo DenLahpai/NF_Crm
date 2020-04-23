@@ -1,4 +1,4 @@
-<?php  
+<?php
 require_once "functions.php";
 
 # submitting data from the form
@@ -14,20 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 
-//getting data from the table Departments 
-$rows_Deparments = table_Departments ('select_all', NULL, NULL);
+//getting data from the table Departments
+$rows_Departments = table_Departments ('select_all', NULL, NULL);
 
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php 
+<?php
 $page_title = "Departments";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Departments";
 		include "includes/header.php";
 		include "includes/nav.php";
@@ -58,11 +58,11 @@ include "includes/head.php";
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach ($rows_Deparments as $row_Departments): ?>
+							<?php foreach ($rows_Departments as $row_Departments): ?>
 								<tr>
 									<td><? echo $row_Departments->Department; ?></td>
 									<td>
-										<a href="<? echo "edit_department.php?DepartmentsId=$row_Departments->Id";?>"><button class="medium button">Edit</button></a>
+										<a href="<? echo "edit_department.php?DepartmentsId=$row_Departments->Id";?>"><button type="button" class="medium button">Edit</button></a>
 									</td>
 								</tr>
 							<?php endforeach ?>

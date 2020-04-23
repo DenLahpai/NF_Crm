@@ -102,9 +102,41 @@ function table_Departments ($job, $var1, $var2) {
 			return $r = $database->resultset();
 			break;
 
-		case 'value':
-			# code...
+		case 'select_one':
+			# $var1 = DepartmentsId
+            $query = "SELECT * FROM Departments WHERE Id = :DepartmentsId ;";
+            $database->query($query);
+            $database->bind(':DepartmentsId', $var1);
+            return $r = $database->resultset();
 			break;
+
+        case 'check_before_update':
+            # $var1 = DepartmentId
+            $Department = trim($_REQUEST['Department']);
+            $query = "SELECT * FROM Departments
+                WHERE Department = :Department
+                AND Id != :DepartmentsId
+            ;";
+            $database->query($query);
+            $database->bind(':Department', $Department);
+            $database->bind(':DepartmentsId', $var1);
+            return $r = $database->rowCount();
+            break;
+
+        case 'update':
+            // $var1 = DepartmentsId
+            $Department = trim($_REQUEST['Department']);
+            $query = "UPDATE Departments SET
+                Department = :Department
+                WHERE Id = :DepartmentsId
+            ;";
+            $database->query($query);
+            $database->bind(':Department', $Department);
+            $database->bind(':DepartmentsId', $var1);
+            if ($database->execute()) {
+                header("location: departments.php");
+            }
+            break;
 
 		default:
 			# code...
