@@ -1,10 +1,12 @@
-<?php  
+<?php
 require_once "functions.php";
+
+check_access();
 
 //checking if the user id is a number
 check_num ($_REQUEST['UsersId']);
 
-# submitting data from the form 
+# submitting data from the form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	# checking for duplicate entry
 	$rowCount = table_Users ('check_before_update', $_REQUEST['UsersId'], NULL);
@@ -16,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 
-# getting data from the table Users 
+# getting data from the table Users
 $rows_Users = table_Users ('select_one', $_REQUEST['UsersId'], NULL);
 foreach ($rows_Users as $row_Users) {
 	# code...
@@ -24,14 +26,14 @@ foreach ($rows_Users as $row_Users) {
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php  
+<?php
 $page_title = "Edit User";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Edit User";
 		include "includes/header.php";
 		include "includes/nav.php";
@@ -49,7 +51,7 @@ include "includes/head.php";
 						<tbody>
 							<tr>
 								<td>
-									Username: 
+									Username:
 								</td>
 								<td>
 									<input type="text" name="Username" id="Username" value="<? echo $row_Users->Username; ?>">
@@ -97,7 +99,7 @@ include "includes/head.php";
 								</td>
 								<td>
 									<select name="DepartmentsId" id="DepartmentsId">
-										<?php  
+										<?php
 										#getting data from the table Departments
 										$rows_Departments = table_Departments ('select_all', NULL, NULL);
 										foreach ($rows_Departments as $row_Departments) {
@@ -114,11 +116,11 @@ include "includes/head.php";
 							</tr>
 							<tr>
 								<td>
-									Branch: 
+									Branch:
 								</td>
 								<td>
 									<select id="BranchesId" name="BranchesId">
-										<?php  
+										<?php
 										# getting data from the table Branches
 										$rows_Branches = table_Branches ('select_all', NULL, NULL);
 										foreach ($rows_Branches as $row_Branches) {
@@ -139,7 +141,7 @@ include "includes/head.php";
 								</td>
 								<td>
 									<select id="Status" name="Status">
-										<?php  
+										<?php
 										switch ($row_Users->Status) {
 											case '1':
 												echo "<option value=\"1\" selected>Active</option>";
@@ -149,8 +151,8 @@ include "includes/head.php";
 											case '2':
 												echo "<option value=\"1\">Active</option>";
 												echo "<option value=\"2\" selected>Inactive</option>";
-												break;	
-											
+												break;
+
 											default:
 												# code...
 												break;
@@ -162,7 +164,7 @@ include "includes/head.php";
 							<tr>
 								<th colspan="2" class="error">
 									<?php if (!empty($error)) {
-										echo $error; 
+										echo $error;
 									}
 									?>
 								</th>

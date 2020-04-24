@@ -1,7 +1,9 @@
-<?php  
+<?php
 require_once "functions.php";
 
-#submitting data from the form 
+check_access();
+
+#submitting data from the form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	#checking for duplicate entry
 	$rowCount = table_FrequentFlyers ('check_before_insert', NULL, NULL);
@@ -13,18 +15,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$error = "Duplicate entry!";
 	}
 }
-
 ?>
 <!DOCTYPE html>
 <html>
-<?php  
+<?php
 $page_title = "Frequent Flyers";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Frequent Flyers";
 		include "includes/nav.php";
 		include "includes/header.php";
@@ -53,9 +54,9 @@ include "includes/head.php";
 										$rows_Airlines = table_Airlines ('select_all', NULL, NULL);
 										foreach ($rows_Airlines as $row_Airlines) {
 											echo "<option value=\"$row_Airlines->Id\">".$row_Airlines->Airline."</option>";
-										}	
+										}
 										?>
-									</select>								
+									</select>
 								</td>
 								<td>
 									<input type="text" name="Alliance" id="Alliance" placeholder="Alliances / Partners">
@@ -71,7 +72,7 @@ include "includes/head.php";
 							</tr>
 						</thead>
 						<tbody>
-							<?php  
+							<?php
 							# getting data from the table FrequentFlyers
 							$rows_FrequentFlyers = table_FrequentFlyers ('select_all', NULL, NULL);
 							?>

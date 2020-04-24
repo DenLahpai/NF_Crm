@@ -1,16 +1,17 @@
-<?php  
+<?php
 require_once "functions.php";
+check_access();
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php  
+<?php
 $page_title = "Admin";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "System Administration";
 		include "includes/header.php";
 		include "includes/nav.php";

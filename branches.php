@@ -1,5 +1,6 @@
-<?php  
+<?php
 require_once "functions.php";
+check_access();
 
 # getting data from the table Branches
 $rows_Branches = table_Branches ('select_all', NULL, NULL);
@@ -20,14 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <!DOCTYPE html>
 <html>
-<?php  
+<?php
 $page_title = "Branches";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Branches";
 		include "includes/header.php";
 		include "includes/nav.php";
@@ -75,7 +76,7 @@ include "includes/head.php";
 							<tr>
 								<th colspan="2" class="error">
 									<?php if (!empty($error)) {
-										echo $error; 
+										echo $error;
 									}
 									?>
 								</th>

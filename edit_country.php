@@ -1,5 +1,6 @@
-<?php 
+<?php
 require_once "functions.php";
+check_access();
 #checking if the country code is a num
 check_num($_REQUEST['CountriesId']);
 
@@ -16,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 
-# getting data from the table Coutries 
+# getting data from the table Coutries
 $rows_Countries = table_Countries ('select_one', $_REQUEST['CountriesId'], NULL);
 foreach ($rows_Countries as $row_Countries) {
 	# code...
@@ -25,14 +26,14 @@ foreach ($rows_Countries as $row_Countries) {
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php  
+<?php
 $page_title = "Edit Country";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Edit Country";
 		include "includes/nav.php";
 		include "includes/header.php";

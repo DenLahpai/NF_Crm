@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once "functions.php";
 
 # getting data from the table Organizations
@@ -6,7 +6,7 @@ $rows_Organizations = table_Organizations ('select_all', NULL, NULL);
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php 
+<?php
 $page_title = "Organizations";
 include "includes/head.php";
 ?>
@@ -14,9 +14,9 @@ include "includes/head.php";
 	<!-- content -->
 	<div class="content">
 		<?php
-		include "includes/nav.php";  
+		include "includes/nav.php";
 		$header = "Organizations";
-		include "includes/header.php";		
+		include "includes/header.php";
 		?>
 		<!-- sub-menu -->
 		<div class="sub-menu">

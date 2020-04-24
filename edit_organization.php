@@ -1,10 +1,10 @@
-<?php  
+<?php
 require_once "functions.php";
 
 # checking if OrganiztionsId is a num
 check_num ($_REQUEST['OrganizationsId']);
 
-# submittig the data 
+# submittig the data
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	# checking for duplicate entry!
 	$rowCount = table_Organizations ('check_before_update', $_REQUEST['OrganizationsId'], NULL);
@@ -26,14 +26,14 @@ foreach ($rows_Organizations as $row_Organizations) {
 ?>
 <!DOCTYPE html>
 <html>
-<?php  
+<?php
 $page_title = "Edit Organization";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php 
+		<?php
 		$header = "Edit Organization";
 		include "includes/header.php";
 		include "includes/nav.php";
@@ -94,7 +94,7 @@ include "includes/head.php";
 								<td>Country:</td>
 								<td>
 									<select id="CountriesId" name="CountriesId">
-										<?php  
+										<?php
 										# getting data from the table Countries
 										$rows_Countries = table_Countries ('select_all', NULL, NULL);
 										foreach ($rows_Countries as $row_Countries) {
@@ -120,7 +120,7 @@ include "includes/head.php";
 							<tr>
 								<th colspan="2" class="error">
 									<?php if (!empty($error)) {
-										echo $error; 
+										echo $error;
 									}
 									?>
 								</th>
@@ -129,7 +129,7 @@ include "includes/head.php";
 								<th colspan="2">
 									<button type="button" class="medium button" name="buttonSubmit" id="buttonSubmit" onclick="checkSixFields('Name', 'Type', 'City', 'CountriesId', 'Branch', 'City');">Update</button>
 								</th>
-							</tr>		
+							</tr>
 						</tbody>
 					</table>
 				</form>

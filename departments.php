@@ -1,5 +1,6 @@
 <?php
 require_once "functions.php";
+check_access();
 
 # submitting data from the form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

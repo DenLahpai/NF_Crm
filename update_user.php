@@ -1,10 +1,11 @@
-<?php  
+<?php
 require_once "functions.php";
 
-//checking if UserId is num 
+check_access();
+//checking if UserId is num
 check_num($_REQUEST['UsersId']);
 
-//getting data from the table Users 
+//getting data from the table Users
 $rows_Users = table_Users ('select_one', $_REQUEST['UsersId'], NULL);
 foreach ($rows_Users as $row_Users) {
     # code...
@@ -26,14 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <?php  
+    <?php
     $page_title = "Update: ".$_SESSION['Username'];
     include "includes/head.php";
     ?>
 <body>
     <!-- content -->
     <div class="content">
-        <?php 
+        <?php
         include "includes/nav.php";
         $header = "Update User: ".$_SESSION['Username'];
         include "includes/header.php";
@@ -81,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             </tr>
                             <tr>
                                 <th colspan="2" class="error">
-                                    <?php 
+                                    <?php
                                     if (!empty($error)) {
                                         echo $error;
                                     }

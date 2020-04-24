@@ -1,19 +1,19 @@
-<?php  
+<?php
 require_once "functions.php";
-
+check_access();
 #getting data from the table Users
 $rows_Users = table_Users ('select_all', NULL, NULL);
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php  
+<?php
 $page_title = "Users";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Users";
 		include "includes/nav.php";
 		include "includes/header.php";
@@ -41,14 +41,14 @@ include "includes/head.php";
 								<? echo $row_Users->Title." ".$row_Users->Name; ?>
 							</li>
 							<li>
-								Department: 
+								Department:
 								<? echo $row_Users->Department; ?>
 							</li>
 							<li style="text-align: center;">
 								<a href="<? echo "edit_user.php?UsersId=$row_Users->Id"; ?>"><button class="medium button">Edit</button></a>
-							</li>							
+							</li>
 						</ul>
-					</div>	
+					</div>
 					<!-- end of grid-item -->
 				<?php endforeach ?>
 			</div>

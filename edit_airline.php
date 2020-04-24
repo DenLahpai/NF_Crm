@@ -1,10 +1,11 @@
-<?php  
+<?php
 require_once "functions.php";
+check_access();
 
 #checking if AirlinesId is a number
 check_num($_REQUEST['AirlinesId']);
 
-# submitting data from the form 
+# submitting data from the form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	# checking for duplication
 	$rowCount = table_Airlines ('check_before_update', $_REQUEST['AirlinesId'], NULL);
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 
-#getting data fromt the table Airlines 
+#getting data fromt the table Airlines
 $rows_Airlines = table_Airlines ('select_one', $_REQUEST['AirlinesId'], NULL);
 foreach ($rows_Airlines as $row_Airlines) {
 	# code...
@@ -25,14 +26,14 @@ foreach ($rows_Airlines as $row_Airlines) {
 ?>
 <!DOCTYPE html>
 <html>
-<?php  
+<?php
 $page_title = "Edit Airline";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Edit Airline";
 		include "includes/nav.php";
 		include "includes/header.php";
@@ -58,7 +59,7 @@ include "includes/head.php";
 								</td>
 								<td>
 									<select id="CountriesId" name="CountriesId">
-										<?php  
+										<?php
 										# getting data from the table Countries
 										$rows_Countries = table_Countries ('select_all', NULL, NULL);
 										foreach ($rows_Countries as $row_Countries) {
@@ -68,10 +69,10 @@ include "includes/head.php";
 												echo "<option value=\"$row_Countries->Id\" selected>".$row_Countries->Country."</option>";
 											}
 											else {
-												echo "<option value=\"$row_Countries->Id\">".$row_Countries->Country."</option>";	
+												echo "<option value=\"$row_Countries->Id\">".$row_Countries->Country."</option>";
 											}
 										}
-										?> 
+										?>
 									</select>
 								</td>
 								<td>

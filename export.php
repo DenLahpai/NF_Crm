@@ -1,5 +1,6 @@
-<?php  
+<?php
 require_once "functions.php";
+header("location: home.php");
 
 $database = new Database ();
 header ('Content-Type: text/csv; charset=utf-8');

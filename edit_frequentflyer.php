@@ -1,5 +1,6 @@
-<?php  
+<?php
 require_once "functions.php";
+check_access();
 
 # checking if FrequentFlyersId is a num
 check_num ($_REQUEST['FrequentFlyersId']);
@@ -18,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 }
 
-# getting data fromt the table FrequentFlyers 
+# getting data fromt the table FrequentFlyers
 $rows_FrequentFlyers = table_FrequentFlyers ('select_one', $_REQUEST['FrequentFlyersId'], NULL);
 foreach ($rows_FrequentFlyers as $row_FrequentFlyers) {
 	# code...
@@ -27,14 +28,14 @@ foreach ($rows_FrequentFlyers as $row_FrequentFlyers) {
 ?>
 <!DOCTYPE html>
 <html>
-<?php  
+<?php
 $page_title = "Edit Frequent Flyer";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Edit Frequent Flyer";
 		include "includes/header.php";
 		include "includes/nav.php";
@@ -57,7 +58,7 @@ include "includes/head.php";
 								</td>
 								<td>
 									<select name="AirlinesId" id="AirlinesId">
-										<?php  
+										<?php
 										# getting data from the table Airlines
 										$rows_Airlines = table_Airlines ('select_all', NULL, NULL);
 										foreach ($rows_Airlines as $row_Airlines) {

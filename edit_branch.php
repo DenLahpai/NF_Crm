@@ -1,5 +1,6 @@
 <?php
 require_once "functions.php";
+check_access();
 
 # checking if branchesId is a number
 check_num ($_REQUEST['BranchesId']);

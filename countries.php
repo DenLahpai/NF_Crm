@@ -1,5 +1,6 @@
-<?php 
+<?php
 require_once "functions.php";
+check_access();
 
 # submitting data to insert
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -17,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php  
+<?php
 $page_title = "Countries";
 include "includes/head.php";
 ?>
@@ -25,7 +26,7 @@ include "includes/head.php";
 	<!-- content -->
 	<div class="content">
 		<?php
-		$header = "Countries";  
+		$header = "Countries";
 		include "includes/nav.php";
 		include "includes/header.php";
 		?>
@@ -58,8 +59,8 @@ include "includes/head.php";
 							</tr>
 						</thead>
 						<tbody>
-							<?php  
-							$rows_Countries = table_Countries ('select_all', NULL, NULL);							
+							<?php
+							$rows_Countries = table_Countries ('select_all', NULL, NULL);
 							?>
 							<?php foreach ($rows_Countries as $row_Countries): ?>
 								<tr>
@@ -79,7 +80,7 @@ include "includes/head.php";
 			</div>
 			<!-- end of form small table -->
 		</main>
-		<?php include "includes/footer.php"; ?>	
+		<?php include "includes/footer.php"; ?>
 	</div>
 	<!-- end of content -->
 </body>

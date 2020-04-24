@@ -1,12 +1,13 @@
-<?php  
+<?php
 require_once "functions.php";
+check_access();
 
 #submitting data from the form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	# checking for duplication
 	$rowCount = table_Airlines ('check_before_insert', NULL, NULL);
 	if ($rowCount == 0) {
-		# inserting data to the table Airlines 
+		# inserting data to the table Airlines
 		table_Airlines ('insert', NULL, NULL);
 	}
 	else {
@@ -16,14 +17,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 <!DOCTYPE html>
 <html>
-<?php  
+<?php
 $page_title = "Airlines";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "Airlines";
 		include "includes/nav.php";
 		include "includes/header.php";
@@ -50,7 +51,7 @@ include "includes/head.php";
 								<td>
 									<select id="CountriesId" name="CountriesId">
 										<option value="">Select</option>
-										<?php  
+										<?php
 										# getting data from the table Countries
 										$rows_Countries = table_Countries ('select_all', NULL, NULL);
 										foreach ($rows_Countries as $row_Countries) {
@@ -70,8 +71,8 @@ include "includes/head.php";
 							</tr>
 						</thead>
 						<tbody>
-							<?php  
-							# getting data from the table Airlines 
+							<?php
+							# getting data from the table Airlines
 							$rows_Airlines = table_Airlines ('select_all', NULL, NULL);
 							?>
 							<?php foreach ($rows_Airlines as $row_Airlines): ?>
@@ -84,7 +85,7 @@ include "includes/head.php";
 							<?php endforeach ?>
 						</tbody>
 					</table>
-				</form>				
+				</form>
 			</div>
 			<!-- end of form small table -->
 		</main>

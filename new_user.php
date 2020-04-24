@@ -1,5 +1,7 @@
-<?php  
+<?php
 require_once "functions.php";
+
+check_access();
 
 # submitting data from the form
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,14 +23,14 @@ $rows_Branches = table_Branches ('select_all', NULL, NULL);
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-<?php  
+<?php
 $page_title = "New User";
 include "includes/head.php";
 ?>
 <body>
 	<!-- content -->
 	<div class="content">
-		<?php  
+		<?php
 		$header = "New User";
 		include "includes/header.php";
 		include "includes/nav.php";
@@ -62,7 +64,7 @@ include "includes/head.php";
 								</td>
 							</tr>
 							<tr>
-								<td>Name:</td>	
+								<td>Name:</td>
 								<td>
 									<input type="text" name="Name" id="Name" placeholder="Name Name">
 								</td>
@@ -128,7 +130,7 @@ include "includes/head.php";
 							<tr>
 								<th colspan="2" class="error">
 									<?php if (!empty($error)) {
-										echo $error; 
+										echo $error;
 									}
 									?>
 								</th>

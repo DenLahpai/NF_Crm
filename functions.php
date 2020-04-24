@@ -7,6 +7,20 @@ if (empty($_SESSION['UsersId'])) {
     $_SESSION['msg_error'] = 'Session Expired!';
 }
 
+//checking admin access
+function check_access () {
+    # allowed departments
+    $allowed_dpt = array(1,2,7);
+    #getting data from the table Users
+    $rows_Users = table_Users ('select_one', $_SESSION['UsersId'], NULL);
+    foreach ($rows_Users as $row_Users) {
+        $DepartmentsId = $row_Users->DepartmentsId;
+    }
+    if(!in_array($DepartmentsId, $allowed_dpt)) {
+        header("location: no_access.php");
+    }
+}
+
 //checking if a variable is a number
 function check_num ($num) {
     if (!is_numeric($num)) {
