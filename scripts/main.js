@@ -176,11 +176,12 @@ function openAllReminders () {
     }
 }
 
-//function to open one reminder
+// function to open one reminder
 function openReminder(ClientsId) {
     var divOpen = '#reminder'+ClientsId;
     $(divOpen).slideToggle(500);
 }
+
 
 //function to sort table Passport Expiry
 function sortTablePassportExpiry (column, order) {
@@ -194,7 +195,6 @@ function sortTablePassportExpiry (column, order) {
     }
 
     var sorting = 'ORDER BY '+ column + ' '+ order;
-
 
     $("#passport-expiry-table").load("table_passportexpiryphp.php", {
         job: job,

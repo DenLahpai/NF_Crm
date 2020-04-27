@@ -1,7 +1,6 @@
 <?php
 require_once "functions.php";
 
-check_access();
 //checking if UserId is num
 check_num($_REQUEST['UsersId']);
 
