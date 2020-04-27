@@ -15,6 +15,22 @@ include "includes/head.php";
 		include "includes/header.php";
 		include "includes/nav.php";
 		?>
+		<!-- sub-menu  -->
+		<div class="sub-menu">
+			<!-- menu-links -->
+			<div class="menu-links">
+				<ul>
+					<li>
+						<a href="new_client.php" title="New Client">Add New</a>
+					</li>
+					<li>
+						<a href="clients.php" title="View as Grid">Grid View</a>
+					</li>
+				</ul>
+			</div>
+			<!-- end of menu-links -->
+		</div>
+		<!-- end of sub-menu  -->
 		<section>
 			<!-- search	 -->
 			<div class="search">
